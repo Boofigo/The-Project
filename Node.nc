@@ -112,46 +112,6 @@ implementation{
       memcpy(Package->payload, payload, length);
    }
 
-   void updateNeighborhood()
-   {
-      Neighbor* n;
-      uint32_t i;
-      uint32_t size = call Neighborhood.size();
-
-      for (i = 0; i < size; i++) //drop old neighbors
-      {
-         n = call Neighborhood.get(i); //get neighbor in neighborhood[i]
-
-         if (n->Age > 3) //if Age > 3, drop the neighbor
-         {
-            call Neighborhood.pop(i);
-            dbg(NEIGHBOR_CHANNEL, "Node %d Dropped from Neighborhood due to more than 3 pings\n", n->Node);
-            call NeighborsDropped.pushfront(n);//move neighbor to droppedList
-            dbg(NEIGHBOR_CHANNEL, "Node %d Added to NeighborsDropped\n", n->Node);
-            i--;
-            size--;
-         }
-      }
-   }
-
-   void printNeighbors()
-   {
-	   updateNeighborhood();
-
-		if(call Neighborhood.size() == 0) //if neighborhood is empty
-    	{
-		   dbg(NEIGHBOR_CHANNEL, "No Neighbors of Node %d found\n", TOS_NODE_ID);
-		}
-   	else
-    	{
-      	int i;
-			dbg(NEIGHBOR_CHANNEL, "UPDATED NEIGHBORHOOD.\nMembers: %d Node ID: %d\n", call Neighborhood.size(), TOS_NODE_ID);
-			for(i = 0; i < call Neighborhood.size(); i++)
-      	{
-				dbg(NEIGHBOR_CHANNEL, "Neighbor: %d\n", call Neighborhood.get(i));
-			}
-		}
-   }
 
    void discoverNeighbors()
    {
