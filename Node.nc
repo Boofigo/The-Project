@@ -39,7 +39,7 @@ module Node{
 
 	uses interface Timer<TMilli> as neighbortimer;
 	uses interface Timer<TMilli> as routingtimer;
-	uses interface Timer<TMilli> as TCPtimer;
+	//uses interface Timer<TMilli> as TCPtimer;
 	
    uses interface Hashmap<socket_store_t> as SocketsTable;
    
@@ -69,14 +69,14 @@ implementation
    bool inthemap( socket_t fd);
    void findneighbor();
    void Packhash(pack* Package, socket_t fd);
-     void printNeighbors();
-      socket_t getfd(TCPpack payload);
-       uint16_t getfdmsg(uint16_t src);
-     void ListHandler(pack *Package);
-     void EstablishedSend();
-     void replypackage(pack *Package);
-      TCPpack dataPayload(uint16_t destport,uint16_t srcport,uint16_t flag,uint16_t ACK,uint16_t seq,uint16_t Awindow, TCPpack payload);
-      TCPpack makePayload(uint16_t destport,uint16_t srcport,uint16_t flag,uint16_t ACK,uint16_t seq,uint16_t Awindow);
+   void printNeighbors();
+   socket_t getfd(TCPpack payload);
+   uint16_t getfdmsg(uint16_t src);
+   void ListHandler(pack *Package);
+   void EstablishedSend();
+   void replypackage(pack *Package);
+   TCPpack dataPayload(uint16_t destport,uint16_t srcport,uint16_t flag,uint16_t ACK,uint16_t seq,uint16_t Awindow, TCPpack payload);
+   TCPpack makePayload(uint16_t destport,uint16_t srcport,uint16_t flag,uint16_t ACK,uint16_t seq,uint16_t Awindow);
    void makeTCPpacket(pack *Package, uint16_t src, uint16_t dest, uint16_t TTL, uint16_t Protocol, uint16_t seq,TCPpack payload, uint8_t length);
    void makePack(pack *Package, uint16_t src, uint16_t dest, uint16_t TTL, uint16_t Protocol, uint16_t seq, uint8_t *payload, uint8_t length);
    
@@ -90,7 +90,7 @@ implementation
       // the timmer will have a oneshot of (250)
       
       call neighbortimer.startOneShot(250);
-      call routingtimer.startOneShot(250);
+      //call routingtimer.startOneShot(250);
 
       dbg(GENERAL_CHANNEL, "Booted\n");
    }
@@ -100,7 +100,7 @@ implementation
    }
 
    event void routingtimer.fired(){
-      Route_flood();
+      //Route_flood();
    }
 
    event void AMControl.startDone(error_t err){
@@ -148,13 +148,13 @@ void ListHandler(pack* Package)
    Neighbor neighbor;
    if (!met(Package->src))
    {
-      localroute();
+      //localroute();
       dbg(NEIGHBOR_CHANNEL, "Node %d was added to %d's Neighborhood\n", Package->src, TOS_NODE_ID);
       neighbor.node = Package->src;
       call NeighborHood.pushback(neighbor);
       PacketArr++;
       PacketSent;
-      localroute();			 
+      //localroute();			 
       Q=((PacketSent)/((float)PacketArr));
       // dbg(GENERAL_CHANNEL, "Havent met you %d\n", Package->src);
    }
