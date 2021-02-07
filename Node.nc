@@ -34,6 +34,9 @@ implementation{
    // Prototypes
    void makePack(pack *Package, uint16_t src, uint16_t dest, uint16_t TTL, uint16_t Protocol, uint16_t seq, uint8_t *payload, uint8_t length);
 
+
+   void discoverNeighbors(); //sends out standard packet w protocol 8
+
    event void Boot.booted(){
       call AMControl.start();
 
@@ -47,6 +50,11 @@ implementation{
          //Retry until successful
          call AMControl.start();
       }
+   }
+
+   event void PeriodTimer.fired()
+   {
+     discoverNeighbors();
    }
 
    event void AMControl.stopDone(error_t err){}
@@ -94,4 +102,14 @@ implementation{
       Package->protocol = protocol;
       memcpy(Package->payload, payload, length);
    }
+
+   void discoverNeighbors()
+   {
+      dbg(NEIGHBOR_CHANNEL, "Searching for Neighbors...\n");
+
+      //send out packet with PROTOCOL_PINGREPLY
+      makePack(&sendPacket, TOS_NODE_ID, AM_BROADCAST_ADDR, MAX_TTL, PROTOCOL_PINGREPLY, -1, 0, PACKET_MAX_PAYLOAD_SIZE);
+      call Sender.send(sendPacket, AM_BROADCAST_ADDR);
+   }
+
 }
