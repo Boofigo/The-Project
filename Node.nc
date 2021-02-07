@@ -1,11 +1,3 @@
-/*
- * ANDES Lab - University of California, Merced
- * This class provides the basic functions of a network node.
- *
- * @author UCM ANDES Lab
- * @date   2013/09/03
- *
- */
 #include <Timer.h>
 #include "includes/command.h"
 #include "includes/packet.h"
@@ -13,15 +5,22 @@
 #include "includes/sendInfo.h"
 #include "includes/channels.h"
 
+
+typedef struct Neighbor
+{
+    uint16_t Node;
+    uint8_t Age;
+}   Neighbor;
+
 module Node{
    uses interface Boot;
 
    uses interface SplitControl as AMControl;
    uses interface Receive;
-
    uses interface SimpleSend as Sender;
-
    uses interface CommandHandler;
+
+   
 }
 
 implementation{
@@ -59,7 +58,8 @@ implementation{
    }
 
 
-   event void CommandHandler.ping(uint16_t destination, uint8_t *payload){
+   event void CommandHandler.ping(uint16_t destination, uint8_t *payload)
+   {
       dbg(GENERAL_CHANNEL, "PING EVENT \n");
       makePack(&sendPackage, TOS_NODE_ID, destination, 0, 0, 0, payload, PACKET_MAX_PAYLOAD_SIZE);
       call Sender.send(sendPackage, destination);
