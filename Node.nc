@@ -34,10 +34,10 @@ implementation{
    // Prototypes
    void makePack(pack *Package, uint16_t src, uint16_t dest, uint16_t TTL, uint16_t Protocol, uint16_t seq, uint8_t *payload, uint8_t length);
 
-
+   void updateNeighborhood();
    void discoverNeighbors(); //sends out standard packet w protocol 8
    void printNeighbors(); //finds neighbors in neighborhood
-   
+
    event void Boot.booted()
    {
       call AMControl.start();
@@ -112,8 +112,30 @@ implementation{
       memcpy(Package->payload, payload, length);
    }
 
+   void updateNeighborhood()
+   {
+      Neighbor* n;
+      uint32_t i;
+      uint32_t size = call Neighborhood.size();
+
+      for (i = 0; i < size; i++) //drop old neighbors
+      {
+         n = call Neighborhood.get(i); //get neighbor in neighborhood[i]
+
+         if (n->Age > 3) //if Age > 3, drop the neighbor
+         {
+            call Neighborhood.popspot(i);
+            dbg(NEIGHBOR_CHANNEL, "Node %d Dropped from Neighborhood due to more than 3 pings\n", n->Node);
+            call NeighborsDropped.pushfront(n);//move neighbor to droppedList
+            dbg(NEIGHBOR_CHANNEL, "Node %d Added to NeighborsDropped\n", n->Node);
+            i--;
+            size--;
+         }
+      }
+   }
+
    void printNeighbors()
-  {
+   {
 	   updateNeighborhood();
 
 		if(call Neighborhood.size() == 0) //if neighborhood is empty
@@ -129,7 +151,7 @@ implementation{
 				dbg(NEIGHBOR_CHANNEL, "Neighbor: %d\n", call Neighborhood.get(i));
 			}
 		}
-  }
+   }
 
    void discoverNeighbors()
    {
