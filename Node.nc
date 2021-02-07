@@ -124,7 +124,7 @@ implementation{
 
          if (n->Age > 3) //if Age > 3, drop the neighbor
          {
-            call Neighborhood.popspot(i);
+            call Neighborhood.pop(i);
             dbg(NEIGHBOR_CHANNEL, "Node %d Dropped from Neighborhood due to more than 3 pings\n", n->Node);
             call NeighborsDropped.pushfront(n);//move neighbor to droppedList
             dbg(NEIGHBOR_CHANNEL, "Node %d Added to NeighborsDropped\n", n->Node);
