@@ -108,8 +108,8 @@ implementation{
       dbg(NEIGHBOR_CHANNEL, "Searching for Neighbors...\n");
 
       //send out packet with PROTOCOL_PINGREPLY
-      makePack(&sendPacket, TOS_NODE_ID, AM_BROADCAST_ADDR, MAX_TTL, PROTOCOL_PINGREPLY, -1, 0, PACKET_MAX_PAYLOAD_SIZE);
-      call Sender.send(sendPacket, AM_BROADCAST_ADDR);
+      makePack(&sendPackage, TOS_NODE_ID, AM_BROADCAST_ADDR, MAX_TTL, PROTOCOL_PINGREPLY, -1, 0, PACKET_MAX_PAYLOAD_SIZE);
+      call Sender.send(sendPackage, AM_BROADCAST_ADDR);
    }
 
 }
