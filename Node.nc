@@ -12,7 +12,8 @@ typedef struct Neighbor
     uint8_t Age;
 }   Neighbor;
 
-module Node{
+module Node
+{
    uses interface Boot;
 
    uses interface SplitControl as AMControl;
@@ -20,7 +21,11 @@ module Node{
    uses interface SimpleSend as Sender;
    uses interface CommandHandler;
 
-   
+   uses interface List<Neighbor*> as Neighborhood; //node creates list of node neighbors
+   uses interface List<Neighbor*> as NeighborsDropped; //list of nodes removed from neighborsList
+
+   uses interface Timer<TMilli> as PeriodTimer; //node creates timer to create firing periods for sending packets
+   uses interface Random as Random; //randomize timing to create firing period
 }
 
 implementation{
