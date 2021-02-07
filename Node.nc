@@ -36,17 +36,23 @@ implementation{
 
 
    void discoverNeighbors(); //sends out standard packet w protocol 8
-
-   event void Boot.booted(){
+   void printNeighbors(); //finds neighbors in neighborhood
+   
+   event void Boot.booted()
+   {
       call AMControl.start();
 
       dbg(GENERAL_CHANNEL, "Booted\n");
    }
 
-   event void AMControl.startDone(error_t err){
-      if(err == SUCCESS){
+   event void AMControl.startDone(error_t err)
+   {
+      if(err == SUCCESS)
+      {
          dbg(GENERAL_CHANNEL, "Radio On\n");
-      }else{
+      }
+      else
+      {
          //Retry until successful
          call AMControl.start();
       }
@@ -59,9 +65,12 @@ implementation{
 
    event void AMControl.stopDone(error_t err){}
 
-   event message_t* Receive.receive(message_t* msg, void* payload, uint8_t len){
+   //Message recieved
+   event message_t* Receive.receive(message_t* msg, void* payload, uint8_t len)
+   {
       dbg(GENERAL_CHANNEL, "Packet Received\n");
-      if(len==sizeof(pack)){
+      if(len==sizeof(pack))
+      {
          pack* myMsg=(pack*) payload;
          dbg(GENERAL_CHANNEL, "Package Payload: %s\n", myMsg->payload);
          return msg;
@@ -102,6 +111,25 @@ implementation{
       Package->protocol = protocol;
       memcpy(Package->payload, payload, length);
    }
+
+   void printNeighbors()
+  {
+	   updateNeighborhood();
+
+		if(call Neighborhood.size() == 0) //if neighborhood is empty
+    	{
+		   dbg(NEIGHBOR_CHANNEL, "No Neighbors of Node %d found\n", TOS_NODE_ID);
+		}
+   	else
+    	{
+      	int i;
+			dbg(NEIGHBOR_CHANNEL, "UPDATED NEIGHBORHOOD.\nMembers: %d Node ID: %d\n", call Neighborhood.size(), TOS_NODE_ID);
+			for(i = 0; i < call Neighborhood.size(); i++)
+      	{
+				dbg(NEIGHBOR_CHANNEL, "Neighbor: %d\n", call Neighborhood.get(i));
+			}
+		}
+  }
 
    void discoverNeighbors()
    {
