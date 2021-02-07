@@ -33,8 +33,6 @@ implementation {
     Node.neighbortimer -> neighbortimer;
 	Node.TCPtimer -> TCPtimer;
     Node.Receive -> GeneralReceive;
-	components new HashmapC(table,255) as RoutingTableC;
-	Node.RoutingTable -> RoutingTableC;
 
     Node.Receive -> GeneralReceive;
 
@@ -57,6 +55,4 @@ implementation {
     components new HashmapC(socket_store_t,10) as SocketsTable;
     Node.SocketsTable -> SocketsTable;
 
-    components TransportC;
-    Node.Transport -> TransportC;
 }
