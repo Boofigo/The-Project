@@ -12,8 +12,8 @@
 #include "includes/CommandMsg.h"
 #include "includes/sendInfo.h"
 #include "includes/channels.h"
-#include "includes/TCP_packet.h"
-#include "includes/socket.h"
+//#include "includes/TCP_packet.h"
+//#include "includes/socket.h"
 
 
 typedef struct{
