@@ -118,7 +118,7 @@ class TestSim:
 
     def ping(self, source, dest, msg):
         self.sendCMD(self.CMD_PING, source, "{0}{1}".format(chr(dest),msg));
-
+    
     def neighborDMP(self, destination):
         self.sendCMD(self.CMD_NEIGHBOR_DUMP, destination, "neighbor command");
 
@@ -128,6 +128,10 @@ class TestSim:
     def addChannel(self, channelName, out=sys.stdout):
         print 'Adding Channel', channelName;
         self.t.addChannel(channelName, out);
+
+    # My Commands
+    def findNeighbors(self, source, msg):
+        self.sendCMD(self.CMD_PING, source, "{0}{1}".format(chr(dest),msg));
 
 def main():
     s = TestSim();
