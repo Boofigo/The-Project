@@ -131,7 +131,7 @@ class TestSim:
 
     # My Commands
     def findNeighbors(self, source, msg):
-        self.sendCMD(self.CMD_PING, source, "{0}{1}".format(chr(dest),msg));
+        self.sendCMD(self.CMD_NEIGHBOR_DUMP, source, "{0}{1}".format(chr(dest),msg));
 
 def main():
     s = TestSim();
