@@ -114,32 +114,32 @@ implementation{
                   break;
                 
                 case 1: // PROTOCOL_PINGREPLY
-                    //we got a ping reply from a neighbor so we need to update that neighbors life to 0 again because we have seen it again
-                    dbg(NEIGHBOR_CHANNEL, "Recieved PINGREPLY from %d\n", myMsg->src);
-                    FOUND = FALSE; //IF FOUND, we switch to TRUE
-                    size = call ListOfNeighbors.size();
+                  //we got a ping reply from a neighbor so we need to update that neighbors life to 0 again because we have seen it again
+                  dbg(NEIGHBOR_CHANNEL, "Recieved PINGREPLY from %d\n", myMsg->src);
+                  FOUND = FALSE; //IF FOUND, we switch to TRUE
+                  size = call ListOfNeighbors.size();
 
-                    for(i = 0; i < size; i++){
-                        neighbor_ptr = call ListOfNeighbors.get(i);
-                        if(neighbor_ptr->Node == myMsg->src)
-                        {
-                           //found neighbor in list, reset life
-                           dbg(NEIGHBOR_CHANNEL, "Node %d found in neighbor list\n", myMsg->src);
-                           neighbor_ptr->Life = 0;
-                           FOUND = TRUE;
-                           break;
-                        }
+                  for(i = 0; i < size; i++){
+                     neighbor_ptr = call ListOfNeighbors.get(i);
+                     if(neighbor_ptr->Node == myMsg->src)
+                     {
+                        //found neighbor in list, reset life
+                        dbg(NEIGHBOR_CHANNEL, "Node %d found in neighbor list\n", myMsg->src);
+                        neighbor_ptr->Life = 0;
+                        FOUND = TRUE;
+                        break;
+                     }
+                  }
+                  //if the neighbor is not found it means it is a new neighbor to the node and thus we must add it onto the list by calling an allocation pool for memory PoolOfNeighbors
+                  if(!FOUND)
+                  {
+                     Neighbor->Node = myMsg->src; //add node source
+                     Neighbor->Life = 0; //reset life
+                     call ListOfNeighbors.pushback(Neighbor); //put into list 
                     }
-                    //if the neighbor is not found it means it is a new neighbor to the node and thus we must add it onto the list by calling an allocation pool for memory PoolOfNeighbors
-                    if(!FOUND)
-                    {
-                        Neighbor->Node = myMsg->src; //add node source
-                        Neighbor->Life = 0; //reset life
-                        call ListOfNeighbors.pushback(Neighbor); //put into list 
-                    }
-                    break;
+                  break;
                 default:
-                    break;
+                  break;
          }
          else
          { //packet does not belong to current node
@@ -220,8 +220,8 @@ implementation{
 		char* message;
 		
 		dbg(NEIGHBOR_CHANNEL, "Neighbor Discovery: checking node %d list for its neighbors\n", TOS_NODE_ID);
-      makePack(&sendPackage, TOS_NODE_ID, AM_BROADCAST_ADDR, 1, 0, 0, payload, PACKET_MAX_PAYLOAD_SIZE);
-      call Sender.send(sendPackage, AM_BROADCAST_ADDR);
+      //makePack(&sendPackage, TOS_NODE_ID, AM_BROADCAST_ADDR, 1, 0, 0, payload, PACKET_MAX_PAYLOAD_SIZE);
+      //call Sender.send(sendPackage, AM_BROADCAST_ADDR);
 
 		if(!call ListOfNeighbors.isEmpty()) 
       {
