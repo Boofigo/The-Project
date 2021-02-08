@@ -5,11 +5,11 @@
 #include "includes/channels.h"
 
 
-typedef struct
+typedef struct Neighbor
 {
     uint16_t Node;
     uint8_t Age;
-}   Neighbor;
+}
 
 module Node
 {
