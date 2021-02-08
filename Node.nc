@@ -83,12 +83,12 @@ implementation{
       call Sender.send(sendPackage, destination);
    }
 
-   event void CommandHandler.findNeighbors(uint8_t *payload)
-   {
-      dbg(GENERAL_CHANNEL, "Discovery event \n");
-      makePack(&sendPackage, TOS_NODE_ID, AM_BROADCAST_ADDR, 0, 0, 0, payload, PACKET_MAX_PAYLOAD_SIZE);
-      call Sender.send(sendPackage, AM_BROADCAST_ADDR);
-   }
+   //event void CommandHandler.findNeighbors(uint8_t *payload)
+   //{
+   //   dbg(GENERAL_CHANNEL, "Discovery event \n");
+   //   makePack(&sendPackage, TOS_NODE_ID, AM_BROADCAST_ADDR, 0, 0, 0, payload, PACKET_MAX_PAYLOAD_SIZE);
+   //   call Sender.send(sendPackage, AM_BROADCAST_ADDR);
+   //}
 
    event void CommandHandler.printNeighbors(){}
 
