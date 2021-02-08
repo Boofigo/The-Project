@@ -79,7 +79,7 @@ implementation{
    event void CommandHandler.findNeighbors(uint8_t *payload)
    {
       dbg(GENERAL_CHANNEL, "Discovery event \n");
-      uint32_t i = 1;
+      int i;
       for(i = 1; i < 20; i++) 
       {
          if(i != TOS_NODE_ID)
