@@ -84,7 +84,8 @@ implementation{
          else if(findSeenPacket(myMsg))
          {//packet dropped if seen by node more than once
             dbg(FLOODING_CHANNEL,"ALREADY SEEN: Dropping packet seq #%d from %d to %d\n", myMsg->seq, myMsg->src, myMsg->dest); //notify what is happening
-         }else if(myMsg->src == TOS_NODE_ID)
+         }
+         else if(myMsg->src == TOS_NODE_ID)
          {
             dbg(FLOODING_CHANNEL,"Packet has returned to source node %d: Dropping packet\n", myMsg->src); //once again, notify what has happened    
          }
@@ -145,7 +146,7 @@ implementation{
    event void CommandHandler.ping(uint16_t destination, uint8_t *payload)
    {
       dbg(GENERAL_CHANNEL, "PING EVENT \n");
-      makePack(&sendPackage, TOS_NODE_ID, destination, 2, 0, 0, payload, PACKET_MAX_PAYLOAD_SIZE);
+      makePack(&sendPackage, TOS_NODE_ID, destination, 7, 0, 0, payload, PACKET_MAX_PAYLOAD_SIZE);
       call Sender.send(sendPackage, AM_BROADCAST_ADDR);
    }
 

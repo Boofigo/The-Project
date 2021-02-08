@@ -148,7 +148,7 @@ def main():
     s.runTime(20);
     s.ping(1, 2, "Hello, World");
     s.runTime(10);
-    s.ping(2, 3, "Hello, World");
+    s.ping(1, 6, "Hello, World");
     #s.findNeighbors(1, "Neighbor Found");
     s.runTime(10);
     
