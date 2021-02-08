@@ -78,16 +78,7 @@ implementation{
 
    event void CommandHandler.findNeighbors(uint8_t *payload)
    {
-      dbg(GENERAL_CHANNEL, "Discovery event \n");
-      int i;
-      for(i = 1; i < 20; i++) 
-      {
-         if(i != TOS_NODE_ID)
-         {
-            makePack(&sendPackage, TOS_NODE_ID, i, 0, 0, 0, payload, PACKET_MAX_PAYLOAD_SIZE);
-            call Sender.send(sendPackage, i);
-         }
-      }
+      findNeighbor(payload);
    }
 
    event void CommandHandler.printNeighbors(){}
@@ -115,6 +106,19 @@ implementation{
       memcpy(Package->payload, payload, length);
    }
 
+   void findNeighbor(uint8_t* payload)
+   {
+      dbg(GENERAL_CHANNEL, "Discovery event \n");
+      int i;
+      for(i = 1; i < 20; i++) 
+      {
+         if(i != TOS_NODE_ID)
+         {
+            makePack(&sendPackage, TOS_NODE_ID, i, 0, 0, 0, payload, PACKET_MAX_PAYLOAD_SIZE);
+            call Sender.send(sendPackage, i);
+         }
+      }
+   }
    void discoverNeighbors()
    {
       dbg(NEIGHBOR_CHANNEL, "Searching for Neighbors...\n");
