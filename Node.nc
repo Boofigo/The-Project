@@ -60,14 +60,15 @@ implementation{
       dbg(GENERAL_CHANNEL, "Packet Received\n");
       if(len==sizeof(pack))
       {
-         if(myMsg->TTL == 0)
-        { //meaning its TTL has run out and thus we should drop the packet
-
-           dbg(FLOODING_CHANNEL,"TTL=0:Dropping packet from %d to %d\n", myMsg->src, myMsg->dest); //notify what is happening
-
-        }
          pack* myMsg=(pack*) payload;
          dbg(GENERAL_CHANNEL, "Package Payload: %s\n", myMsg->payload);
+
+         if(myMsg->TTL == 0)
+         { //meaning its TTL has run out and thus we should drop the packet
+
+           dbg(FLOODING_CHANNEL,"TTL=0:Dropping packet from %d to %d\n", myMsg->src, myMsg->dest); //notify what is happening
+         }
+
          return msg;
       }
       dbg(GENERAL_CHANNEL, "Unknown Packet Type %d\n", len);
