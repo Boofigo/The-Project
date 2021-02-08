@@ -34,9 +34,7 @@ implementation{
    // Prototypes
    void makePack(pack *Package, uint16_t src, uint16_t dest, uint16_t TTL, uint16_t Protocol, uint16_t seq, uint8_t *payload, uint8_t length);
 
-   void updateNeighborhood();
    void discoverNeighbors(); //sends out standard packet w protocol 8
-   void printNeighbors(); //finds neighbors in neighborhood
 
    event void Boot.booted()
    {
@@ -57,7 +55,7 @@ implementation{
          call AMControl.start();
       }
    }
- // git example
+
    event void PeriodTimer.fired()
    {
      discoverNeighbors();
@@ -111,7 +109,6 @@ implementation{
       Package->protocol = protocol;
       memcpy(Package->payload, payload, length);
    }
-
 
    void discoverNeighbors()
    {
