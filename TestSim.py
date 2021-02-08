@@ -6,6 +6,7 @@
 import sys
 from TOSSIM import *
 from CommandMsg import *
+from packet import *
 
 class TestSim:
     moteids=[]
@@ -40,7 +41,10 @@ class TestSim:
 
         #Create a Command Packet
         self.msg = CommandMsg()
+        self.msg.set_protocol(99)  # change
+
         self.pkt = self.t.newPacket()
+        self.pkt.setData(self.msg.data) # change
         self.pkt.setType(self.msg.get_amType())
 
     # Load a topo file and use it.
