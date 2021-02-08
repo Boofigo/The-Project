@@ -130,8 +130,8 @@ class TestSim:
         self.t.addChannel(channelName, out);
 
     # My Commands
-    def findNeighbors(self, source, msg):
-        self.sendCMD(self.CMD_NEIGHBOR_DUMP, source, "{0}{1}".format(chr(dest),msg));
+    #def findNeighbors(self, source, msg):
+    #    self.sendCMD(self.CMD_NEIGHBOR_DUMP, source, "{0}{1}".format(chr(dest),msg));
 
 def main():
     s = TestSim();
@@ -148,8 +148,9 @@ def main():
     s.runTime(20);
     s.ping(1, 2, "Hello, World");
     s.runTime(10);
-    s.findNeighbors(1, "Neighbor Found");
-    s.runTime(70);
+    s.ping(2, 3, "Hello, World");
+    #s.findNeighbors(1, "Neighbor Found");
+    s.runTime(10);
     
 if __name__ == '__main__':
     main()
