@@ -9,5 +9,4 @@ interface CommandHandler{
    event void setTestClient();
    event void setAppServer();
    event void setAppClient();
-   event void findNeighbors(uint8_t *payload);
 }

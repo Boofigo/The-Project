@@ -60,6 +60,12 @@ implementation{
       dbg(GENERAL_CHANNEL, "Packet Received\n");
       if(len==sizeof(pack))
       {
+         if(myMsg->TTL == 0)
+        { //meaning its TTL has run out and thus we should drop the packet
+
+           dbg(FLOODING_CHANNEL,"TTL=0:Dropping packet from %d to %d\n", myMsg->src, myMsg->dest); //notify what is happening
+
+        }
          pack* myMsg=(pack*) payload;
          dbg(GENERAL_CHANNEL, "Package Payload: %s\n", myMsg->payload);
          return msg;
@@ -108,13 +114,5 @@ implementation{
       memcpy(Package->payload, payload, length);
    }
    
-   void discoverNeighbors()
-   {
-      dbg(NEIGHBOR_CHANNEL, "Searching for Neighbors...\n");
-
-      //send out packet with PROTOCOL_PINGREPLY
-      makePack(&sendPackage, TOS_NODE_ID, AM_BROADCAST_ADDR, MAX_TTL, PROTOCOL_PINGREPLY, -1, 0, PACKET_MAX_PAYLOAD_SIZE);
-      call Sender.send(sendPackage, AM_BROADCAST_ADDR);
-   }
 
 }
