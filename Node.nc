@@ -21,8 +21,8 @@ module Node
    uses interface CommandHandler;
 
    uses interface List<pack> as SeenPacketList; //use interface to create a seen packet list for each node
-   uses interface List<neighbor*> as ListOfNeighbors;
-   uses interface Pool<neighbor> as PoolOfNeighbors;
+   //uses interface List<neighbor*> as ListOfNeighbors;
+   //uses interface Pool<neighbor> as PoolOfNeighbors;
    uses interface Timer<TMilli> as Timer1; //uses timer to create periodic firing on neighbordiscovery and to not overload the network
 }
 
@@ -65,7 +65,7 @@ implementation{
    //fired() event for Timer1
    event void Timer1.fired()
    {
-      neighborDiscovery();
+      //neighborDiscovery();
    }
 
    //Message recieved
@@ -131,10 +131,10 @@ implementation{
    
    void pushToPacketList(pack Package)
    { //pushes a packet to back of SeenPacketList
-      if(call SeenPacketList.isFull())
-      { //SeenPacketList is full so lets drop the first packet ever seen
-         call SeenPacketList.popfront();
-      }
+      //if(call SeenPacketList.isFull())
+      //{ //SeenPacketList is full so lets drop the first packet ever seen
+         //call SeenPacketList.popfront();
+      //}
       //add Package
       call SeenPacketList.pushback(Package);
    }
