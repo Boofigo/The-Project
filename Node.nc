@@ -8,7 +8,7 @@
 typedef struct Neighbor
 {
     uint16_t Node;
-    uint8_t Age;
+    uint8_t Life;
 }   Neighbor;
 
 module Node
@@ -44,7 +44,7 @@ implementation{
       dbg(GENERAL_CHANNEL, "Booted\n");
 
       call Timer1.startPeriodicAt(1,1500);
-      dbg(NEIGHBOR_CHANNEL,"Timer started");
+      dbg(NEIGHBOR_CHANNEL,"Timer started\n");
    }
 
    event void AMControl.startDone(error_t err)
@@ -79,15 +79,15 @@ implementation{
 
          if(myMsg->TTL == 0) //Time to Live is 0 so packet should be dropped
          {
-           dbg(FLOODING_CHANNEL,"TTL=0:Dropping packet from %d to %d\n", myMsg->src, myMsg->dest); //notify what is happening
+           dbg(FLOODING_CHANNEL,"TTL=0:Dropping packet from %d to %d\n", myMsg->src, myMsg->dest); 
          }
          else if(findSeenPacket(myMsg))
          {//packet dropped if seen by node more than once
-            dbg(FLOODING_CHANNEL,"ALREADY SEEN: Dropping packet seq #%d from %d to %d\n", myMsg->seq, myMsg->src, myMsg->dest); //notify what is happening
+            dbg(FLOODING_CHANNEL,"ALREADY SEEN: Dropping packet\n",); //notify what is happening
          }
          else if(myMsg->src == TOS_NODE_ID)
          {
-            dbg(FLOODING_CHANNEL,"Packet has returned to source node %d: Dropping packet\n", myMsg->src); //once again, notify what has happened    
+            dbg(FLOODING_CHANNEL,"Packet has returned to source node %d: Dropping packet\n", myMsg->src);    
          }
          else if(myMsg->dest == TOS_NODE_ID)
          {
@@ -97,7 +97,7 @@ implementation{
          }
          else if(AM_BROADCAST_ADDR == myMsg->dest)
          {//meant for neighbor discovery
-      
+
          }
          else
          { //packet does not belong to current node
