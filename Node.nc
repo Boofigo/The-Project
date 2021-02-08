@@ -84,6 +84,9 @@ implementation{
          else if(findSeenPacket(myMsg))
          {//packet dropped if seen by node more than once
             dbg(FLOODING_CHANNEL,"ALREADY SEEN: Dropping packet seq #%d from %d to %d\n", myMsg->seq, myMsg->src, myMsg->dest); //notify what is happening
+         }else if(myMsg->src == TOS_NODE_ID)
+         {
+            dbg(FLOODING_CHANNEL,"Packet has returned to source node %d: Dropping packet\n", myMsg->src); //once again, notify what has happened    
          }
          else if(myMsg->dest == TOS_NODE_ID)
          {
