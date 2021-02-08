@@ -75,7 +75,7 @@ implementation{
       if(len==sizeof(pack))
       {
          pack* myMsg=(pack*) payload;
-         dbg(GENERAL_CHANNEL, "Package Payload: %s\n", myMsg->payload);
+         // dbg(GENERAL_CHANNEL, "Package Payload: %s\n", myMsg->payload);
 
          if(myMsg->TTL == 0) //Time to Live is 0 so packet should be dropped
          {
