@@ -1,4 +1,3 @@
-#include <Timer.h>
 #include "includes/command.h"
 #include "includes/packet.h"
 #include "includes/CommandMsg.h"
@@ -23,9 +22,6 @@ module Node
 
    uses interface List<Neighbor*> as Neighborhood; //node creates list of node neighbors
    uses interface List<Neighbor*> as NeighborsDropped; //list of nodes removed from neighborsList
-
-   uses interface Timer<TMilli> as PeriodTimer; //node creates timer to create firing periods for sending packets
-   uses interface Random as Random; //randomize timing to create firing period
 }
 
 implementation{
@@ -56,11 +52,6 @@ implementation{
       }
    }
 
-   event void PeriodTimer.fired()
-   {
-     discoverNeighbors();
-   }
-
    event void AMControl.stopDone(error_t err){}
 
    //Message recieved
@@ -83,6 +74,19 @@ implementation{
       dbg(GENERAL_CHANNEL, "PING EVENT \n");
       makePack(&sendPackage, TOS_NODE_ID, destination, 0, 0, 0, payload, PACKET_MAX_PAYLOAD_SIZE);
       call Sender.send(sendPackage, destination);
+   }
+
+   event void CommandHandler.findNeighbors(uint8_t *payload)
+   {
+      dbg(GENERAL_CHANNEL, "Discovery event \n");
+      for(i = 1; i < 20; i++) 
+      {
+         if(i != TOS_NODE_ID)
+         {
+            makePack(&sendPackage, TOS_NODE_ID, i, 0, 0, 0, payload, PACKET_MAX_PAYLOAD_SIZE);
+            call Sender.send(sendPackage, i);
+         }
+      }
    }
 
    event void CommandHandler.printNeighbors(){}
