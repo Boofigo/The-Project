@@ -4,13 +4,6 @@
 #include "includes/sendInfo.h"
 #include "includes/channels.h"
 
-
-typedef struct Neighbor
-{
-    uint16_t Node;
-    uint8_t Age;
-}
-
 module Node
 {
    uses interface Boot;
