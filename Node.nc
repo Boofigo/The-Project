@@ -5,11 +5,11 @@
 #include "includes/channels.h"
 #include <Timer.h>
 
-typedef struct Neighbor
+typedef struct neighbor
 {
     uint16_t Node;
     uint8_t Life;
-}   Neighbor;
+}   neighbor;
 
 module Node
 {
@@ -82,7 +82,7 @@ implementation{
          }
          else if(findSeenPacket(myMsg))
          {//packet dropped if seen by node more than once
-            dbg(FLOODING_CHANNEL,"ALREADY SEEN: Dropping packet\n",); //notify what is happening
+            dbg(FLOODING_CHANNEL,"ALREADY SEEN: Dropping packet\n"); //notify what is happening
          }
          else if(myMsg->src == TOS_NODE_ID)
          {
