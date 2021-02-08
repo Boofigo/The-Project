@@ -57,7 +57,7 @@ implementation{
          call AMControl.start();
       }
    }
-
+ // git example
    event void PeriodTimer.fired()
    {
      discoverNeighbors();
