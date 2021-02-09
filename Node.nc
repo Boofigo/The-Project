@@ -39,7 +39,7 @@ implementation{
 
    event void Boot.booted()
    {
-      uint32_t period;
+      uint32_t start;
 
       call AMControl.start();
 
