@@ -140,6 +140,7 @@ implementation{
                   break;
                 default:
                   break;
+            }
          }
          else
          { //packet does not belong to current node
