@@ -22,7 +22,7 @@ module Node
 
    uses interface List<pack> as SeenPacketList; //use interface to create a seen packet list for each node
    uses interface List<neighbor*> as ListOfNeighbors;
-   //uses interface Pool<neighbor> as PoolOfNeighbors;
+   uses interface Pool<neighbor> as PoolOfNeighbors;
    uses interface Timer<TMilli> as Timer1; //uses timer to create periodic firing on neighbordiscovery and to not overload the network
 }
 
@@ -98,8 +98,7 @@ implementation{
          {//meant for neighbor discovery
             bool FOUND;
             uint16_t i =0, size;
-            neighbor* hold, *neighbor_ptr;
-            neighbor* Neighbor;
+            neighbor* Neighbor, *neighbor_ptr;
 
             switch(myMsg->protocol)
             {
@@ -137,6 +136,7 @@ implementation{
                   //if the neighbor is not found it means it is a new neighbor to the node and thus we must add it onto the list by calling an allocation pool for memory PoolOfNeighbors
                   if(!FOUND)
                   {
+                     Neighbor = call PoolOfNeighbors.get(); //get New Neighbor
                      dbg(NEIGHBOR_CHANNEL, "Error Test 1\n");
                      Neighbor->Node = myMsg->src; //add node source
                      dbg(NEIGHBOR_CHANNEL, "Error Test 2\n");
@@ -255,6 +255,7 @@ implementation{
             {
 				   myNeighbor = call ListOfNeighbors.remove(i);
 				   dbg(NEIGHBOR_CHANNEL, "Node %d life has expired dropping from NODE %d list\n", myNeighbor->Node, TOS_NODE_ID);
+               call PoolOfNeighbors.put(myNeighbor);
 				   i--;
 					size--;
 				}
