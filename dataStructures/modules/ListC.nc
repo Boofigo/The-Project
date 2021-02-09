@@ -21,9 +21,14 @@ implementation{
 	command bool List.isFull() 
 	{
 		if (size == MAX_SIZE)
+		{
 			return TRUE;
+		}
 		else
+		{
 			return FALSE;
+		}
+			
 	}
 
 	command t List.remove(uint16_t position) 
@@ -31,7 +36,8 @@ implementation{
 		t temp;
 		uint16_t i = 0;
 		temp = container[position];
-		for(i = 0; i < position; i++) {
+		for(i = 0; i < position; i++) 
+		{
 			container[i+1] = container[i];
 		}
 		container[0] = temp;
