@@ -23,7 +23,7 @@ module Node
    uses interface List<pack> as SeenPacketList; //use interface to create a seen packet list for each node
    uses interface List<neighbor*> as ListOfNeighbors;
    uses interface Pool<neighbor> as PoolOfNeighbors;
-   uses interface Timer<TMilli> as Timer1; //uses timer to create periodic firing on neighbordiscovery and to not overload the network
+   uses interface Timer<5> as Timer1; //uses timer to create periodic firing on neighbordiscovery and to not overload the network
 }
 
 implementation{
