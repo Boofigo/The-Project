@@ -142,7 +142,7 @@ def main():
     s.addChannel(s.COMMAND_CHANNEL);
     s.addChannel(s.GENERAL_CHANNEL);
     s.addChannel(s.FLOODING_CHANNEL);
-    //s.addChannel(s.NEIGHBOR_CHANNEL);
+    #s.addChannel(s.NEIGHBOR_CHANNEL);
 
 
     s.runTime(20);
