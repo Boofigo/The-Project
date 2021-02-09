@@ -18,6 +18,14 @@ implementation{
 	t container[n];
 	uint16_t size = 0;
 
+	command bool List.isFull() 
+	{
+		if (size == MAX_SIZE)
+			return TRUE;
+		else
+			return FALSE;
+	}
+
 	command t List.remove(uint16_t position) 
 	{
 		t temp;
