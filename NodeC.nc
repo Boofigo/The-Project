@@ -36,7 +36,7 @@ implementation {
 
     //component for Timer
     components new TimerMilliC() as Timer1C;
-    Node.Timer1-> TimerC;
+    Node.Timer-> Timer1C;
 
     components RandomC as Random;
     Node.Random -> Random;
