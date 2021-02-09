@@ -43,7 +43,7 @@ implementation{
 
       dbg(GENERAL_CHANNEL, "Booted\n");
 
-      call Timer1.startPeriodicAt(1,1500);
+      call Timer1.startPeriodicAt(1,3000);
       dbg(NEIGHBOR_CHANNEL,"Timer started\n");
    }
 
