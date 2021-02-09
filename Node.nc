@@ -265,7 +265,7 @@ implementation{
    { 
       if(call seenPackets.isFull())
       { //SeenPacketList is full so lets drop the first packet ever seen
-         call SeenPacketList.popfront();
+         call seenPackets.popfront();
       }
       call seenPackets.pushback(Package);
    }
