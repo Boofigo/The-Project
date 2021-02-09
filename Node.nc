@@ -20,16 +20,15 @@ module Node
    uses interface SimpleSend as Sender;
    uses interface CommandHandler;
 
-   uses interface List<pack> as SeenPacketList; //use interface to create a seen packet list for each node
+   uses interface List<pack> as seenPackets; //use interface to create a seen packet list for each node
    uses interface List<neighbor*> as ListOfNeighbors;
    uses interface Pool<neighbor> as PoolOfNeighbors;
-   uses interface Timer<TMilli> as Timer1; //uses timer to create periodic firing on neighbordiscovery and to not overload the network
+   uses interface Timer<TMilli> as Timer; //uses timer to create periodic firing on neighbordiscovery and to not overload the network
    uses interface Random as Random; //randomize timing to create firing period
 }
 
 implementation{
    pack sendPackage;
-   uint16_t seqNumb = 0;
 
    // Prototypes
    void makePack(pack *Package, uint16_t src, uint16_t dest, uint16_t TTL, uint16_t Protocol, uint16_t seq, uint8_t *payload, uint8_t length);
@@ -48,7 +47,7 @@ implementation{
 
       period = call Random.rand32() % 6000;
 
-      call Timer1.startPeriodic(period); // 6000 if I'm using static number
+      call Timer.startPeriodic(period); // 6000 if I'm using static number
       dbg(NEIGHBOR_CHANNEL,"Timer started\n");
    }
 
@@ -67,7 +66,7 @@ implementation{
 
    event void AMControl.stopDone(error_t err){}
 
-   event void Timer1.fired()
+   event void Timer.fired()
    {
       neighborDiscovery();
    }
@@ -87,7 +86,7 @@ implementation{
          }
          else if(findSeenPacket(myMsg))
          {//packet dropped if seen by node more than once
-            dbg(FLOODING_CHANNEL,"ALREADY SEEN: Dropping packet\n"); //notify what is happening
+            dbg(FLOODING_CHANNEL,"Packet already seen. Dropping packet\n"); //notify what is happening
          }
          else if(myMsg->src == TOS_NODE_ID)
          {
@@ -101,7 +100,7 @@ implementation{
          }
          else if(AM_BROADCAST_ADDR == myMsg->dest)
          {//meant for neighbor discovery
-            bool FOUND;
+            bool Found;
             uint16_t i =0, size;
             neighbor* Neighbor, *neighbor_ptr;
 
@@ -109,10 +108,9 @@ implementation{
             {
 
                case 0: //PROTOCOL_PING
-                  dbg(NEIGHBOR_CHANNEL, "NODE %d Received Protocol Ping from %d\n",TOS_NODE_ID,myMsg->src);
+                  dbg(NEIGHBOR_CHANNEL, "NODE %d received ping from neighbor %d\n",TOS_NODE_ID,myMsg->src);
 
                   makePack(&sendPackage, TOS_NODE_ID, AM_BROADCAST_ADDR, myMsg->TTL-1, 1, myMsg->seq, (uint8_t *) myMsg->payload, sizeof(myMsg->payload));
-                  //dbg(NEIGHBOR_CHANNEL, "inbetween = %s\n", sendPackage.protocol);
                   pushToPacketList(sendPackage); //push to our seen list
 
                   call Sender.send(sendPackage, myMsg->src); //send back to sender with PINGREPLY Protocol
@@ -120,8 +118,8 @@ implementation{
                 
                 case 1: // PROTOCOL_PINGREPLY
                   //we got a ping reply from a neighbor so we need to update that neighbors life to 0 again because we have seen it again
-                  dbg(NEIGHBOR_CHANNEL, "Recieved PINGREPLY from %d\n", myMsg->src);
-                  FOUND = FALSE; //IF FOUND, we switch to TRUE
+                  dbg(NEIGHBOR_CHANNEL, "Neighbor %d has replied\n", myMsg->src);
+                  Found = FALSE; //IF FOUND, we switch to TRUE
                   size = call ListOfNeighbors.size();
 
                   for(i = 0; i < size; i++)
@@ -132,14 +130,15 @@ implementation{
                         //found neighbor in list, reset life
                         dbg(NEIGHBOR_CHANNEL, "Node %d found in neighbor list\n", myMsg->src);
                         neighbor_ptr->Life = 0;
-                        FOUND = TRUE;
+                        Found = TRUE;
                         break;
                      }
                   }
                   
                   //if the neighbor is not found it means it is a new neighbor to the node and thus we must add it onto the list by calling an allocation pool for memory PoolOfNeighbors
-                  if(!FOUND)
+                  if(!Found)
                   {
+                     dbg(NEIGHBOR_CHANNEL, "Node %d is a new neighbor\n", myMsg->src);
                      Neighbor = call PoolOfNeighbors.get(); //get New Neighbor
                      Neighbor->Node = myMsg->src; //add node source
                      Neighbor->Life = 0; //reset life
@@ -155,8 +154,7 @@ implementation{
             makePack(&sendPackage, myMsg->src, myMsg->dest, myMsg->TTL-1,myMsg->protocol, myMsg->seq, (uint8_t *)myMsg->payload, sizeof(myMsg->payload));
 
             dbg(FLOODING_CHANNEL, "Recieved Message from %d meant for %d...Rebroadcasting\n", myMsg->src, myMsg->dest); //notify process
-            pushToPacketList(sendPackage); //packet not meant for this node but we need to push into seenpacketlist
-            //resend with broadcast address to move packet forward
+            pushToPacketList(sendPackage);
             call Sender.send(sendPackage, AM_BROADCAST_ADDR);
          }
 
@@ -248,13 +246,13 @@ implementation{
 
    bool findSeenPacket(pack *Package)
    {
-       uint16_t packetListSize = call SeenPacketList.size();
+       uint16_t listSize = call seenPackets.size();
        uint16_t i = 0;
        pack packetMatcher; //use to try to find match
 
-       for(i = 0; i < packetListSize; i++)
+       for(i = 0; i < listSize; i++)
        { //traverse thru SeenPacketList
-           packetMatcher = call SeenPacketList.get(i);
+           packetMatcher = call seenPackets.get(i);
            if(packetMatcher.src == Package->src && packetMatcher.dest == Package->dest && packetMatcher.seq == Package->seq)
            {
                return TRUE; //packet is found in SeenPacketList
@@ -265,11 +263,11 @@ implementation{
    
    void pushToPacketList(pack Package)
    { 
-      if(call SeenPacketList.isFull())
+      if(call seenPackets.isFull())
       { //SeenPacketList is full so lets drop the first packet ever seen
          call SeenPacketList.popfront();
       }
-      call SeenPacketList.pushback(Package);
+      call seenPackets.pushback(Package);
    }
 
 }
