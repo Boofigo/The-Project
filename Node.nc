@@ -220,7 +220,7 @@ implementation{
 		pack Package;
 		char* message;
 		
-		dbg(NEIGHBOR_CHANNEL, "Neighbor Discovery: checking node %d list for its neighbors\n", TOS_NODE_ID);
+		//dbg(NEIGHBOR_CHANNEL, "Neighbor Discovery: checking node %d list for its neighbors\n", TOS_NODE_ID);
       //makePack(&sendPackage, TOS_NODE_ID, AM_BROADCAST_ADDR, 1, 0, 0, payload, PACKET_MAX_PAYLOAD_SIZE);
       //call Sender.send(sendPackage, AM_BROADCAST_ADDR);
 
