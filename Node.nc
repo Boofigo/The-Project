@@ -117,11 +117,12 @@ implementation{
                   //we got a ping reply from a neighbor so we need to update that neighbors life to 0 again because we have seen it again
                   dbg(NEIGHBOR_CHANNEL, "Recieved PINGREPLY from %d\n", myMsg->src);
                   FOUND = FALSE; //IF FOUND, we switch to TRUE
+                  dbg(NEIGHBOR_CHANNEL, "Error Test 1\n");
                   size = call ListOfNeighbors.size();
-
+                  dbg(NEIGHBOR_CHANNEL, "Error Test 2\n");
                   for(i = 0; i < size; i++)
                   {
-                     dbg(NEIGHBOR_CHANNEL, "Error Test 1\n");
+                     
                      neighbor_ptr = call ListOfNeighbors.get(i);
                      if(neighbor_ptr->Node == myMsg->src)
                      {
