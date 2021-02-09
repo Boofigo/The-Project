@@ -47,7 +47,7 @@ implementation{
 
       start = call Random.rand32() % 100;
 
-      call Timer.startPeriodicAt(start, 6421); // 6000 if I'm using static number
+      call Timer.startPeriodicAt(1, 6000); // 6000 if I'm using static number
       dbg(NEIGHBOR_CHANNEL,"Timer started\n");
    }
 
