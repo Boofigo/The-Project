@@ -171,7 +171,7 @@ implementation{
        for(i = 0; i < packetListSize; i++)
        { //traverse thru SeenPacketList
            packetMatcher = call SeenPacketList.get(i);
-           if(packetMatcher.src == Package->src && packetMatcher.dest == Package->dest && packetMatcher.seq == Package->seq)
+           if(packetMatcher.src == Package->src && packetMatcher.dest == Package->dest)
            {
                return TRUE; //packet is found in SeenPacketList
            }
