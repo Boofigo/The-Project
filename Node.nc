@@ -121,7 +121,6 @@ implementation{
 
                   for(i = 0; i < size; i++)
                   {
-                     dbg(NEIGHBOR_CHANNEL, "Error Test 1\n");
                      neighbor_ptr = call ListOfNeighbors.get(i);
                      if(neighbor_ptr->Node == myMsg->src)
                      {
