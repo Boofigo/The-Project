@@ -24,7 +24,7 @@ implementation {
 
     //add component for seenPacketList
     components new ListC(pack, 64) as PacketListC;
-    Node.SeenPacketList -> PacketListC; //connects seenPacketList with component ListC
+    Node.seenPackets -> PacketListC; //connects seenPacketList with component ListC
 
     //add component for ListOfNeighbors
     components new ListC(neighbor*, 64) as ListOfNeighborsC;
@@ -36,7 +36,7 @@ implementation {
 
     //component for Timer
     components new TimerMilliC() as Timer1C;
-    Node.Timer1-> Timer1C;
+    Node.Timer1-> TimerC;
 
     components RandomC as Random;
     Node.Random -> Random;
