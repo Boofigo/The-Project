@@ -181,7 +181,10 @@ implementation{
    
    void pushToPacketList(pack Package)
    { 
-      // dumb idea here
+      if(call SeenPacketList.isFull())
+      { //SeenPacketList is full so lets drop the first packet ever seen
+         call SeenPacketList.popfront();
+      }
       call SeenPacketList.pushback(Package);
    }
 
