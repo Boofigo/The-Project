@@ -137,13 +137,9 @@ implementation{
                   if(!FOUND)
                   {
                      Neighbor = call PoolOfNeighbors.get(); //get New Neighbor
-                     dbg(NEIGHBOR_CHANNEL, "Error Test 1\n");
                      Neighbor->Node = myMsg->src; //add node source
-                     dbg(NEIGHBOR_CHANNEL, "Error Test 2\n");
                      Neighbor->Life = 0; //reset life
-                     dbg(NEIGHBOR_CHANNEL, "Error Test 3\n");
                      call ListOfNeighbors.pushback(Neighbor); //put into list
-                     dbg(NEIGHBOR_CHANNEL, "Error Test 4\n"); 
                   }
                   break;
                 default:
