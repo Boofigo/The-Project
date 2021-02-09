@@ -146,9 +146,9 @@ def main():
 
 
     s.runTime(20);
-    s.ping(1, 2, "Hello, World");
+    s.ping(1, 2, "Noticably long message !!!!!!!!!!!!!!!!!");
     s.runTime(10);
-    s.ping(1, 6, "Hello, World");
+    s.ping(1, 6, "Noticably long message !!!!!!!!!!!!!!!!!");
     #s.findNeighbors(1, "Neighbor Found");
     s.runTime(10);
     
