@@ -171,7 +171,7 @@ implementation{
        for(i = 0; i < packetListSize; i++)
        { //traverse thru SeenPacketList
            packetMatcher = call SeenPacketList.get(i);
-           if(packetMatcher.src == Package->src && packetMatcher.dest == Package->dest)
+           if(packetMatcher.src == Package->src && packetMatcher.dest == Package->dest && packetMatcher.seq == Package->seq)
            {
                return TRUE; //packet is found in SeenPacketList
            }
@@ -260,7 +260,7 @@ implementation{
       message = "addOn\n";
 		makePack(&Package, TOS_NODE_ID, AM_BROADCAST_ADDR, 2, PROTOCOL_PING, 1, (uint8_t*) message, (uint8_t) sizeof(message));
 
-		pushToPacketList(Package);
+		//pushToPacketList(Package);
 		call Sender.send(Package, AM_BROADCAST_ADDR);
 
    }     
