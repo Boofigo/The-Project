@@ -24,6 +24,7 @@ module Node
    uses interface List<neighbor*> as ListOfNeighbors;
    uses interface Pool<neighbor> as PoolOfNeighbors;
    uses interface Timer<TMilli> as Timer1; //uses timer to create periodic firing on neighbordiscovery and to not overload the network
+   uses interface Random as Random; //randomize timing to create firing period
 }
 
 implementation{
@@ -39,11 +40,15 @@ implementation{
 
    event void Boot.booted()
    {
+      uint32_t period;
+
       call AMControl.start();
 
       dbg(GENERAL_CHANNEL, "Booted\n");
 
-      call Timer1.startPeriodic(6000);
+      period = call Random.rand32() % 991;
+
+      call Timer1.startPeriodic(period); // 6000 if I'm using static number
       dbg(NEIGHBOR_CHANNEL,"Timer started\n");
    }
 
