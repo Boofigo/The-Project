@@ -132,13 +132,17 @@ implementation{
                         break;
                      }
                   }
-                  dbg(NEIGHBOR_CHANNEL, "Error Test 1\n");
+                  
                   //if the neighbor is not found it means it is a new neighbor to the node and thus we must add it onto the list by calling an allocation pool for memory PoolOfNeighbors
                   if(!FOUND)
                   {
+                     dbg(NEIGHBOR_CHANNEL, "Error Test 1\n");
                      Neighbor->Node = myMsg->src; //add node source
+                     dbg(NEIGHBOR_CHANNEL, "Error Test 2\n");
                      Neighbor->Life = 0; //reset life
-                     call ListOfNeighbors.pushback(Neighbor); //put into list 
+                     dbg(NEIGHBOR_CHANNEL, "Error Test 3\n");
+                     call ListOfNeighbors.pushback(Neighbor); //put into list
+                     dbg(NEIGHBOR_CHANNEL, "Error Test 4\n"); 
                   }
                   break;
                 default:
