@@ -119,7 +119,9 @@ implementation{
                   FOUND = FALSE; //IF FOUND, we switch to TRUE
                   size = call ListOfNeighbors.size();
 
-                  for(i = 0; i < size; i++){
+                  for(i = 0; i < size; i++)
+                  {
+                     dbg(NEIGHBOR_CHANNEL, "Error Test 1\n");
                      neighbor_ptr = call ListOfNeighbors.get(i);
                      if(neighbor_ptr->Node == myMsg->src)
                      {
@@ -136,7 +138,7 @@ implementation{
                      Neighbor->Node = myMsg->src; //add node source
                      Neighbor->Life = 0; //reset life
                      call ListOfNeighbors.pushback(Neighbor); //put into list 
-                    }
+                  }
                   break;
                 default:
                   break;
