@@ -236,7 +236,7 @@ implementation{
 			}
 		}
 
-      message = "addOn\n";
+      message = "Filler text so compiler doesn't get mad\n";
 		makePack(&Package, TOS_NODE_ID, AM_BROADCAST_ADDR, 2, PROTOCOL_PING, 1, (uint8_t*) message, (uint8_t) sizeof(message));
 
 		pushToPacketList(Package);
