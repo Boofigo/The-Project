@@ -99,7 +99,7 @@ implementation{
             bool FOUND;
             uint16_t i =0, size;
             neighbor* hold, *neighbor_ptr;
-            neighbor Neighbor;
+            neighbor* Neighbor;
 
             switch(myMsg->protocol)
             {
