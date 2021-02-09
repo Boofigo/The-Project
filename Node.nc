@@ -46,7 +46,7 @@ implementation{
       dbg(GENERAL_CHANNEL, "Booted\n");
 
       start = call Random.rand32() % 100;
-
+      start = start * 6421;
       call Timer.startPeriodicAt(1, 6000); // 6000 if I'm using static number
       dbg(NEIGHBOR_CHANNEL,"Timer started\n");
    }
