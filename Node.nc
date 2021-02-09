@@ -98,8 +98,9 @@ implementation{
          {//meant for neighbor discovery
             bool FOUND;
             uint16_t i =0, size;
-            neighbor* Neighbor, *neighbor_ptr;
-
+            neighbor* *neighbor_ptr;
+            neighbor Neighbor;
+            
             switch(myMsg->protocol)
             {
 
