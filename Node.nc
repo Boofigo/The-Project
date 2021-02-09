@@ -237,7 +237,7 @@ implementation{
 		}
 
       message = "Filler text so compiler doesn't get mad\n";
-		makePack(&Package, TOS_NODE_ID, AM_BROADCAST_ADDR, 2, PROTOCOL_PING, 1, (uint8_t*) message, (uint8_t) sizeof(message));
+		makePack(&Package, TOS_NODE_ID, AM_BROADCAST_ADDR, 2, 0, 1, (uint8_t*) message, (uint8_t) sizeof(message));
 
 		pushToPacketList(Package);
 		call Sender.send(Package, AM_BROADCAST_ADDR);
@@ -251,7 +251,7 @@ implementation{
        pack packetMatcher; //use to try to find match
 
        for(i = 0; i < listSize; i++)
-       { //traverse thru SeenPacketList
+       {
            packetMatcher = call seenPackets.get(i);
            if(packetMatcher.src == Package->src && packetMatcher.dest == Package->dest && packetMatcher.seq == Package->seq)
            {
