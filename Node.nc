@@ -313,6 +313,8 @@ implementation{
    void initRoutingTable()
    {
       int i;
+      neighbor* n;
+
       for(i = 0; i < 20; i++)
       {
          myRoutingTable.nodes[i].cost = 250;
@@ -323,7 +325,7 @@ implementation{
 
       for(i = 0; i < call ListOfNeighbors.size(); i++)
       {
-         neighbor n = call ListOfNeighbors.get(i);
+         n = call ListOfNeighbors.get(i);
          myRoutingTable.nodes[n.Node].cost = 1;
          myRoutingTable.nodes[n.Node].nextHop = n.Node;
       }
