@@ -326,8 +326,8 @@ implementation{
       for(i = 0; i < call ListOfNeighbors.size(); i++)
       {
          n = call ListOfNeighbors.get(i);
-         myRoutingTable.nodes[n.Node].cost = 1;
-         myRoutingTable.nodes[n.Node].nextHop = n.Node;
+         myRoutingTable.nodes[n->Node].cost = 1;
+         myRoutingTable.nodes[n->Node].nextHop = n.Node;
       }
    }
 
