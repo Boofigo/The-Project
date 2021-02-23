@@ -151,7 +151,7 @@ def main():
     s.ping(1, 6, "Hello, World");
     
     #s.findNeighbors(1, "Neighbor Found");
-    s.runTime(10);
+    s.runTime(40);
     s.neighborDMP(1);
     
 if __name__ == '__main__':
