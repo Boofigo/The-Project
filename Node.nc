@@ -7,9 +7,21 @@
 
 typedef struct neighbor
 {
-    uint16_t Node;
-    uint8_t Life;
+   uint16_t Node;
+   uint8_t Life;
 }   neighbor;
+
+
+typedef struct RoutingInfo
+{
+   uint8_t nextHop;
+   uint8_t cost;
+}   RoutingInfo;
+
+typedef struct RoutingTable
+{
+   RoutingInfo nodes[20];
+}   RoutingTable;
 
 module Node
 {
@@ -35,7 +47,9 @@ implementation{
    bool findSeenPacket(pack *Package); //function for finding a packet from a node's seen packet list
    void pushToPacketList(pack Package); //push a seen packet onto a node's seen packet list
    void neighborDiscovery(); //find a nodes neighbors
-   //void printNeighbors(); //print a nodes neighbor list
+
+   // Project 2
+   void initRoutingTable();
 
    event void Boot.booted()
    {
@@ -49,6 +63,8 @@ implementation{
       start = start * 6421;
       call Timer.startPeriodicAt(start, 6000); // 6000 if I'm using static number
       dbg(NEIGHBOR_CHANNEL,"Timer started\n");
+
+      initRoutingTable();
    }
 
    event void AMControl.startDone(error_t err)
@@ -225,10 +241,6 @@ implementation{
    {
 		pack Package;
 		char* message;
-		
-		//dbg(NEIGHBOR_CHANNEL, "Neighbor Discovery: checking node %d list for its neighbors\n", TOS_NODE_ID);
-      //makePack(&sendPackage, TOS_NODE_ID, AM_BROADCAST_ADDR, 1, 0, 0, payload, PACKET_MAX_PAYLOAD_SIZE);
-      //call Sender.send(sendPackage, AM_BROADCAST_ADDR);
 
 		if(!call ListOfNeighbors.isEmpty()) 
       {
@@ -294,6 +306,25 @@ implementation{
          call seenPackets.popfront();
       }
       call seenPackets.pushback(Package);
+   }
+
+   void initRoutingTable()
+   {
+      int i;
+      for(i = 0; i < 20; i++)
+      {
+         myRoutingTable.nodes[i].cost = 250;
+      }
+
+      myRoutingTable.nodes[TOS_NODE_ID].nextHop = TOS_NODE_ID;
+      myRoutingTable.nodes[TOS_NODE_ID].cost = 0;
+
+      for(i = 0; i < call NeighborList.size(); i++)
+      {
+         Neighbor n = call NeighborList.get(i);
+         myRoutingTable.nodes[n.Node].cost = 1;
+         myRoutingTable.nodes[n.Node].nextHop = n.Node;
+      }
    }
 
 }
