@@ -97,6 +97,9 @@ implementation{
             dbg(FLOODING_CHANNEL,"Packet from %d has arrived with Msg: %s\n", myMsg->src, myMsg->payload);
              
             pushToPacketList(*myMsg); //push to seenpacketlist
+
+            makePack(&sendPackage, myMsg->src, myMsg->dest, myMsg->TTL-1,myMsg->protocol, myMsg->seq, (uint8_t *)myMsg->payload, sizeof(myMsg->payload));
+
             call Sender.send(sendPackage, AM_BROADCAST_ADDR);     
          }
          else if(AM_BROADCAST_ADDR == myMsg->dest)
