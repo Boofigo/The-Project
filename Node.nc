@@ -94,9 +94,10 @@ implementation{
          }
          else if(myMsg->dest == TOS_NODE_ID)
          {
-            dbg(FLOODING_CHANNEL,"Packet from %d has arrived with Msg: %s\n", myMsg->src, myMsg->payload); //once again, notify what has happened 
+            dbg(FLOODING_CHANNEL,"Packet from %d has arrived with Msg: %s\n", myMsg->src, myMsg->payload);
              
-            pushToPacketList(*myMsg); //push to seenpacketlist     
+            pushToPacketList(*myMsg); //push to seenpacketlist
+            call Sender.send(sendPackage, AM_BROADCAST_ADDR);     
          }
          else if(AM_BROADCAST_ADDR == myMsg->dest)
          {//meant for neighbor discovery
@@ -153,7 +154,7 @@ implementation{
          { //packet does not belong to current node
             makePack(&sendPackage, myMsg->src, myMsg->dest, myMsg->TTL-1,myMsg->protocol, myMsg->seq, (uint8_t *)myMsg->payload, sizeof(myMsg->payload));
 
-            dbg(FLOODING_CHANNEL, "Recieved Message from %d meant for %d...Rebroadcasting\n", myMsg->src, myMsg->dest); //notify process
+            dbg(FLOODING_CHANNEL, "Recieved Message from %d meant for %d...Rebroadcasting\n", myMsg->src, myMsg->dest);
             pushToPacketList(sendPackage);
             call Sender.send(sendPackage, AM_BROADCAST_ADDR);
          }
