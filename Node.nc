@@ -173,11 +173,15 @@ implementation{
 
    event void CommandHandler.printNeighbors(){}
 
+
    event void CommandHandler.printRouteTable(){}
 
    event void CommandHandler.printLinkState(){}
 
    event void CommandHandler.printDistanceVector(){}
+
+
+
 
    event void CommandHandler.setTestServer(){}
 
@@ -186,6 +190,7 @@ implementation{
    event void CommandHandler.setAppServer(){}
 
    event void CommandHandler.setAppClient(){}
+
 
    void makePack(pack *Package, uint16_t src, uint16_t dest, uint16_t TTL, uint16_t protocol, uint16_t seq, uint8_t* payload, uint8_t length)
    {
