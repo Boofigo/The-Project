@@ -321,9 +321,9 @@ implementation{
       myRoutingTable.nodes[TOS_NODE_ID].nextHop = TOS_NODE_ID;
       myRoutingTable.nodes[TOS_NODE_ID].cost = 0;
 
-      for(i = 0; i < call NeighborList.size(); i++)
+      for(i = 0; i < call ListOfNeighbors.size(); i++)
       {
-         Neighbor n = call NeighborList.get(i);
+         neighbor n = call ListOfNeighbors.get(i);
          myRoutingTable.nodes[n.Node].cost = 1;
          myRoutingTable.nodes[n.Node].nextHop = n.Node;
       }
