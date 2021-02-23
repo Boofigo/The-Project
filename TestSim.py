@@ -150,7 +150,7 @@ def main():
     s.runTime(10);
     s.ping(1, 6, "Hello, World");
     s.runTime(40);
-    s.neighborDMP(5);
+    s.neighborDMP(19);
     #s.findNeighbors(1, "Neighbor Found");
     s.runTime(10);
 
