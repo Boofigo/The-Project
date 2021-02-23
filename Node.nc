@@ -177,7 +177,7 @@ implementation{
       uint16_t i = 0;
       neighbor* Neighbor, *neighbor_ptr;
 
-      dbg(GENERAL_CHANNEL, "Checking neighbors of Node %d \n", TOS_NODE_ID);
+      dbg(GENERAL_CHANNEL, "Checking Neighbors of Node %d \n", TOS_NODE_ID);
 
       for(i = 0; i < size; i++) 
       {
@@ -233,7 +233,7 @@ implementation{
 		   uint16_t life = 0;
 		   neighbor* myNeighbor;
 		   neighbor* tempNeighbor;
-         
+
          dbg(NEIGHBOR_CHANNEL, "Neighbor Discovery: checking node %d list for its neighbors\n", TOS_NODE_ID);
 
 		   //Increase Life of the ListOfNeighbors if not seen, every 5 pings a neighbor isnt seen, we are going to remove it
