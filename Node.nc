@@ -112,7 +112,7 @@ implementation{
          }
          else if(myMsg->dest == TOS_NODE_ID)
          {
-            // dbg(FLOODING_CHANNEL,"Packet from %d has arrived with Msg: %s\n", myMsg->src, myMsg->payload);
+            dbg(FLOODING_CHANNEL,"Packet from %d has arrived with Msg: %s\n", myMsg->src, myMsg->payload);
              
             pushToPacketList(*myMsg); //push to seenpacketlist
 
