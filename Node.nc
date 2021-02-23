@@ -171,7 +171,22 @@ implementation{
       call Sender.send(sendPackage, AM_BROADCAST_ADDR);
    }
 
-   event void CommandHandler.printNeighbors(){}
+   event void CommandHandler.printNeighbors()
+   {
+      uint16_t size = call ListOfNeighbors.size();
+      uint16_t i = 0;
+      neighbor* Neighbor, *neighbor_ptr;
+
+      dbg(GENERAL_CHANNEL, "Checking neighbors of Node %d \n", TOS_NODE_ID);
+
+      for(i = 0; i < size; i++) 
+      {
+         neighbor_ptr = call ListOfNeighbors.get(i);
+
+         dbg(GENERAL_CHANNEL, "Neighbor Node: %d \n", neighbor_ptr->Node);
+		 }
+
+   }
 
 
    event void CommandHandler.printRouteTable(){}
@@ -217,8 +232,10 @@ implementation{
 			uint16_t i = 0;
 		   uint16_t life = 0;
 		   neighbor* myNeighbor;
-		   neighbor* tempNeighbor;
+		   neighbor* tempNeighbo
+         r;
          dbg(NEIGHBOR_CHANNEL, "Neighbor Discovery: checking node %d list for its neighbors\n", TOS_NODE_ID);
+
 		   //Increase Life of the ListOfNeighbors if not seen, every 5 pings a neighbor isnt seen, we are going to remove it
 		   for(i = 0; i < size; i++) 
          {
