@@ -367,15 +367,15 @@ implementation{
       {
           uint8_t n = neighborLSP.neighbors[i];
 
-          if(myRoutingTable.dests[n].cost > 1 + myRoutingTable.dests[neighborID].cost)
+          if(myRoutingTable.nodes[n].cost > 1 + myRoutingTable.nodes[neighborID].cost)
           {
-            myRoutingTable.dests[n].cost = 1 + myRoutingTable.dests[neighborID].cost;
-            myRoutingTable.dests[n].nextHop = myRoutingTable.dests[neighborID].nextHop;
+            myRoutingTable.nodes[n].cost = 1 + myRoutingTable.nodes[neighborID].cost;
+            myRoutingTable.nodes[n].nextHop = myRoutingTable.nodes[neighborID].nextHop;
           }
-          else if(myRoutingTable.dests[n].cost + 1 < myRoutingTable.dests[neighborID].cost)
+          else if(myRoutingTable.nodes[n].cost + 1 < myRoutingTable.nodes[neighborID].cost)
           {
-            myRoutingTable.dests[neighborID].cost = 1 + myRoutingTable.dests[n].cost;
-            myRoutingTable.dests[neighborID].nextHop = myRoutingTable.dests[n].nextHop;
+            myRoutingTable.nodes[neighborID].cost = 1 + myRoutingTable.nodes[n].cost;
+            myRoutingTable.nodes[neighborID].nextHop = myRoutingTable.nodes[n].nextHop;
           }
       }
       return;
