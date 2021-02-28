@@ -398,7 +398,7 @@ implementation{
          sendLSP.neighbors[i] = -1;
       }
 
-      makePack(&sendPack, TOS_NODE_ID, AM_BROADCAST_ADDR, ttl, PROTOCOL_LINKSTATE, seqNum, (void*) sendLSP.neighbors, PACKET_MAX_PAYLOAD_SIZE);
+      makePack(&sendPack, TOS_NODE_ID, AM_BROADCAST_ADDR, ttl, 4, 0, (void*) sendLSP.neighbors, PACKET_MAX_PAYLOAD_SIZE);
       call Sender.send(sendPack, AM_BROADCAST_ADDR);
    }
 
