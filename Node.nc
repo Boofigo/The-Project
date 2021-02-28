@@ -23,6 +23,18 @@ typedef struct RoutingTable
    RoutingInfo nodes[20];
 }   RoutingTable;
 
+typedef LSpack
+{
+	nx_uint16_t dest;
+	nx_uint16_t src;
+	nx_uint16_t seq;
+	nx_uint8_t TTL;
+	nx_uint8_t protocol;
+   nx_uint8_t neighbors[PACKET_MAX_PAYLOAD_SIZE];
+}   LSPack;
+
+
+
 module Node
 {
    uses interface Boot;
@@ -52,6 +64,9 @@ implementation{
 
    // Project 2
    void initRoutingTable();
+   void sendLSPack(uint8_t TTL);
+   void updateRoutingTable(LSPack nieghborLSP, uint8_t neighborID);
+
 
    event void Boot.booted()
    {
@@ -211,7 +226,19 @@ implementation{
    }
 
 
-   event void CommandHandler.printRouteTable(){}
+   event void CommandHandler.printRouteTable()
+   {
+      int i;
+
+      dbg(ROUTING_CHANNEL, "Routing Table: Node %s\nDest\tNextHop\tCost\n", TOS_NODE_ID);
+      
+      for(i = 0; i < 20; i++)
+      {
+         dbg(ROUTING_CHANNEL, "%s\t%s\t%s\n", i, myRoutingTable.dests[i].nextHop, myRoutingTable.dests[i].cost);
+      }
+
+      dbg(ROUTING_CHANNEL, "\n");
+   }
 
    event void CommandHandler.printLinkState(){}
 
@@ -329,6 +356,48 @@ implementation{
          myRoutingTable.nodes[n->Node].cost = 1;
          myRoutingTable.nodes[n->Node].nextHop = n->Node;
       }
+   }
+
+
+   void updateRoutingTable(LSPack neighborLSP, uint8_t neighborID)
+   {
+      int i;
+
+      for(i = 0; neighborLSP.neighbors[i] >= 0 ; i++) //Djikstra's
+      {
+          uint8_t n = neighborLSP.neighbors[i];
+
+          if(myRoutingTable.dests[n].cost > 1 + myRoutingTable.dests[neighborID].cost)
+          {
+            myRoutingTable.dests[n].cost = 1 + myRoutingTable.dests[neighborID].cost;
+            myRoutingTable.dests[n].nextHop = myRoutingTable.dests[neighborID].nextHop;
+          }
+          else if(myRoutingTable.dests[n].cost + 1 < myRoutingTable.dests[neighborID].cost)
+          {
+            myRoutingTable.dests[neighborID].cost = 1 + myRoutingTable.dests[n].cost;
+            myRoutingTable.dests[neighborID].nextHop = myRoutingTable.dests[n].nextHop;
+          }
+      }
+      return;
+   }
+
+    void sendLSPack(uint8_t ttl)
+   {
+      int i;
+      int numOfNeighbors = call NeighborList.size();
+
+      for(i = 0; i < numOfNeighbors; i++)
+      {
+         Neighbor n = call NeighborList.get(i);
+         sendLSP.neighbors[i] = n.Node;
+      }
+      for(i = numOfNeighbors; i < PACKET_MAX_PAYLOAD_SIZE; i++)
+      {
+         sendLSP.neighbors[i] = -1;
+      }
+
+      makePack(&sendPack, TOS_NODE_ID, AM_BROADCAST_ADDR, ttl, PROTOCOL_LINKSTATE, seqNum, (void*) sendLSP.neighbors, PACKET_MAX_PAYLOAD_SIZE);
+      call Sender.send(sendPack, AM_BROADCAST_ADDR);
    }
 
 }
