@@ -55,6 +55,8 @@ implementation{
    pack sendPackage;
    RoutingTable myRoutingTable;
 
+   LSPack sendLSP;
+   LSPack sendLSP
 
    // Prototypes
    void makePack(pack *Package, uint16_t src, uint16_t dest, uint16_t TTL, uint16_t Protocol, uint16_t seq, uint8_t *payload, uint8_t length);
@@ -65,7 +67,8 @@ implementation{
    // Project 2
    void initRoutingTable();
    void sendLSPack(uint8_t TTL);
-   void updateRoutingTable(LSPack nieghborLSP, uint8_t neighborID);
+
+   void updateRoutingTable(LSPack neighborLSP, uint8_t neighborID);
 
 
    event void Boot.booted()
