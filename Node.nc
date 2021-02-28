@@ -384,11 +384,11 @@ implementation{
     void sendLSPack(uint8_t ttl)
    {
       int i;
-      int numOfNeighbors = call NeighborList.size();
+      int numOfNeighbors = call ListOfNeighbors.size();
 
       for(i = 0; i < numOfNeighbors; i++)
       {
-         Neighbor n = call NeighborList.get(i);
+         neighbor n = call ListOfNeighbors.get(i);
          sendLSP.neighbors[i] = n.Node;
       }
       for(i = numOfNeighbors; i < PACKET_MAX_PAYLOAD_SIZE; i++)
