@@ -66,7 +66,6 @@ implementation{
    // Project 2
    void initRoutingTable();
    void sendLSPack(uint8_t TTL);
-
    void updateRoutingTable(LSPack neighborLSP, uint8_t neighborID);
 
 
@@ -383,7 +382,7 @@ implementation{
       return;
    }
 
-    void sendLSPack(uint8_t ttl)
+   void sendLSPack(uint8_t ttl)
    {
       int i;
       int numOfNeighbors = call ListOfNeighbors.size();
@@ -391,8 +390,8 @@ implementation{
 
       for(i = 0; i < numOfNeighbors; i++)
       {
-         n = call ListOfNeighbors.get(i);
-         sendLSP.neighbors[i] = n.Node;
+         //n = call ListOfNeighbors.get(i);
+         //sendLSP.neighbors[i] = n.Node;
       }
       for(i = numOfNeighbors; i < PACKET_MAX_PAYLOAD_SIZE; i++)
       {
