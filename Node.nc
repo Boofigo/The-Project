@@ -30,7 +30,7 @@ typedef struct Spack
 	nx_uint16_t seq;
 	nx_uint8_t TTL;
 	nx_uint8_t protocol;
-   nx_uint8_t neighbors[PACKET_MAX_PAYLOAD_SIZE];
+   nx_uint16_t neighbors[PACKET_MAX_PAYLOAD_SIZE];
 }   LSPack;
 
 
