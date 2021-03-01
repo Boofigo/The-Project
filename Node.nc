@@ -303,6 +303,9 @@ implementation{
                call PoolOfNeighbors.put(myNeighbor);
 				   i--;
 					size--;
+
+               linkLost(myNeighbor->Node)
+
 				}
 			}
 		}
@@ -344,27 +347,32 @@ implementation{
    void initRoutingTable()
    {
       int i;
-      neighbor* n;
 
       for(i = 1; i < 20; i++)
       {
-         myRoutingTable.nodes[i].nextHop = 200;
-         myRoutingTable.nodes[i].cost = 2;
+         myRoutingTable.nodes[i].nextHop = 250;
+         myRoutingTable.nodes[i].cost = 250;
       }
 
       myRoutingTable.nodes[TOS_NODE_ID].nextHop = TOS_NODE_ID;
       myRoutingTable.nodes[TOS_NODE_ID].cost = 0;
 
-      for(i = 0; i < call ListOfNeighbors.size(); i++)
-      {
-         n = call ListOfNeighbors.get(i);
-         myRoutingTable.nodes[n->Node].cost = 1;
-         myRoutingTable.nodes[n->Node].nextHop = n->Node;
-      }
    }
 
 
+   void linkLost(uint16_t Node)
+   {
+      int i;
 
+      for(i = 1; i < 20; i++)
+      {
+         if(myRoutingTable.nodes[i].nextHop == Node)
+         {
+            myRoutingTable.nodes[i].nextHop = 250;
+            myRoutingTable.nodes[i].cost = 250;
+         }
+      }
+   }
 
 
 
