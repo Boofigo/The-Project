@@ -304,7 +304,7 @@ implementation{
 				   i--;
 					size--;
 
-               linkLost(myNeighbor->Node)
+               linkLost(myNeighbor->Node);
 
 				}
 			}
