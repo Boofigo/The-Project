@@ -233,7 +233,7 @@ implementation{
 
       dbg(ROUTING_CHANNEL, "Routing Table: Node %s\nDest\tNextHop\tCost\n", TOS_NODE_ID);
       
-      for(i = 0; i < 20; i++)
+      for(i = 1; i < 20; i++)
       {
          dbg(ROUTING_CHANNEL, "%s\t%s\t%s\n", i, myRoutingTable.nodes[i].nextHop, myRoutingTable.nodes[i].cost);
       }
@@ -343,7 +343,7 @@ implementation{
       int i;
       //neighbor* n;
 
-      for(i = 0; i < 20; i++)
+      for(i = 1; i < 20; i++)
       {
          myRoutingTable.nodes[i].nextHop = -1;
          myRoutingTable.nodes[i].cost = 2;
