@@ -23,7 +23,7 @@ typedef struct RoutingTable
    RoutingInfo nodes[20];
 }   RoutingTable;
 
-typedef struct LSpack
+typedef struct LSPack
 {
 	nx_uint16_t dest;
 	nx_uint16_t src;
