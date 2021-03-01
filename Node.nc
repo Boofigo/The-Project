@@ -231,12 +231,12 @@ implementation{
    {
       int i;
 
-      dbg(ROUTING_CHANNEL, "Routing Table: Node \n");
+      dbg(ROUTING_CHANNEL, "Routing Table: Node %d\n", TOS_NODE_ID);
       dbg(ROUTING_CHANNEL, "Dest\tNext Hop\tCost\n");
       
       for(i = 1; i < 20; i++)
       {
-         dbg(ROUTING_CHANNEL, "%s\t%s\t%s\n", i, myRoutingTable.nodes[i].nextHop, myRoutingTable.nodes[i].cost);
+         dbg(ROUTING_CHANNEL, "%d\t%d\t%d\n", i, myRoutingTable.nodes[i].nextHop, myRoutingTable.nodes[i].cost);
       }
 
       //dbg(ROUTING_CHANNEL, "\n");
