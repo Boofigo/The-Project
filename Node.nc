@@ -341,7 +341,7 @@ implementation{
    void initRoutingTable()
    {
       int i;
-      neighbor* n;
+      //neighbor* n;
 
       for(i = 0; i < 20; i++)
       {
@@ -352,12 +352,12 @@ implementation{
       myRoutingTable.nodes[TOS_NODE_ID].nextHop = TOS_NODE_ID;
       myRoutingTable.nodes[TOS_NODE_ID].cost = 0;
 
-      for(i = 0; i < call ListOfNeighbors.size(); i++)
-      {
-         n = call ListOfNeighbors.get(i);
-         myRoutingTable.nodes[n->Node].cost = 1;
-         myRoutingTable.nodes[n->Node].nextHop = n->Node;
-      }
+      //for(i = 0; i < call ListOfNeighbors.size(); i++)
+      //{
+      //   n = call ListOfNeighbors.get(i);
+      //   myRoutingTable.nodes[n->Node].cost = 1;
+      //   myRoutingTable.nodes[n->Node].nextHop = n->Node;
+     // }
    }
 
 
