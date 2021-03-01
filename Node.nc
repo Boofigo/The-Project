@@ -387,10 +387,11 @@ implementation{
    {
       int i;
       int numOfNeighbors = call ListOfNeighbors.size();
+      neighbor* n;
 
       for(i = 0; i < numOfNeighbors; i++)
       {
-         neighbor* n = call ListOfNeighbors.get(i);
+         n = call ListOfNeighbors.get(i);
          sendLSP.neighbors[i] = n.Node;
       }
       for(i = numOfNeighbors; i < PACKET_MAX_PAYLOAD_SIZE; i++)
