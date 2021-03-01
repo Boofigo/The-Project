@@ -232,6 +232,7 @@ implementation{
       int i;
 
       dbg(ROUTING_CHANNEL, "Routing Table: Node %s\nDest\tNextHop\tCost\n", TOS_NODE_ID);
+      dbg(ROUTING_CHANNEL, "Dest\tNextHop\tCost\n");
       
       for(i = 1; i < 20; i++)
       {
