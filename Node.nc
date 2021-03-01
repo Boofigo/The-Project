@@ -402,7 +402,7 @@ implementation{
    {
       int i;
       int numOfNeighbors = call ListOfNeighbors.size();
-      neighbor tempNeighbor;
+      neighbor* tempNeighbor;
 
       for(i = 0; i < numOfNeighbors; i++)
       {
