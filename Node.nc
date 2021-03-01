@@ -231,8 +231,8 @@ implementation{
    {
       int i;
 
-      dbg(ROUTING_CHANNEL, "Routing Table: Node \nDest\tNextHop\tCost\n");
-      //dbg(ROUTING_CHANNEL, "Dest\tNextHop\tCost\n");
+      dbg(ROUTING_CHANNEL, "Routing Table: Node \n");
+      dbg(ROUTING_CHANNEL, "Dest\tNext Hop\tCost\n");
       
       for(i = 1; i < 20; i++)
       {
