@@ -67,7 +67,7 @@ implementation{
    void initRoutingTable();
    void sendLSPack(uint8_t TTL);
    void updateRoutingTable(LSPack neighborLSP, uint8_t neighborID);
-
+   linkLost(uint16_t Node);
 
    event void Boot.booted()
    {
