@@ -231,15 +231,15 @@ implementation{
    {
       int i;
 
-      dbg(ROUTING_CHANNEL, "Routing Table: Node %s\nDest\tNextHop\tCost\n", TOS_NODE_ID);
-      dbg(ROUTING_CHANNEL, "Dest\tNextHop\tCost\n");
+      //dbg(ROUTING_CHANNEL, "Routing Table: Node %s\nDest\tNextHop\tCost\n", TOS_NODE_ID);
+      //dbg(ROUTING_CHANNEL, "Dest\tNextHop\tCost\n");
       
       for(i = 1; i < 20; i++)
       {
          //dbg(ROUTING_CHANNEL, "%s\t%s\t%s\n", i, myRoutingTable.nodes[i].nextHop, myRoutingTable.nodes[i].cost);
       }
 
-      dbg(ROUTING_CHANNEL, "\n");
+      //dbg(ROUTING_CHANNEL, "\n");
    }
 
    event void CommandHandler.printLinkState(){}
