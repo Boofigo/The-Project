@@ -181,6 +181,8 @@ implementation{
                      Neighbor->Node = myMsg->src; //add node source
                      Neighbor->Life = 0; //reset life
                      call ListOfNeighbors.pushback(Neighbor); //put into list
+                     myRoutingTable.nodes[myMsg->src].nextHop = myMsg->src; 
+                     myRoutingTable.nodes[myMsg->src].cost = 1;
                   }
                   break;
                 default:
@@ -360,6 +362,12 @@ implementation{
          myRoutingTable.nodes[n->Node].nextHop = n->Node;
       }
    }
+
+
+
+
+
+
 
 
    void updateRoutingTable(LSPack neighborLSP, uint8_t neighborID)
