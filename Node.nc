@@ -239,7 +239,7 @@ implementation{
          dbg(ROUTING_CHANNEL, "%d\t%d\t%d\n", i, myRoutingTable.nodes[i].nextHop, myRoutingTable.nodes[i].cost);
       }
 
-      //dbg(ROUTING_CHANNEL, "\n");
+      dbg(ROUTING_CHANNEL, "\n");
    }
 
    event void CommandHandler.printLinkState(){}
