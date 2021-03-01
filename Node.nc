@@ -342,7 +342,7 @@ implementation{
    void initRoutingTable()
    {
       int i;
-      //neighbor* n;
+      neighbor* n;
 
       for(i = 1; i < 20; i++)
       {
