@@ -345,7 +345,8 @@ implementation{
 
       for(i = 0; i < 20; i++)
       {
-         myRoutingTable.nodes[i].cost = 250;
+         myRoutingTable.nodes[i].nextHop = -1;
+         myRoutingTable.nodes[i].cost = 100;
       }
 
       myRoutingTable.nodes[TOS_NODE_ID].nextHop = TOS_NODE_ID;
