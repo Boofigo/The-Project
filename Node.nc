@@ -376,8 +376,6 @@ implementation{
 
 
 
-
-
    void updateRoutingTable(LSPack neighborLSP, uint8_t neighborID)
    {
       int i;
@@ -386,9 +384,9 @@ implementation{
       {
           uint8_t n = neighborLSP.neighbors[i];
 
-          if(myRoutingTable.nodes[n].cost > 1 + myRoutingTable.nodes[neighborID].cost)
+          if(myRoutingTable.nodes[n].cost > myRoutingTable.nodes[neighborID].cost + 1)
           {
-            myRoutingTable.nodes[n].cost = 1 + myRoutingTable.nodes[neighborID].cost;
+            myRoutingTable.nodes[n].cost = myRoutingTable.nodes[neighborID].cost + 1;
             myRoutingTable.nodes[n].nextHop = myRoutingTable.nodes[neighborID].nextHop;
           }
           else if(myRoutingTable.nodes[n].cost + 1 < myRoutingTable.nodes[neighborID].cost)
