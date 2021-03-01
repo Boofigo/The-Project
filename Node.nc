@@ -402,11 +402,11 @@ implementation{
    {
       int i;
       int numOfNeighbors = call ListOfNeighbors.size();
-      neighbor* n;
+      neighbor* tempNeighbor;
 
       for(i = 0; i < numOfNeighbors; i++)
       {
-         //n = call ListOfNeighbors.get(i);
+         tempNeighbor = call ListOfNeighbors.get(i);
          //sendLSP.neighbors[i] = n.Node;
       }
       for(i = numOfNeighbors; i < PACKET_MAX_PAYLOAD_SIZE; i++)
