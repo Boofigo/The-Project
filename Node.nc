@@ -407,7 +407,7 @@ implementation{
       for(i = 0; i < numOfNeighbors; i++)
       {
          tempNeighbor = call ListOfNeighbors.get(i);
-         sendLSP.neighbors[i] = tempNeighbor.Node;
+         sendLSP.neighbors[i] = tempNeighbor->Node;
       }
       for(i = numOfNeighbors; i < PACKET_MAX_PAYLOAD_SIZE; i++)
       {
