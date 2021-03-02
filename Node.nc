@@ -375,10 +375,14 @@ implementation{
 
       for(i = 1; neighborLSP.neighbors[i] != 250 ; i++)
       {
-         if(myRoutingTable.nodes[i].cost > neighborLSP.neighbors[i] + 1 && neighborLSP.neighbors[i] != 0)
+         if(neighborLSP.neighbors[i] == 0)
+         {
+            
+         }
+         else if(myRoutingTable.nodes[i].cost > neighborLSP.neighbors[i] + 1)
          {
             myRoutingTable.nodes[i].cost = neighborLSP.neighbors[i] + 1;
-            myRoutingTable.nodes[i].nextHop = sendLSP.neighbors[0];
+            myRoutingTable.nodes[i].nextHop = neighborID;
          }
       }
       return;
