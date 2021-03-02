@@ -136,7 +136,7 @@ class TestSim:
 def main():
     s = TestSim();
     s.runTime(10);
-    s.loadTopo("long_line.topo");
+    s.loadTopo("example.topo");
     s.loadNoise("no_noise.txt");
     s.bootAll();
     s.addChannel(s.COMMAND_CHANNEL);
@@ -150,7 +150,7 @@ def main():
     #s.runTime(10);
     s.ping(1, 6, "Hello, World");
     s.runTime(10);
-    s.routeDMP(4);
+    s.routeDMP(1);
     #s.neighborDMP(9);
     #s.findNeighbors(1, "Neighbor Found");
     s.runTime(10);
