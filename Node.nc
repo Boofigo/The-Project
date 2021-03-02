@@ -187,13 +187,13 @@ implementation{
                   break;
             }
          }
-         else
-         { //packet does not belong to current node
+         else //packet does not belong to current node
+         { 
             makePack(&sendPackage, myMsg->src, myMsg->dest, myMsg->TTL-1,myMsg->protocol, myMsg->seq, (uint8_t *)myMsg->payload, sizeof(myMsg->payload));
 
             dbg(FLOODING_CHANNEL, "Recieved Message from %d meant for %d...Rebroadcasting\n", myMsg->src, myMsg->dest);
             pushToPacketList(sendPackage);
-            call Sender.send(sendPackage, AM_BROADCAST_ADDR);
+            call Sender.send(sendPackage, myRoutingTable.nodes[myMsg->dest].nextHop);
          }
 
          return msg;
