@@ -146,11 +146,10 @@ def main():
     s.addChannel(s.ROUTING_CHANNEL);
 
     s.runTime(200); #Needs to run for about 200 to allow routing table to be completed
-    #s.ping(1, 2, "Hello, World");
-    #s.runTime(10);
     s.ping(1, 9, "Hello, World");
     s.runTime(10);
     s.routeDMP(1);
+    s.runTime(10);
     #s.neighborDMP(9);
     s.runTime(10);
 
