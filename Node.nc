@@ -373,7 +373,7 @@ implementation{
    {
       int i;
 
-      for(i = 1; neighborLSP.neighbors[i] != 250 ; i++)
+      for(i = 1; neighborLSP.neighbors[i] != 250 ; i++ || neighborID == TOS_NODE_ID)
       {
          if(neighborLSP.neighbors[i] == 0)
          {
