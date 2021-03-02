@@ -346,8 +346,8 @@ implementation{
 
       for(i = 1; i < 20; i++)
       {
-         myRoutingTable.nodes[i].nextHop = 100;
-         myRoutingTable.nodes[i].cost = 100;
+         myRoutingTable.nodes[i].nextHop = 250;
+         myRoutingTable.nodes[i].cost = 250;
       }
 
       myRoutingTable.nodes[TOS_NODE_ID].nextHop = TOS_NODE_ID;
@@ -373,9 +373,9 @@ implementation{
    {
       int i;
 
-      for(i = 1; neighborLSP.neighbors[i] != 250 ; i++ || neighborID == TOS_NODE_ID)
+      for(i = 1; i < 20 ; i++)
       {
-         if(neighborLSP.neighbors[i] == 0)
+         if(neighborLSP.neighbors[i] == 0 || neighborID == TOS_NODE_ID)
          {
             
          }
@@ -395,7 +395,7 @@ implementation{
 
       for(i = 1; i < 20; i++)
       {
-         if(myRoutingTable.nodes[i].nextHop == 100)
+         if(myRoutingTable.nodes[i].nextHop == 250)
          {
             sendLSP.neighbors[i] = 0;
          }
@@ -406,7 +406,7 @@ implementation{
       }
       for(i = 20; i < PACKET_MAX_PAYLOAD_SIZE; i++)
       {
-         sendLSP.neighbors[i] = 250;
+         sendLSP.neighbors[i] = 80;
       }
 
       makePack(&sendPackage, TOS_NODE_ID, AM_BROADCAST_ADDR, 1, 2, 0, (void*) sendLSP.neighbors, PACKET_MAX_PAYLOAD_SIZE);
