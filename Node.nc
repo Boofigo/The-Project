@@ -28,7 +28,6 @@ typedef struct LSPack
 }   LSPack;
 
 
-
 module Node
 {
    uses interface Boot;
@@ -127,7 +126,6 @@ implementation{
             pushToPacketList(*myMsg); //push to seenpacketlist
 
             // makePack(&sendPackage, myMsg->src, myMsg->dest, myMsg->TTL-1,myMsg->protocol, myMsg->seq, (uint8_t *)myMsg->payload, sizeof(myMsg->payload));
-
             // call Sender.send(sendPackage, AM_BROADCAST_ADDR);     
          }
          else if(AM_BROADCAST_ADDR == myMsg->dest)
@@ -179,6 +177,9 @@ implementation{
                      myRoutingTable.nodes[myMsg->src].cost = 1;
                   }
                   break;
+                case 2: // Send Linkstatepacket
+                     LSPack* lspNeighbors = (LSPack*) messagePL->payload;
+                     updateRoutingTable(*lspNeighbors, messagePL->src);
                 default:
                   break;
             }
@@ -241,8 +242,6 @@ implementation{
    event void CommandHandler.printLinkState(){}
 
    event void CommandHandler.printDistanceVector(){}
-
-
 
 
    event void CommandHandler.setTestServer(){}
@@ -353,7 +352,6 @@ implementation{
 
    }
 
-
    void linkLost(uint16_t Node)
    {
       int i;
@@ -363,7 +361,7 @@ implementation{
          if(myRoutingTable.nodes[i].nextHop == Node)
          {
             myRoutingTable.nodes[i].nextHop = 250;
-            myRoutingTable.nodes[i].cost = -1;
+            myRoutingTable.nodes[i].cost = 250;
          }
       }
    }
@@ -404,7 +402,7 @@ implementation{
          sendLSP.neighbors[i] = 250;
       }
 
-      makePack(&sendPackage, TOS_NODE_ID, AM_BROADCAST_ADDR, 1, 4, 0, (void*) sendLSP.neighbors, PACKET_MAX_PAYLOAD_SIZE);
+      makePack(&sendPackage, TOS_NODE_ID, AM_BROADCAST_ADDR, 1, 2, 0, (void*) sendLSP.neighbors, PACKET_MAX_PAYLOAD_SIZE);
       call Sender.send(sendPackage, AM_BROADCAST_ADDR);
    }
 
