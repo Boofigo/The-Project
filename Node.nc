@@ -236,7 +236,7 @@ implementation{
       
       for(i = 1; i < 20; i++)
       {
-         dbg(ROUTING_CHANNEL, "%d\t%d\t%d\n", i, myRoutingTable.nodes[i].nextHop, myRoutingTable.nodes[i].cost);
+         dbg(ROUTING_CHANNEL, "%d\t \t %d\t \t%d\n", i, myRoutingTable.nodes[i].nextHop, myRoutingTable.nodes[i].cost);
       }
 
       dbg(ROUTING_CHANNEL, "\n");
