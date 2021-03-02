@@ -96,7 +96,7 @@ implementation{
    event void Timer.fired()
    {
       neighborDiscovery();
-      //sendLSPack();
+      sendLSPack();
    }
 
    //Message recieved
@@ -373,7 +373,7 @@ implementation{
    {
       int i;
 
-      for(i = 1; neighborLSP.neighbors[i] != 250 ; i++) //Djikstra's
+      for(i = 1; neighborLSP.neighbors[i] != 250 ; i++)
       {
          if(myRoutingTable.nodes[i].cost > neighborLSP.neighbors[i] + 1 && neighborLSP.neighbors[i] != 0)
          {
