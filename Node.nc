@@ -96,6 +96,7 @@ implementation{
    event void Timer.fired()
    {
       neighborDiscovery();
+      sendLSPack();
    }
 
    //Message recieved
@@ -146,7 +147,7 @@ implementation{
                   call Sender.send(sendPackage, myMsg->src); //send back to sender with PINGREPLY Protocol
                   break;
                 
-                case 1: // PROTOCOL_PINGREPLY
+               case 1: // PROTOCOL_PINGREPLY
                   //we got a ping reply from a neighbor so we need to update that neighbors life to 0 again because we have seen it again
                   dbg(NEIGHBOR_CHANNEL, "Neighbor %d has replied\n", myMsg->src);
                   Found = FALSE; //IF FOUND, we switch to TRUE
@@ -177,10 +178,11 @@ implementation{
                      myRoutingTable.nodes[myMsg->src].cost = 1;
                   }
                   break;
-                case 2: // Send Linkstatepacket
+               case 2: // Send Linkstatepacket
                      LSPack* lspNeighbors = (LSPack*) messagePL->payload;
                      updateRoutingTable(*lspNeighbors, messagePL->src);
-                default:
+                     break;
+               default:
                   break;
             }
          }
