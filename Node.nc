@@ -368,8 +368,6 @@ implementation{
       }
    }
 
-
-
    void updateRoutingTable(LSPack neighborLSP, uint8_t neighborID)
    {
       int i;
@@ -385,7 +383,7 @@ implementation{
       return;
    }
 
-   void sendLSPack(uint8_t ttl)
+   void sendLSPack()
    {
       int i;
       sendLSP.neighbors[0] = TOS_NODE_ID;
