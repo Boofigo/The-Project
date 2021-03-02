@@ -96,7 +96,7 @@ implementation{
    event void Timer.fired()
    {
       neighborDiscovery();
-      sendLSPack();
+      //sendLSPack();
    }
 
    //Message recieved
@@ -179,7 +179,7 @@ implementation{
                   }
                   break;
                case 2: // Send Linkstatepacket
-                     LSPack* lspNeighbors = (LSPack*) messagePL->payload;
+                     LSPack* lspNeighbors = (LSPack*) myMsg->payload;
                      updateRoutingTable(*lspNeighbors, messagePL->src);
                      break;
                default:
