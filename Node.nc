@@ -346,8 +346,8 @@ implementation{
 
       for(i = 1; i < 20; i++)
       {
-         myRoutingTable.nodes[i].nextHop = 250;
-         myRoutingTable.nodes[i].cost = 250;
+         myRoutingTable.nodes[i].nextHop = 100;
+         myRoutingTable.nodes[i].cost = 100;
       }
 
       myRoutingTable.nodes[TOS_NODE_ID].nextHop = TOS_NODE_ID;
@@ -395,7 +395,7 @@ implementation{
 
       for(i = 1; i < 20; i++)
       {
-         if(myRoutingTable.nodes[i].nextHop == 250)
+         if(myRoutingTable.nodes[i].nextHop == 100)
          {
             sendLSP.neighbors[i] = 0;
          }
