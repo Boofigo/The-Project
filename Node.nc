@@ -179,7 +179,8 @@ implementation{
                   }
                   break;
                case 2: // Send Linkstatepacket
-                     LSPack* lspNeighbors = (LSPack*) myMsg->payload;
+                     LSPack* lspNeighbors;
+                     lspNeighbors = myMsg->payload;
                      updateRoutingTable(*lspNeighbors, myMsg->src);
                      break;
                default:
