@@ -180,7 +180,7 @@ implementation{
                   break;
                case 2: // Send Linkstatepacket
                      LSPack* lspNeighbors = (LSPack*) myMsg->payload;
-                     updateRoutingTable(*lspNeighbors, messagePL->src);
+                     updateRoutingTable(*lspNeighbors, myMsg->src);
                      break;
                default:
                   break;
