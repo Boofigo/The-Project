@@ -129,11 +129,12 @@ implementation{
             // makePack(&sendPackage, myMsg->src, myMsg->dest, myMsg->TTL-1,myMsg->protocol, myMsg->seq, (uint8_t *)myMsg->payload, sizeof(myMsg->payload));
             // call Sender.send(sendPackage, AM_BROADCAST_ADDR);     
          }
-         else if(AM_BROADCAST_ADDR == myMsg->dest)
-         {//meant for neighbor discovery
+         else if(AM_BROADCAST_ADDR == myMsg->dest) //meant for neighbor discovery
+         {
             bool Found;
             uint16_t i =0, size;
             neighbor* Neighbor, *neighbor_ptr;
+            LSPack* lspNeighbors;
 
             switch(myMsg->protocol)
             {
@@ -179,7 +180,6 @@ implementation{
                   }
                   break;
                case 2: // Send Linkstatepacket
-                     LSPack* lspNeighbors;
                      lspNeighbors = myMsg->payload;
                      updateRoutingTable(*lspNeighbors, myMsg->src);
                      break;
