@@ -206,7 +206,7 @@ implementation{
    {
       dbg(GENERAL_CHANNEL, "PING EVENT \n");
       makePack(&sendPackage, TOS_NODE_ID, destination, 20, 0, 0, payload, PACKET_MAX_PAYLOAD_SIZE);
-      call Sender.send(sendPackage, AM_BROADCAST_ADDR);
+      call Sender.send(sendPackage, myRoutingTable.nodes[myMsg->dest].nextHop);
    }
 
    event void CommandHandler.printNeighbors()
