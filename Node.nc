@@ -11,7 +11,6 @@ typedef struct neighbor
    uint8_t Life;
 }   neighbor;
 
-
 typedef struct RoutingInfo
 {
    uint8_t nextHop;
@@ -25,12 +24,7 @@ typedef struct RoutingTable
 
 typedef struct LSPack
 {
-	nx_uint16_t dest;
-	nx_uint16_t src;
-	nx_uint16_t seq;
-	nx_uint8_t TTL;
-	nx_uint8_t protocol;
-   nx_uint8_t neighbors[PACKET_MAX_PAYLOAD_SIZE];
+   uint8_t neighbors[PACKET_MAX_PAYLOAD_SIZE];
 }   LSPack;
 
 
@@ -65,7 +59,7 @@ implementation{
 
    // Project 2
    void initRoutingTable();
-   void sendLSPack(uint8_t TTL);
+   void sendLSPack();
    void updateRoutingTable(LSPack neighborLSP, uint8_t neighborID);
    void linkLost(uint16_t Node);
 
@@ -380,20 +374,13 @@ implementation{
    {
       int i;
 
-      for(i = 0; neighborLSP.neighbors[i] >= 0 ; i++) //Djikstra's
+      for(i = 1; neighborLSP.neighbors[i] != 250 ; i++) //Djikstra's
       {
-          uint8_t n = neighborLSP.neighbors[i];
-
-          if(myRoutingTable.nodes[n].cost > myRoutingTable.nodes[neighborID].cost + 1)
-          {
-            myRoutingTable.nodes[n].cost = myRoutingTable.nodes[neighborID].cost + 1;
-            myRoutingTable.nodes[n].nextHop = myRoutingTable.nodes[neighborID].nextHop;
-          }
-          else if(myRoutingTable.nodes[n].cost + 1 < myRoutingTable.nodes[neighborID].cost)
-          {
-            myRoutingTable.nodes[neighborID].cost = 1 + myRoutingTable.nodes[n].cost;
-            myRoutingTable.nodes[neighborID].nextHop = myRoutingTable.nodes[n].nextHop;
-          }
+         if(myRoutingTable.nodes[i].cost > neighborLSP.neighbors[i] + 1 && neighborLSP.neighbors[i] != 0)
+         {
+            myRoutingTable.nodes[i].cost = neighborLSP.neighbors[i] + 1;
+            myRoutingTable.nodes[i].nextHop = sendLSP.neighbors[0];
+         }
       }
       return;
    }
@@ -401,17 +388,22 @@ implementation{
    void sendLSPack(uint8_t ttl)
    {
       int i;
-      int numOfNeighbors = call ListOfNeighbors.size();
-      neighbor* tempNeighbor;
+      sendLSP.neighbors[0] = TOS_NODE_ID;
 
-      for(i = 0; i < numOfNeighbors; i++)
+      for(i = 1; i < 20; i++)
       {
-         tempNeighbor = call ListOfNeighbors.get(i);
-         sendLSP.neighbors[i] = tempNeighbor->Node;
+         if(myRoutingTable.nodes[i].nextHop == 250)
+         {
+            sendLSP.neighbors[i] = 0;
+         }
+         else
+         {
+            sendLSP.neighbors[i] = myRoutingTable.nodes[i].cost;
+         }
       }
-      for(i = numOfNeighbors; i < PACKET_MAX_PAYLOAD_SIZE; i++)
+      for(i = 20; i < PACKET_MAX_PAYLOAD_SIZE; i++)
       {
-         sendLSP.neighbors[i] = -1;
+         sendLSP.neighbors[i] = 250;
       }
 
       makePack(&sendPackage, TOS_NODE_ID, AM_BROADCAST_ADDR, ttl, 4, 0, (void*) sendLSP.neighbors, PACKET_MAX_PAYLOAD_SIZE);
