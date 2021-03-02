@@ -72,7 +72,7 @@ implementation{
 
       start = call Random.rand32() % 100;
       start = start * 6421;
-      call Timer.startPeriodicAt(start, 6000); // 6000 if I'm using static number
+      call Timer.startPeriodicAt(start, 9000); // 6000 if I'm using static number
       dbg(NEIGHBOR_CHANNEL,"Timer started\n");
 
       initRoutingTable();
