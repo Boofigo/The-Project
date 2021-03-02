@@ -363,7 +363,7 @@ implementation{
          if(myRoutingTable.nodes[i].nextHop == Node)
          {
             myRoutingTable.nodes[i].nextHop = 250;
-            myRoutingTable.nodes[i].cost = 250;
+            myRoutingTable.nodes[i].cost = -1;
          }
       }
    }
