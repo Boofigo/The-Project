@@ -145,11 +145,11 @@ def main():
     #s.addChannel(s.NEIGHBOR_CHANNEL);
     s.addChannel(s.ROUTING_CHANNEL);
 
-    s.runTime(150);
+    s.runTime(150); #Needs about 200 before 
     #s.ping(1, 2, "Hello, World");
-    s.runTime(10);
+    #s.runTime(10);
     #s.ping(1, 6, "Hello, World");
-    s.runTime(40);
+    #s.runTime(40);
     s.routeDMP(5);
     #s.neighborDMP(9);
     #s.findNeighbors(1, "Neighbor Found");
