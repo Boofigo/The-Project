@@ -22,10 +22,10 @@ typedef struct RoutingTable
    RoutingInfo nodes[20];
 }   RoutingTable;
 
-typedef struct LSPack
+typedef struct DVPack
 {
    uint8_t neighbors[PACKET_MAX_PAYLOAD_SIZE];
-}   LSPack;
+}   DVPack;
 
 
 module Node
@@ -48,7 +48,7 @@ implementation{
    pack sendPackage;
    RoutingTable myRoutingTable;
 
-   LSPack sendLSP;
+   DVPack DVPacket;
 
    // Prototypes
    void makePack(pack *Package, uint16_t src, uint16_t dest, uint16_t TTL, uint16_t Protocol, uint16_t seq, uint8_t *payload, uint8_t length);
@@ -58,8 +58,8 @@ implementation{
 
    // Project 2
    void initRoutingTable();
-   void sendLSPack();
-   void updateRoutingTable(LSPack neighborLSP, uint8_t neighborID);
+   void sendDVPack();
+   void updateRoutingTable(DVPack neighborPack, uint8_t neighborID);
    void linkLost(uint16_t Node);
 
    event void Boot.booted()
@@ -96,7 +96,7 @@ implementation{
    event void Timer.fired()
    {
       neighborDiscovery();
-      sendLSPack();
+      sendDVPack();
    }
 
    //Message recieved
@@ -134,7 +134,7 @@ implementation{
             bool Found;
             uint16_t i =0, size;
             neighbor* Neighbor, *neighbor_ptr;
-            LSPack* lspNeighbors;
+            DVPack* neighborPack;
 
             switch(myMsg->protocol)
             {
@@ -180,8 +180,8 @@ implementation{
                   }
                   break;
                case 2: // Send Linkstatepacket
-                     lspNeighbors = myMsg->payload;
-                     updateRoutingTable(*lspNeighbors, myMsg->src);
+                     neighborPack = myMsg->payload;
+                     updateRoutingTable(*neighborPack, myMsg->src);
                      break;
                default:
                   break;
@@ -372,47 +372,47 @@ implementation{
       }
    }
 
-   void updateRoutingTable(LSPack neighborLSP, uint8_t neighborID)
+   void updateRoutingTable(DVPack neighborPack, uint8_t neighborID)
    {
       int i;
 
       for(i = 1; i < 20 ; i++)
       {
-         if(neighborLSP.neighbors[i] == 0 || neighborID == TOS_NODE_ID)
+         if(neighborPack.neighbors[i] == 0 || neighborID == TOS_NODE_ID)
          {
             
          }
-         else if(myRoutingTable.nodes[i].cost > neighborLSP.neighbors[i] + 1)
+         else if(myRoutingTable.nodes[i].cost > neighborPack.neighbors[i] + 1)
          {
-            myRoutingTable.nodes[i].cost = neighborLSP.neighbors[i] + 1;
+            myRoutingTable.nodes[i].cost = neighborPack.neighbors[i] + 1;
             myRoutingTable.nodes[i].nextHop = neighborID;
          }
       }
       return;
    }
 
-   void sendLSPack()
+   void sendDVPack()
    {
       int i;
-      sendLSP.neighbors[0] = TOS_NODE_ID;
+      DVPacket.neighbors[0] = TOS_NODE_ID;
 
       for(i = 1; i < 20; i++)
       {
          if(myRoutingTable.nodes[i].nextHop == 250)
          {
-            sendLSP.neighbors[i] = 0;
+            DVPacket.neighbors[i] = 0;
          }
          else
          {
-            sendLSP.neighbors[i] = myRoutingTable.nodes[i].cost;
+            DVPacket.neighbors[i] = myRoutingTable.nodes[i].cost;
          }
       }
       for(i = 20; i < PACKET_MAX_PAYLOAD_SIZE; i++)
       {
-         sendLSP.neighbors[i] = 80;
+         DVPacket.neighbors[i] = 80;
       }
 
-      makePack(&sendPackage, TOS_NODE_ID, AM_BROADCAST_ADDR, 1, 2, 0, (void*) sendLSP.neighbors, PACKET_MAX_PAYLOAD_SIZE);
+      makePack(&sendPackage, TOS_NODE_ID, AM_BROADCAST_ADDR, 1, 2, 0, (void*) DVPacket.neighbors, PACKET_MAX_PAYLOAD_SIZE);
       call Sender.send(sendPackage, AM_BROADCAST_ADDR);
    }
 
