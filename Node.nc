@@ -129,7 +129,7 @@ implementation{
             // makePack(&sendPackage, myMsg->src, myMsg->dest, myMsg->TTL-1,myMsg->protocol, myMsg->seq, (uint8_t *)myMsg->payload, sizeof(myMsg->payload));
             // call Sender.send(sendPackage, AM_BROADCAST_ADDR);     
          }
-         else if(AM_BROADCAST_ADDR == myMsg->dest) //meant for neighbor discovery
+         else if(AM_BROADCAST_ADDR == myMsg->dest) //meant for neighbor discovery and routing
          {
             bool Found;
             uint16_t i =0, size;
@@ -179,7 +179,7 @@ implementation{
                      myRoutingTable.nodes[myMsg->src].cost = 1;
                   }
                   break;
-               case 2: // Send Linkstatepacket
+               case 2: // Send Distance Vector packet
                      neighborPack = myMsg->payload;
                      updateRoutingTable(*neighborPack, myMsg->src);
                      break;
