@@ -41,16 +41,4 @@ implementation {
     components RandomC as Random;
     Node.Random -> Random;
 
-    components new TimerMilliC() as serverTimer;
-    Node.serverTimer -> serverTimer;
-
-    components new TimerMilliC() as clientTimer;
-    Node.clientTimer -> clientTimer;
-
-    components TransportC;
-    Node.Transport -> TransportC;
-
-    components new ListC (socket_t, 64) as sockListC;
-    Node.sockList -> sockListC; 
-
 }

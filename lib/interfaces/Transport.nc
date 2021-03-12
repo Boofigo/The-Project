@@ -144,12 +144,4 @@ interface Transport{
     *   to listen else FAIL.
     */
    command error_t listen(socket_t fd);
-
-   command error_t bufCheck(socket_t fd);
-
-   command error_t estCheck(socket_t fd);
-
-   command socket_t find(socket_addr_t *src,socket_addr_t *dest); 
-
-   command void makePack(pack *Package, uint16_t src, uint16_t dest, uint16_t TTL, uint16_t Protocol, uint16_t seq, uint8_t *payload, uint8_t length);
 }
