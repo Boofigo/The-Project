@@ -43,11 +43,6 @@ module Node
    uses interface Timer<TMilli> as Timer; //uses timer to create periodic firing on neighbordiscovery and to not overload the network
    uses interface Random as Random; //randomize timing to create firing period
 
-   uses interface Timer<TMilli> as serverTimer;
-
-   uses interface Timer<TMilli> as clientTimer;
-
-   uses interface List<socket_t> as sockList;
 }
 
 implementation{
@@ -56,18 +51,6 @@ implementation{
    
    DVPack DVPacket;
 
-   socket_t *fd;
-   int transferB = 0;
-
-   char username[SOCKET_BUFFER_SIZE];
-   char bMsg[SOCKET_BUFFER_SIZE];
-   char wMsg[SOCKET_BUFFER_SIZE];
-   char wUser[SOCKET_BUFFER_SIZE];
-   int hell = 0;
-   int broad = 0;
-   int mess = 0;
-   int lis = 0;
-   int size = 0;
 
    // Prototypes
    void makePack(pack *Package, uint16_t src, uint16_t dest, uint16_t TTL, uint16_t Protocol, uint16_t seq, uint8_t *payload, uint8_t length);
@@ -116,220 +99,6 @@ implementation{
    {
       neighborDiscovery();
       sendDVPack();
-   }
-
-   event void serverTimer.fired() 
-   {
-      //Server Fire
-      int x, newFd, r = 1, i;
-      int oFd;
-      char readBuff[SOCKET_BUFFER_SIZE];
-      char writeBuff[SOCKET_BUFFER_SIZE];
-      char* usern;
-
-      dbg(TRANSPORT_CHANNEL, "Server Timer Fired\n");
-
-      newFd = call Transport.accept(fd);
-      if (newFd != NULL)
-      {
-	      dbg(TRANSPORT_CHANNEL, "Adding newFd : %d\n", newFd);
-         call sockList.pushback(newFd);
-      }
-      if(call Transport.estCheck(fd) == SUCCESS) 
-      {
-         //Creates an empty array for buffer
-         for (x = 0; x < SOCKET_BUFFER_SIZE; x++)
-            readBuff[x] = 0;
-
-         dbg(TRANSPORT_CHANNEL, "%d\n", call sockList.size());
-         for (x = 0; x < call sockList.size(); x++) 
-         {
-            oFd = call sockList.get(x);
-
-            dbg(TRANSPORT_CHANNEL, "reading %d\n", oFd);
-  	         r = call Transport.read(oFd, readBuff, SOCKET_BUFFER_SIZE);
-
-	         if (readBuff[0] == 104) 
-            {
-	            dbg(TRANSPORT_CHANNEL, "Reading Hello\n");
-	            for (x = 0; x < strlen(readBuff); x++) 
-               {
-		            username[x] = (char) readBuff[x + 1];
- 	            }
-               dbg(TRANSPORT_CHANNEL, "Username: %s\n", username);
-               dbg(TRANSPORT_CHANNEL, "Fd: %d\n",oFd);
-	            call userMap.insert(oFd, username);
-               size += strlen(readBuff);
-            }
-	         else if (readBuff[0] == 98) 
-            {
-               dbg(TRANSPORT_CHANNEL, "Reading Broadcast\n");
-               for (i = 0; i < call sockList.size(); i++) 
-               {
-                  oFd = call sockList.get(i);
-                  if (call Transport.estCheck(oFd) == SUCCESS) 
-                  {
-		               call Transport.write(oFd, readBuff, sizeof(readBuff));
-	                  call Transport.bufCheck(oFd);
-                  }
-               }
-               size += strlen(readBuff);
-	         }
-            else if (readBuff[0] == 108) 
-            {			//Need to fix
-               dbg(TRANSPORT_CHANNEL, "Reading Whisper\n");
-               for (i = 0; i < call sockList.size(); i++) 
-               {
-                  oFd = call sockList.get(i);
-                  if (call Transport.estCheck(oFd) == SUCCESS) 
-                  {
-		               call Transport.write(oFd, readBuff, sizeof(readBuff));
-                     call Transport.bufCheck(oFd);
-		            }
-               }
-               size += strlen(readBuff);
-	         }
-            else if (readBuff[0] == 109) 
-            {
-               dbg(TRANSPORT_CHANNEL, "Reading List\n");
-               for (i = 0; i < call sockList.size(); i++) 
-               {
-                  oFd = call sockList.get(i);
-                  if (call Transport.estCheck(oFd) == SUCCESS) 
-                  {
-		               usern = call userMap.get(oFd);
-                     writeBuff[i] = usern;
-                  }
-	            }   
-	            call Transport.write(fd, writeBuff, sizeof(writeBuff));
-               call Transport.bufCheck(fd);
-               size += strlen(readBuff);
-	         }
-            else if (r != 0) 
-            {
-               for (r = 0; r < SOCKET_BUFFER_SIZE; r++) 
-               {
-  	               if (r == SOCKET_BUFFER_SIZE - 1 && readBuff[r] != 0)		//At end with value
-                     dbg(TRANSPORT_CHANNEL, "%d\n", readBuff[r]);
-     	            else if (readBuff[r] != 0)				//Not at end but have value
-   	               dbg(TRANSPORT_CHANNEL, "%d, \n", readBuff[r]);
-	               else if (r == (SOCKET_BUFFER_SIZE - 1))			//No value and at end
-                     dbg(TRANSPORT_CHANNEL, "\n");
-	            }
-            }
-         }
-      }
-   }
-
-   event void clientTimer.fired() 
-   {
-      //Client Fire
-      int i = 0, x = 0;
-      int temp = 0;
-      int writeBuff[transferB];
-      char readBuff[SOCKET_BUFFER_SIZE];
-      char* charac;
-
-      //New FCN to test buffer and send data accordingly
-      dbg(TRANSPORT_CHANNEL, "Client Timer Fired\n");
-
-
-      if (transferB != NULL) 
-      {
-         if (call Transport.estCheck(fd) == SUCCESS) 
-         {
-            for (i = 0; i < transferB; i++)
-               writeBuff[i] = i + 1;
-
-            x = call Transport.write(fd, writeBuff, transferB);
-
-            call Transport.bufCheck(fd);
-         }
-         if ((transferB - x) == 0) 
-         {
-            call Transport.close(fd);
-	         call clientTimer.stop();
-         }
-         else
-	    transferB -= x; 
-      }
-      else 
-      {
-         if (hell == 1) 
-         {
-	         temp = strlen(username);
-	         charac = "h";
-
-	         call Transport.write(fd, charac, 1);
-            x = call Transport.write(fd, username, strlen(username));
-	         call Transport.bufCheck(fd);
-
-	         if ((temp - x) == 0)
-	            hell = 0;
-	      }
-	      else if (broad == 1) 
-         {
-            temp = strlen(bMsg);
-            charac = "b";
-
-            call Transport.write(fd, charac, 1);
-            x = call Transport.write(fd, bMsg, strlen(bMsg));
-            call Transport.bufCheck(fd);
-            //write bMsg to buffer
-            //Send msg
-            if ((temp - x) == 0)
-               broad = 0;	 
-	      }
-	      else if (mess == 1)
-         {
-            temp = strlen(wMsg) + strlen(wUser);
-            charac = "m";
-
-            call Transport.write(fd, charac, 1);    
-            x = call Transport.write(fd, wMsg, strlen(wMsg));
-            call Transport.bufCheck(fd);
-
-            if ((temp - x) == 0)
-               mess = 0;
-	      }
-	      else if (lis == 1) 
-         {
-            charac = "l";
-
-            call Transport.write(fd, charac, 1);
-            call Transport.bufCheck(fd);
-
-            //send pckt indicating list
-            lis = 0;
-	      }
-	      else
-         {
-	         dbg(TRANSPORT_CHANNEL, "Broke\n"); 		//Not actually broke
-
-            for (x = 0; x < SOCKET_BUFFER_SIZE; x++)
-               readBuff[x] = 0;
-
-	         call Transport.read(fd, readBuff, SOCKET_BUFFER_SIZE);
-	         if (readBuff[0] == 109) 
-            {
-	            for (x = 1; x < sizeof(readBuff); x++)
- 	               wMsg[x - 1] = (char) readBuff[x];
-               dbg(TRANSPORT_CHANNEL, "Whisper Message: %s\n", wMsg);
-            }
-            else if (readBuff[0] == 108) 
-            {
-               for (x = 1; x < sizeof(readBuff); x++)
-                  wUser[x - 1] = (char) readBuff[x];
-               dbg(TRANSPORT_CHANNEL, "List of Users: %s\n", wUser);
-            }
-            else if (readBuff[0] == 98) 
-            {
-               for (x = 1; x < sizeof(readBuff); x++)
-                  bMsg[x - 1] = (char) readBuff[x];
-               dbg(TRANSPORT_CHANNEL, "Broadcast Message: %s\n", bMsg);
-            }
-         }
-      }
    }
 
    //Message recieved
@@ -485,40 +254,12 @@ implementation{
 
    event void CommandHandler.setTestServer()
    {
-      socket_addr_t sAddr;
 
-      dbg(TRANSPORT_CHANNEL, "Test Server Starting\n");
-
-      sAddr.port = sPort;
-      sAddr.addr = TOS_NODE_ID;
-
-      fd = call Transport.socket();
-      call Transport.bind(fd, &sAddr);
-      call Transport.listen(fd);
-
-      dbg(TRANSPORT_CHANNEL, "Starting Server Timer\n");
-      call serverTimer.startPeriodic(100000);
    }
 
    event void CommandHandler.setTestClient()
    {
-      socket_addr_t src;
-      socket_addr_t dest;
-
-      dbg(TRANSPORT_CHANNEL, "Test Client Starting\n");
-
-      src.port = srcPort;
-      src.addr = TOS_NODE_ID;
-      dest.port = destPort;
-      dest.addr = destination;
-
-      fd = call Transport.socket();
-      call Transport.bind(fd, &src);
-
-      call Transport.connect(fd, &dest);
-      //Connects
-      call clientTimer.startPeriodic(200000);		//Client Connection
-      transferB = trans;
+ 
    }
 
    event void CommandHandler.setAppServer(){}
