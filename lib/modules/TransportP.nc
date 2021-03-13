@@ -15,6 +15,9 @@ module TransportP {
 
    uses interface Timer<TMilli> as closeTimer;
    uses interface SimpleSend as TransportSender;
+
+   uses interface Hashmap<socket_store_t> as SocketsTable;
+
 }
 
 implementation {

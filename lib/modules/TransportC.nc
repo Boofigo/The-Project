@@ -10,6 +10,9 @@ implementation{
    components new HashmapC (socket_store_t, 64) as sMapC;
    TransportP.sMap -> sMapC;
 
+   components new HashmapC (socket_store_t, 64) as SocketsTable;
+   TransportP.sMap -> SocketsTable;
+
    components new ListC (int, 64) as sListC;
    TransportP.sList -> sListC;
 
