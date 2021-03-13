@@ -45,7 +45,7 @@ implementation {
 	         socket.flag = 0;
       	   socket.state = CLOSED;
 
-      	   socket.src.port = 0;
+      	   socket->src.port = 0;
 	         socket.src.addr = 0;
   	         socket.dest.port = 0;
 	         socket.dest.addr = 0;
