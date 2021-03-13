@@ -52,7 +52,7 @@ implementation {
       else
       {
          dbg(TRANSPORT_CHANNEL, "No Available Socket: return NULL\n");
-         fd = NULL;
+         
       }
       return fd;
    }
