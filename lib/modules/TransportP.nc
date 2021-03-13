@@ -166,7 +166,7 @@ implementation {
       }
       else     
       { 
-         return e = FAI
+         return e = FAIL;
       }  
    }
 
