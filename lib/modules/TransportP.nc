@@ -33,42 +33,24 @@ implementation {
 
    command socket_t Transport.socket()
    {
-      int x, i;
-      int fd = 255;
+      socket_t fd;
+      socket_store_t socket;
+      socket_store_t tempsocket;
+      uint16_t size;
 
-      dbg(TRANSPORT_CHANNEL, "Reached socket\n");
-
-      for (i = 0; i < MAX_NUM_OF_SOCKETS; i++) 
+      if(call SocketsTable.size()<= MAX_NUM_OF_SOCKETS)
       {
-	      if(!call sMap.contains(i)) 
-         {
-	         socket.flag = 0;
-      	   socket.state = CLOSED;
 
-      	   socket.src->port = 0;
-	         socket.src.addr = 0;
-  	         socket.dest.port = 0;
-	         socket.dest.addr = 0;
-  	         socket.lastWritten = 0;
-   	      socket.lastAck = 0;
-  	         socket.lastSent = 0;
-     	      for (x = 0; x < SOCKET_BUFFER_SIZE; x++)
-            {
-               socket.rcvdBuff[x] = 0;
-               socket.sendBuff[x] = 0;
-            }
-            socket.lastRead = 0;
-            socket.lastRcvd = 0;
-      	   socket.nextExpected = 0;
-   	      socket.RTT = 0;
-  	         socket.effectiveWindow = 0;
-	         break;
-	      }
+         fd = fdw+1;
+         dbg(TRANSPORT_CHANNEL,"fd value%d\n", fd);
+         socket.fd=fd;
+         call SocketsTable.insert(fd, socket);
       }
-
-      fd = i;
-      call sMap.insert(fd, socket);
-
+      else
+      {
+         dbg(TRANSPORT_CHANNEL, "No Available Socket: return NULL\n");
+         fd = NULL;
+      }
       return fd;
    }
 
