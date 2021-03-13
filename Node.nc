@@ -38,6 +38,7 @@ module Node
    uses interface Receive;
    uses interface SimpleSend as Sender;
    uses interface CommandHandler;
+   uses interface Transport;
 
    uses interface List<pack> as seenPackets; //use interface to create a seen packet list for each node
    uses interface List<neighbor*> as ListOfNeighbors;
@@ -52,7 +53,7 @@ implementation{
    RoutingTable myRoutingTable;
    
    DVPack DVPacket;
-   
+
    socket_t *fd;
    int transferB = 0;
 

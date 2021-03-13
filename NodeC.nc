@@ -40,5 +40,7 @@ implementation {
 
     components RandomC as Random;
     Node.Random -> Random;
-
+    
+    components TransportC;
+    Node.Transport -> TransportC;
 }

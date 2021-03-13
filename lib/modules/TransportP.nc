@@ -38,29 +38,31 @@ implementation {
 
       dbg(TRANSPORT_CHANNEL, "Reached socket\n");
 
-      for (i = 0; i < MAX_NUM_OF_SOCKETS; i++) {
-	 if(!call sMap.contains(i)) {
-	    socket.flag = 0;
-      	    socket.state = CLOSED;
-      	    socket.src.port = 0;
-	    socket.src.addr = 0;
-  	    socket.dest.port = 0;
-	    socket.dest.addr = 0;
-  	    socket.lastWritten = 0;
-   	    socket.lastAck = 0;
-  	    socket.lastSent = 0;
-     	    for (x = 0; x < SOCKET_BUFFER_SIZE; x++){
+      for (i = 0; i < MAX_NUM_OF_SOCKETS; i++) 
+      {
+	      if(!call sMap.contains(i)) 
+         {
+	         socket.flag = 0;
+      	   socket.state = CLOSED;
+      	   socket.src.port = 0;
+	         socket.src.addr = 0;
+  	         socket.dest.port = 0;
+	         socket.dest.addr = 0;
+  	         socket.lastWritten = 0;
+   	      socket.lastAck = 0;
+  	         socket.lastSent = 0;
+     	      for (x = 0; x < SOCKET_BUFFER_SIZE; x++)
+            {
                socket.rcvdBuff[x] = 0;
                socket.sendBuff[x] = 0;
             }
             socket.lastRead = 0;
             socket.lastRcvd = 0;
-      	    socket.nextExpected = 0;
-   	    socket.RTT = 0;
-  	    socket.effectiveWindow = 0;
-
-	    break;
-	 }
+      	   socket.nextExpected = 0;
+   	      socket.RTT = 0;
+  	         socket.effectiveWindow = 0;
+	         break;
+	      }
       }
 
       fd = i;
@@ -76,8 +78,6 @@ implementation {
 
       socket.src.port = addr->port;
       socket.src.addr = addr->addr;
-
-      //      dbg(TRANSPORT_CHANNEL, "%d\n", socket.src.port); 
 
       call sMap.insert(fd, socket);
 
@@ -97,13 +97,15 @@ implementation {
       }
       if (a == 0) 
       {
-         //Places fd in a List of accepted sockets
-	      dbg(TRANSPORT_CHANNEL, "%d has been accpeted\n", fd);
+	      dbg(TRANSPORT_CHANNEL, "%d has been accpeted\n", fd); //Places fd in a List of accepted sockets
          call sList.pushback(fd);
 	      return fd;
       }
       else
-	      return NULL;
+      {
+         return NULL;
+      }
+	      
    }
 
    command uint16_t Transport.write(socket_t fd, uint8_t *buff, uint16_t bufflen) 
@@ -611,7 +613,10 @@ implementation {
 	      return SUCCESS;
       }
       else
-	      return FAIL;
+      {
+         return FAIL;
+      }
+	      
    }
 
    command void Transport.makePack(pack *Package, uint16_t src, uint16_t dest, uint16_t TTL, uint16_t protocol, uint16_t seq, uint8_t* payload, uint8_t length)
