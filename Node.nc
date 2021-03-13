@@ -256,7 +256,9 @@ implementation{
 
    event void CommandHandler.setTestServer(uint8_t sPort)
    {
+      socket_addr_t sAddr;
 
+      dbg(TRANSPORT_CHANNEL, "Test Server Starting\n");
    }
 
    event void CommandHandler.setTestClient(int destination, int srcPort, int destPort, int trans)
