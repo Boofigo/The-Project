@@ -59,15 +59,7 @@ implementation {
 
    command error_t Transport.bind(socket_t fd, socket_addr_t *addr) 
    {
-      dbg(TRANSPORT_CHANNEL, "Binding\n");
-      socket = call sMap.get(fd);
 
-      socket.src.port = addr->port;
-      socket.src.addr = addr->addr;
-
-      call sMap.insert(fd, socket);
-
-      return SUCCESS;
    }
 
    command socket_t Transport.accept(socket_t fd)
@@ -110,20 +102,7 @@ implementation {
 
    command error_t Transport.listen(socket_t fd) 
    {
-      dbg(TRANSPORT_CHANNEL, "Listening\n");
 
-      socket = call sMap.get(fd);
-
-      if (socket.state == CLOSED) 
-      {
-	      socket.state = LISTEN;
-	      call sMap.insert(fd, socket);
-	      return SUCCESS;
-      }
-      else
-      {
-         return FAIL;
-      }
 	      
    }
 
