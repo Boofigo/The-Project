@@ -84,39 +84,39 @@ implementation {
       return SUCCESS;
    }
 
-   command socket_t accept(socket_t fd)
+   command socket_t Transport.accept(socket_t fd)
    {
       
    }
 
-   command uint16_t write(socket_t fd, uint8_t *buff, uint16_t bufflen)
+   command uint16_t Transport.write(socket_t fd, uint8_t *buff, uint16_t bufflen)
    {
 
    }
 
-   command error_t receive(pack* package)
+   command error_t Transport.receive(pack* package)
    {
 
    }
 
-   command uint16_t read(socket_t fd, uint8_t *buff, uint16_t bufflen)
+   command uint16_t Transport.read(socket_t fd, uint8_t *buff, uint16_t bufflen)
    {
 
    }
 
-   command error_t connect(socket_t fd, socket_addr_t * addr)
+   command error_t Transport.connect(socket_t fd, socket_addr_t * addr)
    {
 
    }
 
-   command error_t close(socket_t fd)
+   command error_t Transport.close(socket_t fd)
    {
 
    }
 
-   command error_t release(socket_t fd)
+   command error_t Transport.release(socket_t fd)
    {
-      
+
    }
 
    command error_t Transport.listen(socket_t fd) 
