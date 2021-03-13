@@ -59,7 +59,40 @@ implementation {
 
    command error_t Transport.bind(socket_t fd, socket_addr_t *addr) 
    {
-
+      socket_store_t temp;
+      socket_addr_t temp_addy;
+      error_t e;
+      bool suc = FALSE;
+      uint16_t size = call SocketsTable.size();
+      uint8_t i =1;
+      if(call SocketsTable.isEmpty())
+      {
+         return e = FAIL;
+      }
+   
+      for(i;i<=size;i++)
+      {
+   
+         temp = call SocketsTable.get(i);
+         call SocketsTable.remove(i);
+         if(temp.fd ==fd&&!suc)
+         {
+            suc = TRUE;
+            temp_addy.port = addr->port;
+            temp_addy.addr = addr->addr;
+            temp.src=temp_addy;
+         }
+         call SocketsTable.insert(i, temp);
+      }
+   
+      if(suc) 
+      {
+         return e = SUCCESS;
+      }
+      else
+      {
+         return e = FAIL;
+      }      
    }
 
    command socket_t Transport.accept(socket_t fd)
@@ -102,8 +135,39 @@ implementation {
 
    command error_t Transport.listen(socket_t fd) 
    {
+      socket_store_t temp;
+      error_t e;
+      uint16_t size = call SocketsTable.size();
+      bool suc = FALSE;
+      uint8_t i =0;
 
-	      
+      if(call SocketsTable.isEmpty())
+      {
+         return e = FAIL;
+      }
+      for(i;i<=size;i++)
+      {
+         temp = call SocketsTable.get(i);
+         call SocketsTable.remove(i);
+         if(temp.fd ==fd&&!suc)
+         {
+            suc = TRUE;
+            temp.state =LISTEN;
+            if(temp.state==LISTEN)
+            {
+               dbg(TRANSPORT_CHANNEL,"Changed state to Listen!\n");
+            }
+            call SocketsTable.insert(temp.fd,temp);
+         }
+      }
+      if(suc) 
+      {
+         return e = SUCCESS;
+      }
+      else     
+      { 
+         return e = FAI
+      }  
    }
 
    command void Transport.makePack(pack *Package, uint16_t src, uint16_t dest, uint16_t TTL, uint16_t protocol, uint16_t seq, uint8_t* payload, uint8_t length)
