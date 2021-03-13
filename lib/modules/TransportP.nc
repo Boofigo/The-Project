@@ -76,8 +76,8 @@ implementation {
       dbg(TRANSPORT_CHANNEL, "Binding\n");
       socket = call sMap.get(fd);
 
-      socket.src->port = addr->port;
-      socket.src->addr = addr->addr;
+      socket.src.port = addr->port;
+      socket.src.addr = addr->addr;
 
       call sMap.insert(fd, socket);
 
