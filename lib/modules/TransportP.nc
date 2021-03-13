@@ -44,10 +44,11 @@ implementation {
          {
 	         socket.flag = 0;
       	   socket.state = CLOSED;
-      	   socket.src->port = 0;
-	         socket.src->addr = 0;
-  	         socket.dest->port = 0;
-	         socket.dest->addr = 0;
+
+      	   socket.src.port = 0;
+	         socket.src.addr = 0;
+  	         socket.dest.port = 0;
+	         socket.dest.addr = 0;
   	         socket.lastWritten = 0;
    	      socket.lastAck = 0;
   	         socket.lastSent = 0;
