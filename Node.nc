@@ -4,6 +4,8 @@
 #include "includes/sendInfo.h"
 #include "includes/channels.h"
 #include <Timer.h>
+#include "includes/socket.h"
+#include "includes/TCP_packet.h"
 
 typedef struct neighbor
 {
