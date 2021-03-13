@@ -1,6 +1,6 @@
 #include "../../includes/socket.h"
 #include "../../includes/packet.h"
-#include "../../includes/TCP.h"
+#include "../../includes/TCP_packet.h"
 #include "../../includes/protocol.h"
 #include "../../includes/channels.h"
 #include <stdlib.h>
