@@ -22,15 +22,17 @@ implementation {
    socket_store_t socket;  
 
    event void closeTimer.fired() {
-      if (socket.state == TIME_WAIT) {
-	 socket.state = CLOSED;
+      if (socket.state == TIME_WAIT) 
+      {
+	      socket.state = CLOSED;
          dbg(TRANSPORT_CHANNEL, "%d IS NOW CLOSED WITH PORT %d\n", TOS_NODE_ID, socket.src.port);
          dbg(TRANSPORT_CHANNEL, "CLOSED BABY!!!!\n");
-     }
-     call closeTimer.stop();
+      }
+      call closeTimer.stop();
    }
 
-   command socket_t Transport.socket(){
+   command socket_t Transport.socket()
+   {
       int x, i;
       int fd = 255;
 
@@ -67,40 +69,45 @@ implementation {
       return fd;
    }
 
-   command error_t Transport.bind(socket_t fd, socket_addr_t *addr) {
+   command error_t Transport.bind(socket_t fd, socket_addr_t *addr) 
+   {
       dbg(TRANSPORT_CHANNEL, "Binding\n");
       socket = call sMap.get(fd);
 
       socket.src.port = addr->port;
       socket.src.addr = addr->addr;
 
-//      dbg(TRANSPORT_CHANNEL, "%d\n", socket.src.port); 
+      //      dbg(TRANSPORT_CHANNEL, "%d\n", socket.src.port); 
 
       call sMap.insert(fd, socket);
 
       return SUCCESS;
    }
 
-   command socket_t Transport.accept(socket_t fd) {
+   command socket_t Transport.accept(socket_t fd) 
+   {
       int i, a = 0;
 
       dbg(TRANSPORT_CHANNEL, "Accepted\n");
 
-      for (i = 0; i < call sList.size(); i++) {
+      for (i = 0; i < call sList.size(); i++) 
+      {
          if (fd == call sList.get(i))
-	    a = 1;
+	      a = 1;
       }
-      if (a == 0) {
-      //Places fd in a List of accepted sockets
-	 dbg(TRANSPORT_CHANNEL, "%d has been accpeted\n", fd);
+      if (a == 0) 
+      {
+         //Places fd in a List of accepted sockets
+	      dbg(TRANSPORT_CHANNEL, "%d has been accpeted\n", fd);
          call sList.pushback(fd);
-	 return fd;
+	      return fd;
       }
       else
-	 return NULL;
+	      return NULL;
    }
 
-   command uint16_t Transport.write(socket_t fd, uint8_t *buff, uint16_t bufflen) {	//Client side ONLY
+   command uint16_t Transport.write(socket_t fd, uint8_t *buff, uint16_t bufflen) 
+   {	//Client side ONLY
       int x, writeLN = 0;
       int loop = 0;     //Loop around whole buffer = 1  ----- Doesnt loop mean = 0
       int i;
@@ -116,22 +123,22 @@ implementation {
       }
 
       if (socket.lastAck <= socket.lastWritten) {
-	 dbg(TRANSPORT_CHANNEL, "Something to write\n"); //Loops around in buffer
-	 writeLN = (SOCKET_BUFFER_SIZE - socket.lastWritten + socket.lastAck);
-	 loop = 1;
+	   dbg(TRANSPORT_CHANNEL, "Something to write\n"); //Loops around in buffer
+	   writeLN = (SOCKET_BUFFER_SIZE - socket.lastWritten + socket.lastAck);
+	   loop = 1;
       }
       else {
-	 //Doesn't loop around still has buffer to fill
-	 writeLN = socket.lastAck - socket.lastWritten;
+	   //Doesn't loop around still has buffer to fill
+	   writeLN = socket.lastAck - socket.lastWritten;
       }
 
       if (bufflen > writeLN) {
-	 //For when have writeLN space and bufflen is larger than can write
-	 dbg(TRANSPORT_CHANNEL, "Not enough room to write Have: %d and Need: %d\n", writeLN, bufflen);
-	 return 0;
+	   //For when have writeLN space and bufflen is larger than can write
+	   dbg(TRANSPORT_CHANNEL, "Not enough room to write Have: %d and Need: %d\n", writeLN, bufflen);
+	   return 0;
       }
       else {
-	 if (loop == 1) {
+	   if (loop == 1) {
 	    dbg(TRANSPORT_CHANNEL, "It loops\n");
 	    x = SOCKET_BUFFER_SIZE - socket.lastWritten;
 	    if (bufflen > x) {
@@ -151,17 +158,17 @@ implementation {
                socket.lastWritten = bufflen - x;
 	    }
          }
-	 else {
+	   else {
  	    dbg(TRANSPORT_CHANNEL, "Doesnt loop\n");
             memcpy(socket.sendBuff + socket.lastWritten, buff, bufflen*sizeof(uint8_t));
 	    socket.lastWritten += bufflen;
-	 }
-	 if (socket.lastWritten > SOCKET_BUFFER_SIZE) {
+	   }
+	   if (socket.lastWritten > SOCKET_BUFFER_SIZE) {
             socket.lastWritten -= SOCKET_BUFFER_SIZE;
-	 }
+	   }
 
-//	 for(i = 0; i < 20; i++)
-//         dbg(TRANSPORT_CHANNEL, "%d\n",socket.sendBuff[i]);
+         //	 for(i = 0; i < 20; i++)
+      //         dbg(TRANSPORT_CHANNEL, "%d\n",socket.sendBuff[i]);
 
 	 dbg(TRANSPORT_CHANNEL, "Written to buffer %d\n", socket.lastWritten);
 	 call sMap.insert(fd, socket);
@@ -170,7 +177,8 @@ implementation {
       }
    }
 
-   command error_t Transport.receive(pack* package) {
+   command error_t Transport.receive(pack* package) 
+   {
       int srcPort, destPort, seq, ack, flag, adWindow, x, rcvdLN, z, fd;
       int loop = 0;     //Loop around whole buffer = 1  ----- Doesnt loop mean = 0
       int msgBuf[TCP_MAX_PAYLOAD_SIZE];
@@ -191,9 +199,11 @@ implementation {
       ack = myMsg->ack;
       flag = myMsg->flag;			//^^  Quality of life  ^^
 
-      if (flag == 0 || flag == 1 || flag == 2) {
-         if (flag == 0) {
-	    dbg(TRANSPORT_CHANNEL, "Recieved SYN\n");
+      if (flag == 0 || flag == 1 || flag == 2) 
+      {
+         if (flag == 0) 
+         {
+	         dbg(TRANSPORT_CHANNEL, "Recieved SYN\n");
 
             tempS.addr = TOS_NODE_ID;
             tempS.port = destPort;
@@ -204,10 +214,11 @@ implementation {
             if (call sMap.contains(fd))
                socket = call sMap.get(fd);
 
-            if (socket.state !=SYN_RCVD) {
-	    //Checks if the server is currently listening
+            if (socket.state !=SYN_RCVD) 
+            {
+	          //Checks if the server is currently listening
 
-	       if (call sMap.contains(fd))
+	            if (call sMap.contains(fd))
 	          socket = call sMap.get(fd);
                socket.state = SYN_RCVD;
                socket.dest.port = srcPort;
@@ -225,9 +236,9 @@ implementation {
 
                dbg(TRANSPORT_CHANNEL, "SYN-ACK being sent to %d from %d\n", socket.dest.addr, socket.src.addr);
 
-	       call sMap.insert(fd, socket);
+	            call sMap.insert(fd, socket);
                call TransportSender.send(regPack, AM_BROADCAST_ADDR);
-	    }
+	         }
             else {
                dbg(TRANSPORT_CHANNEL, "Resending SYN-ACK\n");
 
@@ -245,9 +256,10 @@ implementation {
 
                call TransportSender.send(regPack, AM_BROADCAST_ADDR);
             }
- 	 }
-         else if (flag == 1) {
-	 //Got the ACK flag meaning that connection should be completly established
+ 	      }
+         else if (flag == 1) 
+         {
+	         //Got the ACK flag meaning that connection should be completly established
             dbg(TRANSPORT_CHANNEL, "Recieved ACK\n");
 
             tempS.addr = TOS_NODE_ID;
@@ -259,31 +271,34 @@ implementation {
             if(call sMap.contains(fd))
                socket = call sMap.get(fd);
 
-	    if (socket.state == SYN_RCVD) {		//SYN had been recieved
-	       socket.state = ESTABLISHED;
-	       socket.effectiveWindow = myMsg->adWindow;
+	         if (socket.state == SYN_RCVD) 
+            {		//SYN had been recieved
+	            socket.state = ESTABLISHED;
+	            socket.effectiveWindow = myMsg->adWindow;
 
                dbg(TRANSPORT_CHANNEL, "CONNECTION ESTABLISHED - %d with port %d\n", TOS_NODE_ID, socket.src.port);
 
-	       call estList.pushback(fd);
-	       call sMap.insert(fd, socket);
-	    }
+	            call estList.pushback(fd);
+	            call sMap.insert(fd, socket);
+	         }
          }
-	 else {					//flag should equal 2 here (SYN-ACK)
-	    dbg(TRANSPORT_CHANNEL, "Recieved SYN-ACK\n");
+	      else 
+         {					//flag should equal 2 here (SYN-ACK)
+	         dbg(TRANSPORT_CHANNEL, "Recieved SYN-ACK\n");
 
             tempS.addr = TOS_NODE_ID;
             tempS.port = destPort;
             tempD.addr = package->src;
             tempD.port = srcPort;
             fd = call Transport.find(&tempS, &tempD);
-	    socket = call sMap.get(fd);
+	         socket = call sMap.get(fd);
 
-	    if (socket.state == SYN_SENT) {
-	    //This socket sent the SYN got the SYN-ACK now completing the three way handshake
-	       dbg(TRANSPORT_CHANNEL, "Sending ACK\n");
+	         if (socket.state == SYN_SENT) 
+            {
+	            //This socket sent the SYN got the SYN-ACK now completing the three way handshake
+	            dbg(TRANSPORT_CHANNEL, "Sending ACK\n");
 
-	       tcpPacket = (tcpPack*) regPack.payload;
+	            tcpPacket = (tcpPack*) regPack.payload;
                tcpPacket->srcPort = socket.src.port;
                tcpPacket->destPort = socket.dest.port;
                tcpPacket->seq = seq + 1;
@@ -297,17 +312,18 @@ implementation {
 
                call TransportSender.send(regPack, AM_BROADCAST_ADDR);
 
-	       socket.state = ESTABLISHED;
-	       socket.effectiveWindow = myMsg->adWindow;
+	            socket.state = ESTABLISHED;
+	            socket.effectiveWindow = myMsg->adWindow;
 
-	       dbg(TRANSPORT_CHANNEL, "CONNECTION ESTABLISHED - %d with port %d\n", TOS_NODE_ID, socket.src.port);
+	            dbg(TRANSPORT_CHANNEL, "CONNECTION ESTABLISHED - %d with port %d\n", TOS_NODE_ID, socket.src.port);
 
-	       call estList.pushback(fd);
-	       call sMap.insert(fd, socket);
-	    }
-	    else if (socket.state == ESTABLISHED) {
-	    //Destination never got the ACK Q_Q
-	       dbg(TRANSPORT_CHANNEL, "Resending ACK\n");
+	            call estList.pushback(fd);
+	            call sMap.insert(fd, socket);
+	         }
+	         else if (socket.state == ESTABLISHED) 
+            {
+	            //Destination never got the ACK Q_Q
+	            dbg(TRANSPORT_CHANNEL, "Resending ACK\n");
 	       
                tcpPacket = (tcpPack*) regPack.payload;
                tcpPacket->srcPort = socket.src.port;
@@ -323,19 +339,22 @@ implementation {
 
                call TransportSender.send(regPack, AM_BROADCAST_ADDR);
             }
-	 }
+	      }
       }
-      else if (flag == 3 || flag == 4) {
+      else if (flag == 3 || flag == 4) 
+      {
          dbg(TRANSPORT_CHANNEL, "Closing Flag\n");
-	 //DATA
-         if (flag == 3) {
-	    tempS.addr = TOS_NODE_ID;
+	      //DATA
+         if (flag == 3) 
+         {
+	         tempS.addr = TOS_NODE_ID;
             tempS.port = srcPort;
             tempD.addr = package->src;
             tempD.port = destPort;
             fd = call Transport.find(&tempS, &tempD);
-//            dbg(TRANSPORT_CHANNEL, "%d\n", fd);
-            if (fd == 231) {
+            // dbg(TRANSPORT_CHANNEL, "%d\n", fd);
+            if (fd == 231) 
+            {
                dbg(TRANSPORT_CHANNEL, "fd Not Found Trying Other Values\n");
                tempS.addr = TOS_NODE_ID;
                tempS.port = destPort;
@@ -347,7 +366,8 @@ implementation {
             }
             socket = call sMap.get(fd);
 
-            if (socket.state == ESTABLISHED) {
+            if (socket.state == ESTABLISHED) 
+            {
                socket.state = CLOSE_WAIT;
                dbg(TRANSPORT_CHANNEL, "Current Socket State: %d\n", socket.state);
             }
@@ -366,8 +386,9 @@ implementation {
   
             call TransportSender.send(regPack, AM_BROADCAST_ADDR);
 
-	    if (socket.state == CLOSE_WAIT) {
-	       socket.state = LAST_ACK;
+            if (socket.state == CLOSE_WAIT) 
+            {
+               socket.state = LAST_ACK;
                dbg(TRANSPORT_CHANNEL, "Current Socket State: %d\n", socket.state);
 
                tcpPacket = (tcpPack*) regPack.payload;
@@ -384,117 +405,131 @@ implementation {
 
                call TransportSender.send(regPack, AM_BROADCAST_ADDR);
             }
-	    else if (socket.state == FIN_WAIT_2) {
+            else if (socket.state == FIN_WAIT_2) 
+            {
                socket.state = TIME_WAIT;
                dbg(TRANSPORT_CHANNEL, "Current Socket State: %d\n", socket.state);
- 	       call closeTimer.startOneShot(1200);
+               call closeTimer.startOneShot(1200);
             }  
 
-	    call sMap.insert(fd, socket);
+	         call sMap.insert(fd, socket);
          }
-	 //FIN-ACK
-	 else if (flag == 4) {
+	      //FIN-ACK
+	      else if (flag == 4) 
+         {
             tempS.addr = TOS_NODE_ID;
             tempS.port = srcPort;
             tempD.addr = package->src;
             tempD.port = destPort;
             fd = call Transport.find(&tempS, &tempD);
-            if (fd == 231) {
+            if (fd == 231) 
+            {
                dbg(TRANSPORT_CHANNEL, "fd Not Found Trying Other Values\n");
                tempS.addr = TOS_NODE_ID;
                tempS.port = destPort;
                tempD.addr = package->src;
                tempD.port = srcPort;
                fd = call Transport.find(&tempS, &tempD);
-	       if (fd == 231)
+	            if (fd == 231)
                   dbg(TRANSPORT_CHANNEL, "REEEEEEEEEEE IT BROKE REEEEEEEEEE\n");
             }
             socket = call sMap.get(fd);
 
-            if (socket.state == FIN_WAIT_1) {
- 	       socket.state = FIN_WAIT_2;
+            if (socket.state == FIN_WAIT_1) 
+            {
+ 	            socket.state = FIN_WAIT_2;
                dbg(TRANSPORT_CHANNEL, "Current Socket State: %d\n", socket.state);   
             }
-            else if (socket.state == LAST_ACK) {
+            else if (socket.state == LAST_ACK) 
+            {
                socket.state = CLOSED;
-	       dbg(TRANSPORT_CHANNEL, "%d IS NOW CLOSED WITH PORT %d\n", TOS_NODE_ID, socket.src.port);
+	            dbg(TRANSPORT_CHANNEL, "%d IS NOW CLOSED WITH PORT %d\n", TOS_NODE_ID, socket.src.port);
             }
-
             call sMap.insert(fd, socket);
          }
       }
-      else {
-      //Data Payloads 
+      else 
+      {
+         //Data Payloads 
+         tempS.addr = TOS_NODE_ID;
+         tempS.port = srcPort;
+         tempD.addr = package->src;
+         tempD.port = destPort;
+         fd = call Transport.find(&tempS, &tempD);
+         if (fd == 231) 
+         {
+            dbg(TRANSPORT_CHANNEL, "fd Not Found Trying Other Values\n");
             tempS.addr = TOS_NODE_ID;
-            tempS.port = srcPort;
+            tempS.port = destPort;
             tempD.addr = package->src;
-            tempD.port = destPort;
+            tempD.port = srcPort;
             fd = call Transport.find(&tempS, &tempD);
-            if (fd == 231) {
-               dbg(TRANSPORT_CHANNEL, "fd Not Found Trying Other Values\n");
-               tempS.addr = TOS_NODE_ID;
-               tempS.port = destPort;
-               tempD.addr = package->src;
-               tempD.port = srcPort;
-               fd = call Transport.find(&tempS, &tempD);
-               if (fd == 231)
-                  dbg(TRANSPORT_CHANNEL, "REEEEEEEEEEE IT BROKE REEEEEEEEEE\n");
-            }
-
-         if (flag == 6) {
-	 //Data ACK
-	    dbg(TRANSPORT_CHANNEL, "Recieved DATA-ACK\n");
-	    socket.lastAck = (ack * TCP_MAX_PAYLOAD_SIZE);
-
-      	    //Checks if goes over the buffer
-	    if (socket.lastAck > SOCKET_BUFFER_SIZE)
-	       socket.lastAck -= SOCKET_BUFFER_SIZE;
-	    call sMap.insert(fd, socket);
-	    dbg(TRANSPORT_CHANNEL, "EZ\n");
+            if (fd == 231)
+               dbg(TRANSPORT_CHANNEL, "REEEEEEEEEEE IT BROKE REEEEEEEEEE\n");
          }
-	 else {
-	 //Data
-	    dbg(TRANSPORT_CHANNEL, "Recieved DATA\n");
 
-	    z = SOCKET_BUFFER_SIZE - socket.lastRcvd;
+         if (flag == 6) 
+         {
+	         //Data ACK
+	         dbg(TRANSPORT_CHANNEL, "Recieved DATA-ACK\n");
+	         socket.lastAck = (ack * TCP_MAX_PAYLOAD_SIZE);
 
-//	    dbg(TRANSPORT_CHANNEL, "%d, %d\n", socket.dest.addr, socket.state);
+      	   //Checks if goes over the buffer
+	         if (socket.lastAck > SOCKET_BUFFER_SIZE)
+	            socket.lastAck -= SOCKET_BUFFER_SIZE;
+	         call sMap.insert(fd, socket);
+	         dbg(TRANSPORT_CHANNEL, "EZ\n");
+         }
+	      else 
+         {
+	         //Data
+	         dbg(TRANSPORT_CHANNEL, "Recieved DATA\n");
 
-	    //Finds bufflen from the paylaod
-	    for (x = 0; x < TCP_MAX_PAYLOAD_SIZE; x++) {
-	       if (myMsg->payload[x] == 0) {
+	         z = SOCKET_BUFFER_SIZE - socket.lastRcvd;
+
+	         // dbg(TRANSPORT_CHANNEL, "%d, %d\n", socket.dest.addr, socket.state);
+
+	         //Finds bufflen from the paylaod
+	         for (x = 0; x < TCP_MAX_PAYLOAD_SIZE; x++) 
+            {
+	            if (myMsg->payload[x] == 0) 
+               {
                   bufflen = x;
-		  break;
-	       }
+		            break;
+	            }
             }
             dbg(TRANSPORT_CHANNEL, "bufflen : %d\n", bufflen);
 
-	    if (socket.lastRcvd >= socket.lastRead) { 
-	       rcvdLN = (SOCKET_BUFFER_SIZE - socket.lastRcvd) + socket.lastRead;
-	       loop = 1;	//It looped around buffer
-	       dbg(TRANSPORT_CHANNEL, "Loops!\n");
-	    }
-	    else {
-	       rcvdLN = socket.lastRead - socket.lastRcvd;
-	       dbg(TRANSPORT_CHANNEL, "Does not Loop!\n");
-	       }
-
-	    if (bufflen  > rcvdLN)	//Not enough room in bufffer
-	       dbg(TRANSPORT_CHANNEL, "Not enough room in buffer\n");
-	    else {
-	       if (loop = 1 && (bufflen > x)) {
+	         if (socket.lastRcvd >= socket.lastRead) 
+            { 
+	            rcvdLN = (SOCKET_BUFFER_SIZE - socket.lastRcvd) + socket.lastRead;
+	            loop = 1;	//It looped around buffer
+	            dbg(TRANSPORT_CHANNEL, "Loops!\n");
+	         }
+	         else 
+            {
+	            rcvdLN = socket.lastRead - socket.lastRcvd;
+	            dbg(TRANSPORT_CHANNEL, "Does not Loop!\n");
+	         }
+            if (bufflen  > rcvdLN)	//Not enough room in bufffer
+	            dbg(TRANSPORT_CHANNEL, "Not enough room in buffer\n");
+	         else 
+            {
+	            if (loop = 1 && (bufflen > x)) 
+               {
                   dbg(TRANSPORT_CHANNEL, "here\n"); 
-	          memcpy (socket.rcvdBuff - socket.lastRcvd, myMsg->payload, z*sizeof(uint8_t));
-	 	  memcpy (socket.rcvdBuff, myMsg->payload - x, (bufflen - z)*sizeof(uint8_t));
-		  socket.lastRcvd = bufflen - z;
-	       }
-	       else {
+                  memcpy (socket.rcvdBuff - socket.lastRcvd, myMsg->payload, z*sizeof(uint8_t));
+                  memcpy (socket.rcvdBuff, myMsg->payload - x, (bufflen - z)*sizeof(uint8_t));
+                  socket.lastRcvd = bufflen - z;
+	            }
+	            else 
+               {
                   memcpy (socket.rcvdBuff + socket.lastRcvd, myMsg->payload, bufflen*sizeof(uint8_t));
-	          socket.lastRcvd += bufflen;
+	               socket.lastRcvd += bufflen;
                }
 
-	       if(socket.lastRcvd > SOCKET_BUFFER_SIZE)
-		  socket.lastRcvd -= SOCKET_BUFFER_SIZE;
+               if(socket.lastRcvd > SOCKET_BUFFER_SIZE)
+		            socket.lastRcvd -= SOCKET_BUFFER_SIZE;
 
                dbg(TRANSPORT_CHANNEL, "Sending DATA-ACK\n");
 
@@ -505,104 +540,27 @@ implementation {
                tcpPacket->ack = seq + 1;
                tcpPacket->flag = 6;             //DATA-ACK flag
 
-	       if (loop == 1) 
-      	          tcpPacket->adWindow = x + socket.lastRead;
-	       else
+	            if (loop == 1) 
+      	         tcpPacket->adWindow = x + socket.lastRead;
+	            else
                   tcpPacket->adWindow = socket.lastRead - socket.lastRcvd;
-
-//	       array = socket.rcvdBuff;
-//	       for (i = 0; i < 20; i++)
-//               dbg(TRANSPORT_CHANNEL, "%d\n", *(array + i));
-//               dbg(TRANSPORT_CHANNEL, "LR : %d\n", socket.lastRcvd);
-
 
                call Transport.makePack(&regPack, TOS_NODE_ID, socket.dest.addr, 32, 4, 0, tcpPacket, 0);
 
                dbg(TRANSPORT_CHANNEL, "DATA-ACK being sent to %d from %d\n", socket.dest.addr, socket.src.addr);
 
                call TransportSender.send(regPack, AM_BROADCAST_ADDR);
-
-	       call sMap.insert(fd, socket);
-	    }
-	 }
+	            call sMap.insert(fd, socket);
+	         }
+	      }
       }
 
       return SUCCESS;
    }
 
-   command uint16_t Transport.read(socket_t fd, uint8_t *buff, uint16_t bufflen) {	//Server side ONLY
-      int readLN = 0, x;
-      int loop = 0;     //Loop around whole buffer = 1  ----- Doesnt loop mean = 0
-      char* array;
-      int i;
-
-      dbg(TRANSPORT_CHANNEL, "Reading\n");
-
-      if (call sMap.contains(fd)) {
-         socket = call sMap.get(fd);
-      }
-      else {
-        dbg(TRANSPORT_CHANNEL, "Shit broke yo\n Error in read list\n");
-	 return 0;	//ERROR
-      }
-
-      if (socket.lastRcvd == socket.lastRead) {
-         dbg(TRANSPORT_CHANNEL, "Nothing to read LastRc = LastRe\n");
-         return 0;	//Nothing to read
-      }
-      else if (socket.lastRcvd > socket.lastRead) {
-         dbg(TRANSPORT_CHANNEL, "Somthing to read\n");
-	 //Doesnt loop
-	 readLN = socket.lastRcvd - socket.lastRead;		//Account for stuff that has not already been read
-      }
-      else {							//Means that lastRead > lastRcvd
-	 dbg(TRANSPORT_CHANNEL, "Somthing to read\n");		//So the buffer has gone around a whole loop
-	 loop = 1;
-	 readLN = (SOCKET_BUFFER_SIZE - socket.lastRead + socket.lastRcvd);
-      }
-
-      if (bufflen < readLN) {
-	 //Prevents reading more than buffer size
-	 dbg(TRANSPORT_CHANNEL, "Trying to read more than buffer size\n");
-	 readLN = bufflen;
-      }
-
-      x = SOCKET_BUFFER_SIZE - socket.lastRead;
-
-      if (loop == 1) {			//If it has looped around the buffer	 
-         dbg(TRANSPORT_CHANNEL, "Loopz\n");
-	 memcpy (buff, socket.rcvdBuff + socket.lastRead, x*sizeof(uint8_t));
-	 memcpy (x + buff, socket.rcvdBuff, (readLN - x)*sizeof(uint8_t));
-
-	 //Update lastRead
-	 if (readLN < x)
-	    socket.lastRead += readLN;
-	 else
-	    socket.lastRead = (readLN - x);
-      }
-      else {				//If it doesnt loop around buffer
-         dbg(TRANSPORT_CHANNEL, "No Loopz\n");
-	 memcpy(buff, socket.rcvdBuff + socket.lastRead, readLN*sizeof(uint8_t));
-	 //Updates lastRead for informaiton we just processed
-         socket.lastRead += readLN;
-      }
-
-      if (socket.lastRead > SOCKET_BUFFER_SIZE) {
-      //Gone over the buffer size
-	 socket.lastRead -= SOCKET_BUFFER_SIZE;
-      }
-
-//      dbg(TRANSPORT_CHANNEL, "%d\n", fd);
-//      array = buff;
-//      for (i = 0; i < 20; i++)
-//      dbg(TRANSPORT_CHANNEL, "%d\n", *(array + i));
-
-      call sMap.insert(fd, socket);
-      return readLN;
-   }
-
-   command error_t Transport.connect(socket_t fd, socket_addr_t * addr) {			//Make sure to reg everything inside socket ie ports & addrs
-   //Does a hand shake for opening up a connection
+   command error_t Transport.connect(socket_t fd, socket_addr_t * addr)  //Make sure to reg everything inside socket ie ports & addrs
+   {			
+      //Does a hand shake for opening up a connection
 
       pack regPack;		//Normal pack to carry tcp pack
       tcpPack* tcpPacket;	//TCP pack with info
@@ -640,150 +598,20 @@ implementation {
 	 return SUCCESS;
    }
 
-   command error_t Transport.close(socket_t fd) {
-   //Does a hand shake for closing down connections
-
-      pack regPack;             //Normal pack to carry tcp pack
-      tcpPack* tcpPacket;       //TCP pack with info
-
-      socket = call sMap.get(fd);
-
-      dbg(TRANSPORT_CHANNEL, "Closing\n");
-
-      tcpPacket = (tcpPack*) regPack.payload;
-
-      tcpPacket->destPort = socket.dest.port;
-      tcpPacket->srcPort = socket.src.port;
-      srand(time(NULL));
-      tcpPacket->seq = rand();
-      tcpPacket->ack = 0;
-      tcpPacket->flag = 3;
-      tcpPacket->adWindow = SOCKET_BUFFER_SIZE;
-
-      //Creates a packet with payload tcp pack
-      call Transport.makePack(&regPack, TOS_NODE_ID, socket.dest.addr, 32, 4, 0, tcpPacket, 0);
-
-      dbg(TRANSPORT_CHANNEL, "FIN being sent from %d to %d\n", TOS_NODE_ID, socket.dest.addr);
-
-      call TransportSender.send(regPack, AM_BROADCAST_ADDR);      
-
-      socket.state = FIN_WAIT_1;
-      call sMap.insert(fd, socket);
-   }
-
-   command error_t Transport.release(socket_t fd) {
-      dbg(TRANSPORT_CHANNEL, "Releasing\n");
-      //Optional
-   }
-
-   command error_t Transport.listen(socket_t fd) {
+   command error_t Transport.listen(socket_t fd) 
+   {
       dbg(TRANSPORT_CHANNEL, "Listening\n");
 
       socket = call sMap.get(fd);
 
-      if (socket.state == CLOSED) {
-	 socket.state = LISTEN;
-	 call sMap.insert(fd, socket);
-	 return SUCCESS;
+      if (socket.state == CLOSED) 
+      {
+	      socket.state = LISTEN;
+	      call sMap.insert(fd, socket);
+	      return SUCCESS;
       }
       else
-	 return FAIL;
-   }
-
-   command error_t Transport.bufCheck(socket_t fd) {
-      pack regPack;             //Normal pack to carry tcp pack
-      tcpPack* tcpPacket;       //TCP pack with info
-      int loop = 0;     //Loop around whole buffer = 1  ----- Doesnt loop mean = 0
-      char* array;
-      int i;
-
-
-      dbg(TRANSPORT_CHANNEL, "Buffer CHECK/SEND\n");
-      if (call sMap.contains(fd))
-         socket = call sMap.get(fd);
-      else
-	 return FAIL;
-
-      dbg(TRANSPORT_CHANNEL, "lastWritten : %d  / lastSent : %d / adWindow : %d\n", socket.lastWritten, socket.lastSent, socket.effectiveWindow);
-
-      if (socket.lastWritten - socket.lastSent != 0) {
-      dbg(TRANSPORT_CHANNEL, "PASSED FIRST IF\n");
-	 if (socket.effectiveWindow > socket.lastSent - socket.lastAck) {
-            dbg(TRANSPORT_CHANNEL, "PASSED SECOND IF\n");
-            tcpPacket = (tcpPack*) regPack.payload;
-
-	    tcpPacket->destPort = socket.dest.port;
-            tcpPacket->srcPort = socket.src.port;
-            srand(time(NULL));
-            tcpPacket->seq = rand();
-            tcpPacket->ack = 0;
-            tcpPacket->flag = 5;
-
-	    //Figures out what the ad window should be
-      	    if (socket.lastRead <= socket.lastRcvd)
-	       tcpPacket->adWindow = (SOCKET_BUFFER_SIZE - socket.lastRcvd + socket.lastRead);
-	    else
-	       tcpPacket->adWindow = socket.lastRead - socket.lastRcvd;
-
-	    if ((socket.lastSent + TCP_MAX_PAYLOAD_SIZE) > SOCKET_BUFFER_SIZE) {
-//               dbg(TRANSPORT_CHANNEL, "here\n");
-	       loop = 1;
-	       memcpy(tcpPacket->payload, socket.sendBuff + (socket.lastSent), (socket.lastSent + TCP_MAX_PAYLOAD_SIZE) - SOCKET_BUFFER_SIZE);
-	       memcpy(tcpPacket->payload, socket.sendBuff, TCP_MAX_PAYLOAD_SIZE - ((socket.lastSent + TCP_MAX_PAYLOAD_SIZE) - SOCKET_BUFFER_SIZE));
-	       socket.lastSent = TCP_MAX_PAYLOAD_SIZE - (socket.lastSent + TCP_MAX_PAYLOAD_SIZE - SOCKET_BUFFER_SIZE);
-	    }
-	    else {
-//               dbg(TRANSPORT_CHANNEL, "there\n");
-	       //Doesnt loop
-	       memcpy(tcpPacket->payload, socket.sendBuff + (socket.lastSent), TCP_MAX_PAYLOAD_SIZE);
-	       socket.lastSent += TCP_MAX_PAYLOAD_SIZE;
-	    }
-
-	    if (socket.lastSent > SOCKET_BUFFER_SIZE) {
- //              dbg(TRANSPORT_CHANNEL, "beard\n");
-	       socket.lastSent -= SOCKET_BUFFER_SIZE;
-	    }
-//            array = tcpPacket->payload;
-//            for (i = 0; i < 20; i++)
-//            dbg(TRANSPORT_CHANNEL, "%d\n", *(array+i));
-
-            call Transport.makePack(&regPack, TOS_NODE_ID, socket.dest.addr, 32, 4, 0, tcpPacket, 0);
-
-            dbg(TRANSPORT_CHANNEL, "DATA being sent from %d to %d\n", TOS_NODE_ID, socket.dest.addr);
-
-            call TransportSender.send(regPack, AM_BROADCAST_ADDR);
-	
-	    call sMap.insert(fd, socket);
-         }
-      }
-   }
-
-   command error_t Transport.estCheck(socket_t fd) {
-   //Checks if the connection is established
-      int x, fdN;
-      for (x = 0; x < call estList.size(); x++) {
-         fdN = call estList.get(x);
-         if (fdN == fd) {
-            dbg(TRANSPORT_CHANNEL, "SUCCESS BABY!!\n");
-            return SUCCESS;
-         }
-      }
-      return FAIL;
-   }
-
-   command socket_t Transport.find(socket_addr_t *src,socket_addr_t *dest){
-      int x, fd;
-      for (x = 0; x < call sList.size(); x++) {
-         fd = call sList.get(x);
-         dbg(TRANSPORT_CHANNEL, "Checking %d\n", fd);
-         socket = call sMap.get(fd);
-	 if (socket.src.addr == src->addr && socket.src.port == src->port && socket.dest.addr == dest->addr && socket.dest.port == dest->port) {
-	    dbg(TRANSPORT_CHANNEL, "fd was found\n");  
-	    return fd;
-         }
-      }
-      dbg(TRANSPORT_CHANNEL, "fd was not found\n");
-      return 231;
+	      return FAIL;
    }
 
    command void Transport.makePack(pack *Package, uint16_t src, uint16_t dest, uint16_t TTL, uint16_t protocol, uint16_t seq, uint8_t* payload, uint8_t length)
