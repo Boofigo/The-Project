@@ -52,7 +52,9 @@ implementation{
    RoutingTable myRoutingTable;
    
    DVPack DVPacket;
-
+   
+   socket_t *fd;
+   int transferB = 0;
 
    // Prototypes
    void makePack(pack *Package, uint16_t src, uint16_t dest, uint16_t TTL, uint16_t Protocol, uint16_t seq, uint8_t *payload, uint8_t length);
@@ -259,11 +261,37 @@ implementation{
       socket_addr_t sAddr;
 
       dbg(TRANSPORT_CHANNEL, "Test Server Starting\n");
+
+      sAddr.port = sPort;
+      sAddr.addr = TOS_NODE_ID;
+
+      // fd = call Transport.socket();
+      // call Transport.bind(fd, &sAddr);
+      // call Transport.listen(fd);
+ 
+      dbg(TRANSPORT_CHANNEL, "Starting Server Timer\n");
+      // call serverTimer.startPeriodic(100000);
    }
 
    event void CommandHandler.setTestClient(int destination, int srcPort, int destPort, int trans)
    {
- 
+      socket_addr_t src;
+      socket_addr_t dest;
+
+      dbg(TRANSPORT_CHANNEL, "Test Client Starting\n");
+
+      src.port = srcPort;
+      src.addr = TOS_NODE_ID;
+      dest.port = destPort;
+      dest.addr = destination;
+
+      // fd = call Transport.socket();
+      // call Transport.bind(fd, &src);
+
+      // call Transport.connect(fd, &dest);
+      // Connects
+      // call clientTimer.startPeriodic(200000);		//Client Connection
+      transferB = trans;
    }
 
    event void CommandHandler.setAppServer(){}
