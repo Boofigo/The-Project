@@ -22,7 +22,7 @@ module TransportP {
 
 implementation {
 
-   socket_store_t fdw;  
+   socket_t fdw;  
 
    event void closeTimer.fired() {
       //if (socket.state == TIME_WAIT) 
