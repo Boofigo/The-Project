@@ -22,12 +22,12 @@ implementation {
    socket_store_t socket;  
 
    event void closeTimer.fired() {
-      if (socket.state == TIME_WAIT) 
-      {
-	      socket.state = CLOSED;
-         dbg(TRANSPORT_CHANNEL, "%d IS NOW CLOSED WITH PORT %d\n", TOS_NODE_ID, socket.src.port);
-         dbg(TRANSPORT_CHANNEL, "CLOSED BABY!!!!\n");
-      }
+      //if (socket.state == TIME_WAIT) 
+      //{
+	   //   socket.state = CLOSED;
+      //   dbg(TRANSPORT_CHANNEL, "%d IS NOW CLOSED WITH PORT %d\n", TOS_NODE_ID, socket.src.port);
+      //   dbg(TRANSPORT_CHANNEL, "CLOSED BABY!!!!\n");
+      //}
       call closeTimer.stop();
    }
 
@@ -86,37 +86,40 @@ implementation {
 
    command socket_t Transport.accept(socket_t fd)
    {
-      
+      // test
    }
 
    command uint16_t Transport.write(socket_t fd, uint8_t *buff, uint16_t bufflen)
    {
-
+      // test
    }
 
    command error_t Transport.receive(pack* package)
    {
-
+      // test
    }
 
    command uint16_t Transport.read(socket_t fd, uint8_t *buff, uint16_t bufflen)
    {
+      // test
 
    }
 
    command error_t Transport.connect(socket_t fd, socket_addr_t * addr)
    {
+      // test
 
    }
 
    command error_t Transport.close(socket_t fd)
    {
+      // test
 
    }
 
    command error_t Transport.release(socket_t fd)
    {
-
+      // test
    }
 
    command error_t Transport.listen(socket_t fd) 
