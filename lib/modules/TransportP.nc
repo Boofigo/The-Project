@@ -69,7 +69,6 @@ implementation {
       {
          return e = FAIL;
       }
-      dbg(TRANSPORT_CHANNEL, "That worked\n");
       for(i;i<=size;i++)
       {
    
@@ -87,10 +86,12 @@ implementation {
    
       if(suc) 
       {
+         dbg(TRANSPORT_CHANNEL, "Sucess\n");
          return e = SUCCESS;
       }
       else
       {
+         dbg(TRANSPORT_CHANNEL, "Fail\n");
          return e = FAIL;
       }      
    }
