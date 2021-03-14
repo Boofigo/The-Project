@@ -69,7 +69,7 @@ implementation {
       {
          return e = FAIL;
       }
-   
+      dbg(TRANSPORT_CHANNEL, "That worked\n");
       for(i;i<=size;i++)
       {
    
