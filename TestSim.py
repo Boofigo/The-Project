@@ -132,11 +132,11 @@ class TestSim:
         self.t.addChannel(channelName, out);
 
     def cmdTestServer(self, address, port):
-        print 'Listening for connections..', address, port;
+        #print 'Listening for connections..', address, port;
         self.sendCMD(self.CMD_TEST_SERVER, address,"{0}".format(chr(port)));
 
     def cmdTestClient(self, address, destination, sPort, dPort, transfer):
-        print 'Listening for connections...', address, destination, sPort, dPort, transfer;
+        #print 'Listening for connections...', address, destination, sPort, dPort, transfer;
         self.sendCMD(self.CMD_TEST_CLIENT, address, "{0}{1}{2}{3}".format(chr(destination),chr(sPort),chr(dPort),chr(transfer)));
 
     # My Commands
