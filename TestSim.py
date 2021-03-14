@@ -129,6 +129,10 @@ class TestSim:
         print 'Adding Channel', channelName;
         self.t.addChannel(channelName, out);
 
+    def cmdTestServer(self, address, port):
+        print 'Listening for connections..', address, port;
+        self.sendCMD(self.CMD_TEST_SERVER, address,"{0}".format(chr(port)));
+
     # My Commands
     #def findNeighbors(self, source, msg):
     #    self.sendCMD(self.CMD_NEIGHBOR_DUMP, source, "{0}{1}".format(chr(dest),msg));
