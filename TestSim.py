@@ -135,6 +135,10 @@ class TestSim:
         print 'Listening for connections..', address, port;
         self.sendCMD(self.CMD_TEST_SERVER, address,"{0}".format(chr(port)));
 
+    def cmdTestClient(self, address, destination, sPort, dPort, transfer):
+        print 'Listening for connections...', address, destination, sPort, dPort, transfer;
+        self.sendCMD(self.CMD_TEST_CLIENT, address, "{0}{1}{2}{3}".format(chr(destination),chr(sPort),chr(dPort),chr(transfer)));
+
     # My Commands
     #def findNeighbors(self, source, msg):
     #    self.sendCMD(self.CMD_NEIGHBOR_DUMP, source, "{0}{1}".format(chr(dest),msg));
@@ -152,10 +156,12 @@ def main():
     s.addChannel(s.ROUTING_CHANNEL);
     s.addChannel(s.TRANSPORT_CHANNEL);
 
-    s.runTime(200); #Needs to run for about 200 to allow routing table to be completed
+    #s.runTime(200); #Needs to run for about 200 to allow routing table to be completed
     #s.ping(1, 8, "Hello, World");
+    s.runTime(40);
     s.cmdTestServer(3,10);
-    s.runTime(10);
+    s.runTime(60);
+    s.cmdTestClient(9,3,25,10,32);
     #s.routeDMP(4);
     s.runTime(10);
     #s.neighborDMP(9);
