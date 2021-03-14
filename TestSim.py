@@ -150,6 +150,7 @@ def main():
     s.addChannel(s.FLOODING_CHANNEL);
     #s.addChannel(s.NEIGHBOR_CHANNEL);
     s.addChannel(s.ROUTING_CHANNEL);
+    s.addChannel(s.TRANSPORT_CHANNEL);
 
     s.runTime(200); #Needs to run for about 200 to allow routing table to be completed
     #s.ping(1, 8, "Hello, World");
