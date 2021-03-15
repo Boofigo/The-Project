@@ -71,8 +71,8 @@ implementation {
       uint8_t i =1;
       if(call SocketsTable.isEmpty())
       {
-         return e = FAIL;
          dbg(TRANSPORT_CHANNEL, "Fail\n");
+         return e = FAIL;
       }
       for(i;i<=size;i++)
       {
