@@ -64,10 +64,8 @@ implementation {
    {
       socket_store_t temp;
       socket_addr_t temp_addy;
-      error_t e;
-      bool suc = FALSE;
-      uint16_t size = call SocketsTable.size();
       uint8_t i =1;
+
       if(call SocketsTable.isEmpty())
       {
          dbg(TRANSPORT_CHANNEL, "Fail\n");
@@ -75,29 +73,23 @@ implementation {
       }
       for(i;i<=MAX_NUM_OF_SOCKETS;i++)
       {
-   
-         temp = call SocketsTable.get(i);
-         call SocketsTable.remove(i);
          if(i == fd&&!suc)
          {
-            suc = TRUE;
+            temp = call SocketsTable.get(i);
+            call SocketsTable.remove(i);
             temp_addy.port = addr->port;
             temp_addy.addr = addr->addr;
-            temp.dest=temp_addy;
-         }
-         call SocketsTable.insert(i, temp);
+            //temp.dest=temp_addy;
+            temp.dest.port=temp_addy.port;
+            temp.dest.addy=temp_addy.addr;
+            call SocketsTable.insert(i, temp);
+            dbg(TRANSPORT_CHANNEL, "True\n");
+            return  True;     
+         }  
       }
-   
-      if(suc) 
-      {
-         dbg(TRANSPORT_CHANNEL, "Sucess\n");
-         return SUCCESS;
-      }
-      else
-      {
-         dbg(TRANSPORT_CHANNEL, "Fail\n");
-         return  FAIL;
-      }      
+
+      dbg(TRANSPORT_CHANNEL, "Fail\n");
+      return  FAIL;     
    }
 
    command socket_t Transport.accept(socket_t fd)
