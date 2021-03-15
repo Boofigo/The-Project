@@ -47,7 +47,6 @@ implementation {
          {
             fd = i;
             dbg(TRANSPORT_CHANNEL,"It worked again %d\n", fd);
-            socket.fd=fd;
             call SocketsTable.insert(fd, socket);
             found = 1;
             break;
