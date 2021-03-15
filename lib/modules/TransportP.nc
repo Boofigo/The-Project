@@ -77,11 +77,10 @@ implementation {
          {
             temp = call SocketsTable.get(i);
             call SocketsTable.remove(i);
-            temp_addy.port = addr->port;
-            temp_addy.addr = addr->addr;
-            //temp.dest=temp_addy;
-            temp.dest.port=temp_addy.port;
-            temp.dest.addr=temp_addy.addr;
+
+            temp.dest.port = addr->port;
+           temp.dest.addr = addr->addr;
+
             call SocketsTable.insert(i, temp);
             dbg(TRANSPORT_CHANNEL, "True\n");
             return  TRUE;     
