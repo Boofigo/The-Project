@@ -38,7 +38,6 @@ implementation {
    {
       socket_t fd;
       socket_store_t socket;
-      socket_store_t tempsocket;
       uint16_t size;
 
       if(call SocketsTable.size()<= MAX_NUM_OF_SOCKETS)
