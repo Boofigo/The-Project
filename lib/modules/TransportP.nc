@@ -154,7 +154,7 @@ implementation {
       {
          temp = call SocketsTable.get(i);
          call SocketsTable.remove(i);
-         if(temp.fd ==fd&&!suc)
+         if(i ==fd&&!suc)
          {
             suc = TRUE;
             temp.state =LISTEN;
@@ -162,7 +162,7 @@ implementation {
             {
                dbg(TRANSPORT_CHANNEL,"Changed state to Listen!\n");
             }
-            call SocketsTable.insert(temp.fd,temp);
+            call SocketsTable.insert(i,temp);
          }
       }
       if(suc) 
