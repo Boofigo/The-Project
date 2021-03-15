@@ -73,7 +73,7 @@ implementation {
       }
       for(i;i<=MAX_NUM_OF_SOCKETS;i++)
       {
-         if(i == fd&&!suc)
+         if(i == fd)
          {
             temp = call SocketsTable.get(i);
             call SocketsTable.remove(i);
@@ -81,7 +81,7 @@ implementation {
             temp_addy.addr = addr->addr;
             //temp.dest=temp_addy;
             temp.dest.port=temp_addy.port;
-            temp.dest.addy=temp_addy.addr;
+            temp.dest.addr=temp_addy.addr;
             call SocketsTable.insert(i, temp);
             dbg(TRANSPORT_CHANNEL, "True\n");
             return  True;     
