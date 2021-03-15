@@ -46,7 +46,7 @@ implementation {
          if(!call SocketsTable.contains(i)) 
          {
             fd = i;
-            dbg(TRANSPORT_CHANNEL,"It worked again %d\n", fd);
+            dbg(TRANSPORT_CHANNEL,"Socket %d allocated\n", fd);
             call SocketsTable.insert(fd, socket);
             found = 1;
             break;
@@ -82,12 +82,12 @@ implementation {
             temp.dest.addr = addr->addr;
 
             call SocketsTable.insert(i, temp);
-            dbg(TRANSPORT_CHANNEL, "True\n");
+            dbg(TRANSPORT_CHANNEL, "Socket successfully bound\n");
             return  TRUE;     
          }  
       }
 
-      dbg(TRANSPORT_CHANNEL, "Fail\n");
+      //dbg(TRANSPORT_CHANNEL, "Fail\n");
       return  FAIL;     
    }
 
@@ -136,7 +136,7 @@ implementation {
 
       if(call SocketsTable.isEmpty())
       {
-         dbg(TRANSPORT_CHANNEL, "Fail\n");
+         // dbg(TRANSPORT_CHANNEL, "Fail\n");
          return FAIL;
       }
       for(i;i<=MAX_NUM_OF_SOCKETS;i++)
@@ -151,12 +151,12 @@ implementation {
             dbg(TRANSPORT_CHANNEL,"Changed state to Listen!\n");
 
             call SocketsTable.insert(i,temp);
-            dbg(TRANSPORT_CHANNEL, "True\n");
+            // dbg(TRANSPORT_CHANNEL, "True\n");
             return SUCCESS;
          }
       }
 
-      dbg(TRANSPORT_CHANNEL, "Fail\n");
+      // dbg(TRANSPORT_CHANNEL, "Fail\n");
       return FAIL;
   
    }
