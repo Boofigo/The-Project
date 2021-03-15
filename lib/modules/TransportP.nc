@@ -78,7 +78,7 @@ implementation {
             suc = TRUE;
             temp_addy.port = addr->port;
             temp_addy.addr = addr->addr;
-            temp.src=temp_addy;
+            temp.dest=temp_addy;
          }
          call SocketsTable.insert(i, temp);
       }
