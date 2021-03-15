@@ -42,7 +42,7 @@ implementation {
       socket_store_t socket;
       uint16_t size;
       
-      for (i = 0; i < MAX_NUM_OF_SOCKETS; i++) {
+      for (i = 0; i < MAX_NUM_OF_SOCKETS; i++) 
       {
          if(!call sMap.contains(i)) 
          {
