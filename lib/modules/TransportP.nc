@@ -43,7 +43,6 @@ implementation {
 
       if(call SocketsTable.size()<= MAX_NUM_OF_SOCKETS)
       {
-
          fd = fdw+1;
          dbg(TRANSPORT_CHANNEL,"fd value%d\n", fd);
          socket.fd=fd;
@@ -52,7 +51,7 @@ implementation {
       else
       {
          dbg(TRANSPORT_CHANNEL, "No Available Socket: return NULL\n");
-         // fd = NULL;
+         fd = NULL;
       }
       return fd;
    }
