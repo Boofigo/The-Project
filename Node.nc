@@ -267,8 +267,8 @@ implementation{
       sAddr.addr = TOS_NODE_ID;
 
       fd = call Transport.socket();
-      //call Transport.bind(fd, &sAddr);
-      //call Transport.listen(fd);
+      call Transport.bind(fd, &sAddr);
+      call Transport.listen(fd);
  
       dbg(TRANSPORT_CHANNEL, "Starting Server Timer\n");
       // call serverTimer.startPeriodic(100000);
