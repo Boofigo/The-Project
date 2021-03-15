@@ -44,7 +44,7 @@ implementation {
       if(call SocketsTable.size()<= MAX_NUM_OF_SOCKETS)
       {
          fd = fdw+1;
-         dbg(TRANSPORT_CHANNEL,"It changed %d\n", fd);
+         dbg(TRANSPORT_CHANNEL,"It worked again %d\n", fd);
          socket.fd=fd;
          call SocketsTable.insert(fd, socket);
       }
@@ -78,7 +78,7 @@ implementation {
             suc = TRUE;
             temp_addy.port = addr->port;
             temp_addy.addr = addr->addr;
-            //temp.src=temp_addy;
+            temp.src=temp_addy;
          }
          call SocketsTable.insert(i, temp);
       }
