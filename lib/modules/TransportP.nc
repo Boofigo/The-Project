@@ -36,18 +36,25 @@ implementation {
 
    command socket_t Transport.socket()
    {
+      int i;
+      int found = 0;
       socket_t fd;
       socket_store_t socket;
       uint16_t size;
-
-      if(call SocketsTable.size()<= MAX_NUM_OF_SOCKETS)
+      
+      for (i = 0; i < MAX_NUM_OF_SOCKETS; i++) {
       {
-         fd = fdw+1;
-         dbg(TRANSPORT_CHANNEL,"It worked again %d\n", fd);
-         socket.fd=fd;
-         call SocketsTable.insert(fd, socket);
+         if(!call sMap.contains(i)) 
+         {
+            fd = i;
+            dbg(TRANSPORT_CHANNEL,"It worked again %d\n", fd);
+            socket.fd=fd;
+            call SocketsTable.insert(fd, socket);
+            found = 1;
+            break;
+         }
       }
-      else
+      if(found == 0)
       {
          dbg(TRANSPORT_CHANNEL, "No Available Socket: return NULL\n");
          fd = NULL;
