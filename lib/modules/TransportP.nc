@@ -40,7 +40,6 @@ implementation {
       int found = 0;
       socket_t fd;
       socket_store_t socket;
-      uint16_t size;
       
       for (i = 1; i < MAX_NUM_OF_SOCKETS; i++) 
       {
