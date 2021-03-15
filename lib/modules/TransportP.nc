@@ -43,7 +43,7 @@ implementation {
       if(call SocketsTable.size()<= MAX_NUM_OF_SOCKETS)
       {
          fd = fdw+1;
-         dbg(TRANSPORT_CHANNEL,"It worked again %d\n", fd);
+         dbg(TRANSPORT_CHANNEL,"Yes %d\n", fd);
          socket.fd=fd;
          call SocketsTable.insert(fd, socket);
       }
