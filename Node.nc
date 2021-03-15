@@ -45,7 +45,7 @@ module Node
    uses interface Pool<neighbor> as PoolOfNeighbors;
    uses interface Timer<TMilli> as Timer; //uses timer to create periodic firing on neighbordiscovery and to not overload the network
    uses interface Random as Random; //randomize timing to create firing period
-   
+
    uses interface Timer<TMilli> as serverTimer;
    uses interface Timer<TMilli> as clientTimer;
    uses interface List<socket_t> as sockList;
@@ -116,6 +116,7 @@ implementation{
       if(newfd != NULL)
       {
          dbg(TRANSPORT_CHANNEL, "Connection Established\n");
+         call sockList.pushback(newFd);
       }
    }
 
