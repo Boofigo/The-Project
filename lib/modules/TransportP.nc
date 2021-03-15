@@ -84,7 +84,7 @@ implementation {
             temp.dest.addr=temp_addy.addr;
             call SocketsTable.insert(i, temp);
             dbg(TRANSPORT_CHANNEL, "True\n");
-            return  True;     
+            return  TRUE;     
          }  
       }
 
