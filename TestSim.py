@@ -160,6 +160,8 @@ def main():
     #s.ping(1, 8, "Hello, World");
     s.runTime(40);
     s.cmdTestServer(3,10);
+    s.runTime(40);
+    s.cmdTestServer(4,10);
     s.runTime(60);
     s.cmdTestClient(9,3,25,10,32);
     #s.routeDMP(4);
