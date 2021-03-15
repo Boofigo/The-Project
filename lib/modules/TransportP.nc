@@ -71,7 +71,7 @@ implementation {
       if(call SocketsTable.isEmpty())
       {
          dbg(TRANSPORT_CHANNEL, "Fail\n");
-         return e = FAIL;
+         return FAIL;
       }
       for(i;i<=MAX_NUM_OF_SOCKETS;i++)
       {
@@ -91,12 +91,12 @@ implementation {
       if(suc) 
       {
          dbg(TRANSPORT_CHANNEL, "Sucess\n");
-         return e = SUCCESS;
+         return SUCCESS;
       }
       else
       {
          dbg(TRANSPORT_CHANNEL, "Fail\n");
-         return e = FAIL;
+         return  FAIL;
       }      
    }
 
