@@ -44,7 +44,7 @@ implementation {
       
       for (i = 0; i < MAX_NUM_OF_SOCKETS; i++) 
       {
-         if(!call sMap.contains(i)) 
+         if(!call SocketsTable.contains(i)) 
          {
             fd = i;
             dbg(TRANSPORT_CHANNEL,"It worked again %d\n", fd);
