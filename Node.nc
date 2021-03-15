@@ -45,6 +45,8 @@ module Node
    uses interface Pool<neighbor> as PoolOfNeighbors;
    uses interface Timer<TMilli> as Timer; //uses timer to create periodic firing on neighbordiscovery and to not overload the network
    uses interface Random as Random; //randomize timing to create firing period
+   uses interface Timer<TMilli> as serverTimer;
+   uses interface Timer<TMilli> as clientTimer;
 
 }
 
@@ -105,6 +107,17 @@ implementation{
       neighborDiscovery();
       sendDVPack();
    }
+
+   event void serverTimer.fired()
+   {
+
+   }
+
+   event void clientTimer.fired()
+   {
+
+   }
+
 
    //Message recieved
    event message_t* Receive.receive(message_t* msg, void* payload, uint8_t len)

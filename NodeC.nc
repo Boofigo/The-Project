@@ -38,6 +38,12 @@ implementation {
     components new TimerMilliC() as Timer1C;
     Node.Timer-> Timer1C;
 
+    components new TimerMilliC() as serverTimerC;
+    Node.serverTimer-> serverTimerC;
+
+    components new TimerMilliC() as clientTimerC;
+    Node.clientTimer-> clientTimerC;
+
     components RandomC as Random;
     Node.Random -> Random;
     
