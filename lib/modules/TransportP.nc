@@ -73,12 +73,12 @@ implementation {
          dbg(TRANSPORT_CHANNEL, "Fail\n");
          return e = FAIL;
       }
-      for(i;i<=size;i++)
+      for(i;i<=MAX_NUM_OF_SOCKETS;i++)
       {
    
          temp = call SocketsTable.get(i);
          call SocketsTable.remove(i);
-         if(temp.fd ==fd&&!suc)
+         if(i == fd&&!suc)
          {
             suc = TRUE;
             temp_addy.port = addr->port;
