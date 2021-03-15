@@ -79,7 +79,7 @@ implementation {
             call SocketsTable.remove(i);
 
             temp.dest.port = addr->port;
-           temp.dest.addr = addr->addr;
+            temp.dest.addr = addr->addr;
 
             call SocketsTable.insert(i, temp);
             dbg(TRANSPORT_CHANNEL, "True\n");
@@ -132,38 +132,33 @@ implementation {
    command error_t Transport.listen(socket_t fd) 
    {
       socket_store_t temp;
-      error_t e;
-      uint16_t size = call SocketsTable.size();
-      bool suc = FALSE;
       uint8_t i =0;
 
       if(call SocketsTable.isEmpty())
       {
-         return e = FAIL;
+         dbg(TRANSPORT_CHANNEL, "Fail\n");
+         return FAIL;
       }
-      for(i;i<=size;i++)
+      for(i;i<=MAX_NUM_OF_SOCKETS;i++)
       {
-         temp = call SocketsTable.get(i);
-         call SocketsTable.remove(i);
-         if(i ==fd&&!suc)
+         if(i ==fd)
          {
-            suc = TRUE;
+            temp = call SocketsTable.get(i);
+            call SocketsTable.remove(i);
+
             temp.state =LISTEN;
-            if(temp.state==LISTEN)
-            {
-               dbg(TRANSPORT_CHANNEL,"Changed state to Listen!\n");
-            }
+
+            dbg(TRANSPORT_CHANNEL,"Changed state to Listen!\n");
+
             call SocketsTable.insert(i,temp);
+            dbg(TRANSPORT_CHANNEL, "True\n");
+            return SUCCESS;
          }
       }
-      if(suc) 
-      {
-         return e = SUCCESS;
-      }
-      else     
-      { 
-         return e = FAIL;
-      }  
+
+      dbg(TRANSPORT_CHANNEL, "Fail\n");
+      return FAIL;
+  
    }
 
    command void Transport.makePack(pack *Package, uint16_t src, uint16_t dest, uint16_t TTL, uint16_t protocol, uint16_t seq, uint8_t* payload, uint8_t length)
