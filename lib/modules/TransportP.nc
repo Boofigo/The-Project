@@ -42,7 +42,7 @@ implementation {
       socket_store_t socket;
       uint16_t size;
       
-      for (i = 1; i < MAX_NUM_OF_SOCKETS; i++) 
+      for (i = 2; i < MAX_NUM_OF_SOCKETS; i++) 
       {
          if(!call SocketsTable.contains(i)) 
          {
