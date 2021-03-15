@@ -72,6 +72,7 @@ implementation {
       if(call SocketsTable.isEmpty())
       {
          return e = FAIL;
+         dbg(TRANSPORT_CHANNEL, "Fail\n");
       }
       for(i;i<=size;i++)
       {
