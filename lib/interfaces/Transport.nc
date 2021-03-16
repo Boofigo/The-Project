@@ -145,5 +145,5 @@ interface Transport{
     */
    command error_t listen(socket_t fd);
 
-   command void makePack(pack *Package, uint16_t src, uint16_t dest, uint16_t TTL, uint16_t Protocol, uint16_t seq, uint8_t *payload, uint8_t length);
+   command void makePack(TCPpack *Package, uint8_t destport, uint8_t srcport, uint8_t flag, uint8_t ACK, uint8_t seq, uint8_t Awindow, uint16_t* payload);
 }

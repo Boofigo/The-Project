@@ -22,7 +22,7 @@ module TransportP {
 
 implementation {
 
-   socket_t fdw;  
+   TCPpack sendPackage;
 
    event void closeTimer.fired() {
       //if (socket.state == TIME_WAIT) 
@@ -113,7 +113,7 @@ implementation {
    command error_t Transport.connect(socket_t fd, socket_addr_t * addr)
    {
       // test
-
+      return FAIL;
    }
 
    command error_t Transport.close(socket_t fd)
@@ -159,14 +159,15 @@ implementation {
   
    }
 
-   command void Transport.makePack(pack *Package, uint16_t src, uint16_t dest, uint16_t TTL, uint16_t protocol, uint16_t seq, uint8_t* payload, uint8_t length)
+   command void Transport.makePack(TCPpack *Package, uint8_t destport, uint8_t srcport, uint8_t flag, uint8_t ACK, uint8_t seq, uint8_t Awindow, uint16_t* payload)
    {
-      Package->src = src;
-      Package->dest = dest;
-      Package->TTL = TTL;
+      Package->destport = destport;
+      Package->srcport = srcport;
+      Package->flag = flag;
+      Package->ACK = ACK;
       Package->seq = seq;
-      Package->protocol = protocol;
-      memcpy(Package->payload, payload, length);
+      Package->Awindow = Awindow;
+      memcpy(Package->payload, payload, TCP_PACKET_MAX_PAYLOAD_SIZE);
    }
 
 }
