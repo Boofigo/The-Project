@@ -163,6 +163,17 @@ implementation{
                   destAddr.port = myMsg->seq;
                   destAddr.addr = myMsg->src;
                   fd = call Transport.accept(fd, &destAddr);
+                  if(fd != NULL)
+                  {
+                     dbg(TRANSPORT_CHANNEL, "Sending Acknoweldgement\n");
+
+                     makePack(&sendPackage, myMsg->dest, myMsg->src, 19, 5, myMsg->seq, (uint8_t *)myMsg->payload, sizeof(myMsg->payload));
+                     pushToPacketList(sendPackage);
+                     call Sender.send(sendPackage, myRoutingTable.nodes[myMsg->src].nextHop);
+                  }
+                  break;
+               case 5:
+                  dbg(TRANSPORT_CHANNEL, "Acknoweldgement recieved\n");
                   break;
                default:
                   break;
