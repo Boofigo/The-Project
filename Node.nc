@@ -112,6 +112,8 @@ implementation{
 
    event void serverTimer.fired()
    {
+      socket_t newfd;
+
       newfd = call Transport.accept();
       if(newfd != NULL)
       {
@@ -306,8 +308,8 @@ implementation{
       dest.port = destPort;
       dest.addr = destination;
 
-      // fd = call Transport.socket();
-      // call Transport.bind(fd, &src);
+      fd = call Transport.socket();
+      call Transport.bind(fd, &src);
 
       // call Transport.connect(fd, &dest);
       // Connects

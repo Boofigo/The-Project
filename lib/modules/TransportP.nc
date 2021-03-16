@@ -63,7 +63,6 @@ implementation {
    command error_t Transport.bind(socket_t fd, socket_addr_t *addr) 
    {
       socket_store_t temp;
-      socket_addr_t temp_addy;
       uint8_t i =1;
 
       if(call SocketsTable.isEmpty())
