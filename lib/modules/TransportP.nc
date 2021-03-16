@@ -143,11 +143,11 @@ implementation {
 
    command error_t Transport.connect(socket_t fd, socket_addr_t * addr)
    {
-      socket_port_t message;
-      message = addr->port;
+      char* message;
+      message = "SO it doesn't hate";
 
       // makePack(&sendPackage, addr->addr, TOS_NODE_ID, SYN_Flag, 0, (uint8_t*) message);
-      makePack(&sendPackage, TOS_NODE_ID, addr->addr, 2, 4, 0, (uint8_t*) message, (uint8_t) sizeof(message));
+      makePack(&sendPackage, TOS_NODE_ID, addr->addr, 2, 4, addr->port, (uint8_t*) message, (uint8_t) sizeof(message));
       call TransportSender.send(sendPackage, addr->addr);
       dbg(TRANSPORT_CHANNEL, "Test 1\n");
       return TRUE;
