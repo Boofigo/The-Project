@@ -119,7 +119,7 @@ implementation {
       char* message;
       message = "SO it doesn't hate";
 
-      makePack(&sendPackage, addr->addr, TOS_NODE_ID, SYN_Flag, 0, (uint8_t*) message);
+      // makePack(&sendPackage, addr->addr, TOS_NODE_ID, SYN_Flag, 0, (uint8_t*) message);
       makePack(&sendPackage, TOS_NODE_ID, addr->addr, 0, 1, 0, (uint8_t*) message, (uint8_t) sizeof(message));
       call TransportSender.send(sendPackage, AM_BROADCAST_ADDR);
       return TRUE;
