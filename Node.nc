@@ -48,7 +48,7 @@ module Node
 
    uses interface Timer<TMilli> as serverTimer;
    uses interface Timer<TMilli> as clientTimer;
-   uses interface List<socket_t> as sockList;
+   uses interface List<socket_t*> as sockList;
 
 }
 
