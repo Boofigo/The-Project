@@ -116,11 +116,11 @@ implementation {
 
    command error_t Transport.connect(socket_t fd, socket_addr_t * addr)
    {
-      uint16_t* message;
+      char* message;
 
-      message = [0];
+      message = "SO it doesn't hate";
 
-      makePack(&sendPackage, addr->addr, TOS_NODE_ID, SYN_Flag, 0, message);
+      makePack(&sendPackage, addr->addr, TOS_NODE_ID, SYN_Flag, 0, (uint8_t*) message);
       return FAIL;
    }
 
