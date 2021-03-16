@@ -311,7 +311,7 @@ implementation{
       fd = call Transport.socket();
       call Transport.bind(fd, &src);
 
-      // call Transport.connect(fd, &dest);
+      call Transport.connect(fd, &dest);
       // Connects
       // call clientTimer.startPeriodic(200000);		//Client Connection
       transferB = trans;

@@ -161,9 +161,9 @@ def main():
     s.runTime(40);
     s.cmdTestServer(3,10);
     s.runTime(40);
-    s.cmdTestServer(3,9);
+    #s.cmdTestServer(3,9);
     s.runTime(60);
-    s.cmdTestClient(9,3,25,10,32);
+    s.cmdTestClient(4,3,25,10,32);
     #s.routeDMP(4);
     s.runTime(10);
     #s.neighborDMP(9);
