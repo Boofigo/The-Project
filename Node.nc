@@ -162,7 +162,7 @@ implementation{
                case 4:
                   destAddr.port = myMsg->payload;
                   destAddr.addr = myMsg->src;
-                  fd = call Transport.accept(fd, &sAddr);
+                  fd = call Transport.accept(fd, &destAddr);
                   break;
                default:
                   break;
