@@ -103,7 +103,7 @@ implementation {
       // test
    }
 
-   command error_t Transport.receive(TCPpack* package)
+   command error_t Transport.receive(pack* package)
    {
       dbg(TRANSPORT_CHANNEL, "Test 2\n");
       return FAIL;
