@@ -77,8 +77,7 @@ implementation {
             temp = call SocketsTable.get(i);
             call SocketsTable.remove(i);
 
-            temp.dest.port = addr->port;
-            temp.dest.addr = addr->addr;
+            temp.src.port = addr->port;
 
             call SocketsTable.insert(i, temp);
             dbg(TRANSPORT_CHANNEL, "Socket successfully bound\n");

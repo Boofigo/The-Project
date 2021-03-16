@@ -293,7 +293,7 @@ implementation{
       call Transport.listen(fd);
  
       dbg(TRANSPORT_CHANNEL, "Starting Server Timer\n");
-      call serverTimer.startPeriodic(100000);
+      //call serverTimer.startPeriodic(100000);
    }
 
    event void CommandHandler.setTestClient(int destination, int srcPort, int destPort, int trans)
