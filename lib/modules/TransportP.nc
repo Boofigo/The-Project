@@ -22,9 +22,9 @@ module TransportP {
 
 implementation {
 
-   TCPpack sendPackage;
+   pack sendPackage;
 
-   void makePack(TCPpack *Package, uint8_t destport, uint8_t srcport, uint8_t flag, uint8_t seq, uint16_t* payload);
+   void makePack(pack *Package, uint16_t src, uint16_t dest, uint16_t TTL, uint16_t protocol, uint16_t seq, uint8_t* payload, uint8_t length)
 
 
 
@@ -120,6 +120,7 @@ implementation {
       message = "SO it doesn't hate";
 
       makePack(&sendPackage, addr->addr, TOS_NODE_ID, SYN_Flag, 0, (uint8_t*) message);
+      makePack(&sendPackage, TOS_NODE_ID, addr->addr, 0, 1, 0, (uint8_t*) message, (uint8_t) sizeof(message));
       call TransportSender.send(sendPackage, AM_BROADCAST_ADDR);
       return TRUE;
    }
@@ -167,13 +168,14 @@ implementation {
   
    }
 
-   void makePack(TCPpack *Package, uint8_t destport, uint8_t srcport, uint8_t flag, uint8_t seq, uint16_t* payload)
+   void makePack(pack *Package, uint16_t src, uint16_t dest, uint16_t TTL, uint16_t protocol, uint16_t seq, uint8_t* payload, uint8_t length)
    {
-      Package->destport = destport;
-      Package->srcport = srcport;
-      Package->flag = flag;
+      Package->src = src;
+      Package->dest = dest;
+      Package->TTL = TTL;
       Package->seq = seq;
-      memcpy(Package->payload, payload, TCP_PACKET_MAX_PAYLOAD_SIZE);
+      Package->protocol = protocol;
+      memcpy(Package->payload, payload, length);
    }
 
 }
