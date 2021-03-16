@@ -116,7 +116,7 @@ implementation {
 
       message = [0];
 
-      makePack(&sendPackage, , TOS_NODE_ID, SYN_Flag, 0, message);
+      makePack(&sendPackage, addr->addr, TOS_NODE_ID, SYN_Flag, 0, message);
       return FAIL;
    }
 
