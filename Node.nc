@@ -115,11 +115,11 @@ implementation{
       socket_t newfd;
 
       //newfd = call Transport.accept(fd);
-      if(newfd != NULL)
-      {
-         dbg(TRANSPORT_CHANNEL, "Connection Established\n");
+      //if(newfd != NULL)
+      //{
+         //dbg(TRANSPORT_CHANNEL, "Connection Established\n");
          //call sockList.pushback(newFd);
-      }
+      //}
    }
 
    event void clientTimer.fired()
