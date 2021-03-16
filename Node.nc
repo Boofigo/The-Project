@@ -182,7 +182,7 @@ implementation{
                   break;
                case 6:
                   dbg(TRANSPORT_CHANNEL, "Packet %d recieved\n", myMsg->seq);
-                  dbg(TRANSPORT_CHANNEL, "Sending Acknowledgement\n", );
+                  dbg(TRANSPORT_CHANNEL, "Sending Acknowledgement\n");
 
                   makePack(&sendPackage, myMsg->dest, myMsg->src, 19, 7, myMsg->seq, (uint8_t *)myMsg->payload, sizeof(myMsg->payload));
                   pushToPacketList(sendPackage);
