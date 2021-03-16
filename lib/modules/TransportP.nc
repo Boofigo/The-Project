@@ -112,7 +112,11 @@ implementation {
 
    command error_t Transport.connect(socket_t fd, socket_addr_t * addr)
    {
-      // test
+      uint16_t* message;
+
+      message = [0];
+
+      makePack(&sendPackage, , TOS_NODE_ID, SYN_Flag, 0, message);
       return FAIL;
    }
 
@@ -159,14 +163,12 @@ implementation {
   
    }
 
-   command void Transport.makePack(TCPpack *Package, uint8_t destport, uint8_t srcport, uint8_t flag, uint8_t ACK, uint8_t seq, uint8_t Awindow, uint16_t* payload)
+   command void Transport.makePack(TCPpack *Package, uint8_t destport, uint8_t srcport, uint8_t flag, uint8_t seq, uint16_t* payload)
    {
       Package->destport = destport;
       Package->srcport = srcport;
       Package->flag = flag;
-      Package->ACK = ACK;
       Package->seq = seq;
-      Package->Awindow = Awindow;
       memcpy(Package->payload, payload, TCP_PACKET_MAX_PAYLOAD_SIZE);
    }
 
