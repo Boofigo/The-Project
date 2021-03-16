@@ -165,7 +165,7 @@ implementation{
                   fd = call Transport.accept(fd, &destAddr);
                   if(fd != NULL)
                   {
-                     dbg(TRANSPORT_CHANNEL, "Sending Acknoweldgement\n");
+                     dbg(TRANSPORT_CHANNEL, "Sending Acknowledgement\n");
 
                      makePack(&sendPackage, myMsg->dest, myMsg->src, 19, 5, myMsg->seq, (uint8_t *)myMsg->payload, sizeof(myMsg->payload));
                      pushToPacketList(sendPackage);
@@ -174,6 +174,35 @@ implementation{
                   break;
                case 5:
                   dbg(TRANSPORT_CHANNEL, "Acknoweldgement recieved\n");
+                  dbg(TRANSPORT_CHANNEL, "Starting Transmission\n");
+
+                  makePack(&sendPackage, myMsg->dest, myMsg->src, 19, 6, 1, (uint8_t *)myMsg->payload, sizeof(myMsg->payload));
+                  pushToPacketList(sendPackage);
+                  call Sender.send(sendPackage, myRoutingTable.nodes[myMsg->src].nextHop);
+                  break;
+               case 6:
+                  dbg(TRANSPORT_CHANNEL, "Packet %d recieved\n", myMsg->seq);
+                  dbg(TRANSPORT_CHANNEL, "Sending Acknowledgement\n", );
+
+                  makePack(&sendPackage, myMsg->dest, myMsg->src, 19, 7, myMsg->seq, (uint8_t *)myMsg->payload, sizeof(myMsg->payload));
+                  pushToPacketList(sendPackage);
+                  call Sender.send(sendPackage, myRoutingTable.nodes[myMsg->src].nextHop);
+                  break;
+               case 7:
+                  dbg(TRANSPORT_CHANNEL, "Acknowledgement for packet %d recieved\n", myMsg->seq);
+                  if(myMsg->seq + 1 <= transferB)
+                  {
+                     dbg(TRANSPORT_CHANNEL, "Sending packet %d\n", myMsg->seq + 1);
+
+                     makePack(&sendPackage, myMsg->dest, myMsg->src, 19, 6, myMsg->seq + 1, (uint8_t *)myMsg->payload, sizeof(myMsg->payload));
+                     pushToPacketList(sendPackage);
+                     call Sender.send(sendPackage, myRoutingTable.nodes[myMsg->src].nextHop);
+                  }
+                  else
+                  {
+                     dbg(TRANSPORT_CHANNEL, "Transmission finished\n");
+                  }
+                  
                   break;
                default:
                   break;
@@ -324,7 +353,7 @@ implementation{
    {
       socket_addr_t src;
       socket_addr_t dest;
-
+      transferB = trans;
       dbg(TRANSPORT_CHANNEL, "Test Client Starting\n");
 
       src.port = srcPort;
@@ -338,7 +367,7 @@ implementation{
       call Transport.connect(fd, &dest);
       // Connects
       // call clientTimer.startPeriodic(200000);		//Client Connection
-      transferB = trans;
+      
    }
 
    event void CommandHandler.setAppServer(){}
