@@ -93,8 +93,30 @@ implementation {
       return  FAIL;     
    }
 
-   command socket_t Transport.accept(socket_t fd)
+   command socket_t Transport.accept(socket_t fd, socket_addr_t *addr)
    {
+      dbg(TRANSPORT_CHANNEL, "Request from node %d to send recieved on port %d\n", addr->addr, addr->port );
+      if(call SocketsTable.isEmpty())
+      {
+         dbg(TRANSPORT_CHANNEL, "Fail\n");
+         return NULL;
+      }
+      for(i;i<=MAX_NUM_OF_SOCKETS;i++)
+      {
+         if(i == fd)
+         {
+            temp = call SocketsTable.get(i);
+            call SocketsTable.remove(i);
+
+            temp.dest.port = addr->port;
+            temp.dest.addr = addr->addr;
+
+            call SocketsTable.insert(i, temp);
+            dbg(TRANSPORT_CHANNEL, "Accepting socket\n");
+            return  fd;     
+         }  
+      }
+      return NULL;
       // test
    }
 
@@ -122,7 +144,7 @@ implementation {
       message = "SO it doesn't hate";
 
       // makePack(&sendPackage, addr->addr, TOS_NODE_ID, SYN_Flag, 0, (uint8_t*) message);
-      makePack(&sendPackage, TOS_NODE_ID, addr->addr, 2, 0, 0, (uint8_t*) message, (uint8_t) sizeof(message));
+      makePack(&sendPackage, TOS_NODE_ID, addr->addr, 2, 4, 0, (uint8_t*) message, (uint8_t) sizeof(message));
       call TransportSender.send(sendPackage, addr->addr);
       dbg(TRANSPORT_CHANNEL, "Test 1\n");
       return TRUE;
