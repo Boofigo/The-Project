@@ -143,8 +143,8 @@ implementation {
 
    command error_t Transport.connect(socket_t fd, socket_addr_t * addr)
    {
-      char* message;
-      message = "SO it doesn't hate";
+      socket_port_t message;
+      message = addr->port;
 
       // makePack(&sendPackage, addr->addr, TOS_NODE_ID, SYN_Flag, 0, (uint8_t*) message);
       makePack(&sendPackage, TOS_NODE_ID, addr->addr, 2, 4, 0, (uint8_t*) message, (uint8_t) sizeof(message));

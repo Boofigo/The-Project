@@ -114,7 +114,7 @@ implementation{
    {
       socket_t newfd;
 
-      newfd = call Transport.accept(fd);
+      //newfd = call Transport.accept(fd);
       if(newfd != NULL)
       {
          dbg(TRANSPORT_CHANNEL, "Connection Established\n");
@@ -153,12 +153,16 @@ implementation{
          {
             switch(myMsg->protocol)
             {
+               socket_addr_t destAddr;
+
                case 0:
                   dbg(FLOODING_CHANNEL,"Packet from %d has arrived with Msg: %s\n", myMsg->src, myMsg->payload);
                   pushToPacketList(*myMsg); //push to seenpacketlist
                   break;
                case 4:
-                  fd = call Transport.accept(fd);
+                  destAddr.port = myMsg->payload;
+                  destAddr.addr = myMsg->src;
+                  fd = call Transport.accept(fd, &sAddr);
                   break;
                default:
                   break;
