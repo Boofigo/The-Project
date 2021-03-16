@@ -24,6 +24,10 @@ implementation {
 
    TCPpack sendPackage;
 
+   void makePack(TCPpack *Package, uint8_t destport, uint8_t srcport, uint8_t flag, uint8_t seq, uint16_t* payload);
+
+
+
    event void closeTimer.fired() {
       //if (socket.state == TIME_WAIT) 
       //{
@@ -163,7 +167,7 @@ implementation {
   
    }
 
-   command void Transport.makePack(TCPpack *Package, uint8_t destport, uint8_t srcport, uint8_t flag, uint8_t seq, uint16_t* payload)
+   void makePack(TCPpack *Package, uint8_t destport, uint8_t srcport, uint8_t flag, uint8_t seq, uint16_t* payload)
    {
       Package->destport = destport;
       Package->srcport = srcport;
