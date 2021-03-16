@@ -106,7 +106,7 @@ implementation {
    command error_t Transport.receive(TCPpack* package)
    {
       dbg(TRANSPORT_CHANNEL, "Test 2\n");
-      Return FAIL;
+      return FAIL;
       // test
    }
 
