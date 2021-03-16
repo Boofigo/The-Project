@@ -44,7 +44,7 @@ implementation {
     components new TimerMilliC() as clientTimerC;
     Node.clientTimer-> clientTimerC;
 
-    components new ListC(neighbor*, 64) as sockListC;
+    components new ListC(socket_t*, 64) as sockListC;
     Node.sockList -> sockListC;
 
     components RandomC as Random;
