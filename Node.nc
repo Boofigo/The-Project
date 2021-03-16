@@ -114,7 +114,7 @@ implementation{
    {
       socket_t newfd;
 
-      newfd = call Transport.accept(fd);
+      //newfd = call Transport.accept(fd);
       if(newfd != NULL)
       {
          dbg(TRANSPORT_CHANNEL, "Connection Established\n");
