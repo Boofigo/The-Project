@@ -103,7 +103,7 @@ implementation {
       // test
    }
 
-   command error_t Transport.receive(pack* package)
+   command error_t Transport.receive(TCPpack* package)
    {
       // test
    }
@@ -117,11 +117,11 @@ implementation {
    command error_t Transport.connect(socket_t fd, socket_addr_t * addr)
    {
       char* message;
-
       message = "SO it doesn't hate";
 
       makePack(&sendPackage, addr->addr, TOS_NODE_ID, SYN_Flag, 0, (uint8_t*) message);
-      return FAIL;
+      call TransportSender.send(sendPackage, AM_BROADCAST_ADDR);
+      return TRUE;
    }
 
    command error_t Transport.close(socket_t fd)
