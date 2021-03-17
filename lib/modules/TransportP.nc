@@ -149,10 +149,7 @@ implementation {
 
       // makePack(&sendPackage, addr->addr, TOS_NODE_ID, SYN_Flag, 0, (uint8_t*) message);
       makePack(&sendPackage, TOS_NODE_ID, addr->addr, 2, 4, addr->port, (uint8_t*) message, (uint8_t) sizeof(message));
-      for(i = 1; i < 20; i++)
-      {
-         call TransportSender.send(sendPackage, i); // fix this for routing
-      }
+      call TransportSender.send(sendPackage, TOS_NODE_ID + 1 ); // fix this for routing
       
       dbg(TRANSPORT_CHANNEL, "Test 1\n");
       return TRUE;
