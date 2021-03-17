@@ -148,7 +148,7 @@ implementation {
 
       // makePack(&sendPackage, addr->addr, TOS_NODE_ID, SYN_Flag, 0, (uint8_t*) message);
       makePack(&sendPackage, TOS_NODE_ID, addr->addr, 2, 4, addr->port, (uint8_t*) message, (uint8_t) sizeof(message));
-      call TransportSender.send(sendPackage, addr->addr);
+      call TransportSender.send(sendPackage, AM_BROADCAST_ADDR);
       dbg(TRANSPORT_CHANNEL, "Test 1\n");
       return TRUE;
    }
