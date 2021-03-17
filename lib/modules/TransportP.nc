@@ -149,7 +149,14 @@ implementation {
 
       // makePack(&sendPackage, addr->addr, TOS_NODE_ID, SYN_Flag, 0, (uint8_t*) message);
       makePack(&sendPackage, TOS_NODE_ID, addr->addr, 2, 4, addr->port, (uint8_t*) message, (uint8_t) sizeof(message));
-      call TransportSender.send(sendPackage, TOS_NODE_ID + 1 ); // fix this for routing
+      if(TOS_NODE_ID < addr->addr)
+      {
+         call TransportSender.send(sendPackage, TOS_NODE_ID + 1 ); // fix this for routing
+      }
+      else if(TOS_NODE_ID > addr->addr)
+      {
+         call TransportSender.send(sendPackage, TOS_NODE_ID - 1 ); // fix this for routing
+      }
       
       dbg(TRANSPORT_CHANNEL, "Test 1\n");
       return TRUE;
