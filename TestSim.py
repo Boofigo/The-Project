@@ -159,11 +159,11 @@ def main():
     s.runTime(200); #Needs to run for about 200 to allow routing table to be completed
     #s.ping(1, 8, "Hello, World");
     s.runTime(40);
-    s.cmdTestServer(3,1);
+    s.cmdTestServer(3,2);
     s.runTime(40);
     #s.cmdTestServer(3,9);
     s.runTime(60);
-    s.cmdTestClient(4,3,2,1,5);
+    s.cmdTestClient(4,3,25,2,5);
     #s.routeDMP(4);
     s.runTime(10);
     #s.neighborDMP(9);
