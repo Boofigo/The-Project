@@ -158,7 +158,7 @@ implementation {
          call TransportSender.send(sendPackage, TOS_NODE_ID - 1 ); // fix this for routing
       }
       
-      dbg(TRANSPORT_CHANNEL, "Test 1\n");
+      dbg(TRANSPORT_CHANNEL, "Sending request to send data to node %d\n", addr->addr);
       return TRUE;
    }
 
