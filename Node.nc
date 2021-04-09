@@ -359,7 +359,7 @@ implementation{
       sAddr.port = sPort;
       sAddr.addr = TOS_NODE_ID;
       fd = call Transport.socket();
-      fd.effectiveWindow = window;
+      fd->effectiveWindow = window;
       dbg(TRANSPORT_CHANNEL, "Window size %d\n", fd.effectiveWindow);
       call Transport.bind(fd, &sAddr);
       call Transport.listen(fd);
