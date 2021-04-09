@@ -174,7 +174,7 @@ implementation{
                   break;
                case 5:
                   dbg(TRANSPORT_CHANNEL, "Acknoweldgement recieved\n");
-                  dbg(TRANSPORT_CHANNEL, "Starting Transmission\n");
+                  dbg(TRANSPORT_CHANNEL, "Starting Data Transmission\n");
 
                   makePack(&sendPackage, myMsg->dest, myMsg->src, 19, 6, 1, (uint8_t *)myMsg->payload, sizeof(myMsg->payload));
                   pushToPacketList(sendPackage);
