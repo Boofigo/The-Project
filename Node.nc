@@ -359,7 +359,7 @@ implementation{
       sAddr.port = sPort;
       sAddr.addr = TOS_NODE_ID;
       fd = call Transport.socket();
-      call Transport.bind(fd, &sAddr,window);
+      call Transport.bind(fd, &sAddr, window);
       call Transport.listen(fd);
  
       dbg(TRANSPORT_CHANNEL, "Starting Server Timer\n");
@@ -379,7 +379,7 @@ implementation{
       dest.addr = destination;
 
       fd = call Transport.socket();
-      call Transport.bind(fd, &src);
+      call Transport.bind(fd, &src, 0);
 
       call Transport.connect(fd, &dest);
       // Connects

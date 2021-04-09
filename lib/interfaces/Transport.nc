@@ -38,7 +38,7 @@ interface Transport{
     * @return error_t - SUCCESS if you were able to bind this socket, FAIL
     *       if you were unable to bind.
     */
-   command error_t bind(socket_t fd, socket_addr_t *addr,uint8_t window);
+   command error_t bind(socket_t fd, socket_addr_t *addr, uint8_t window);
 
    /**
     * Checks to see if there are socket connections to connect to and
