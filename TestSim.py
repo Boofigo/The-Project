@@ -133,15 +133,12 @@ class TestSim:
 
     def cmdTestServer(self, address, port):
         #print 'Listening for connections..', address, port;
-        self.sendCMD(self.CMD_TEST_SERVER, address,"{0}".format(chr(port)));
+        self.sendCMD(self.CMD_TEST_SERVER, address,"{0}{1}".format(chr(port),chr(window)));
 
     def cmdTestClient(self, address, destination, sPort, dPort, transfer):
         #print 'Listening for connections...', address, destination, sPort, dPort, transfer;
         self.sendCMD(self.CMD_TEST_CLIENT, address, "{0}{1}{2}{3}".format(chr(destination),chr(sPort),chr(dPort),chr(transfer)));
 
-    # My Commands
-    #def findNeighbors(self, source, msg):
-    #    self.sendCMD(self.CMD_NEIGHBOR_DUMP, source, "{0}{1}".format(chr(dest),msg));
 
 def main():
     s = TestSim();
@@ -159,7 +156,7 @@ def main():
     s.runTime(200); #Needs to run for about 200 to allow routing table to be completed
     #s.ping(1, 8, "Hello, World");
     s.runTime(40);
-    s.cmdTestServer(3,2);
+    s.cmdTestServer(3,2,3);
     s.runTime(40);
     #s.cmdTestServer(3,9);
     s.runTime(60);

@@ -350,12 +350,12 @@ implementation{
    event void CommandHandler.printDistanceVector(){}
 
 
-   event void CommandHandler.setTestServer(uint8_t sPort)
+   event void CommandHandler.setTestServer(uint8_t sPort, uint8_t window)
    {
       socket_addr_t sAddr;
 
       dbg(TRANSPORT_CHANNEL, "Test Server Starting\n");
-
+      dbg(TRANSPORT_CHANNEL, "Window size %d\n", window)
       sAddr.port = sPort;
       sAddr.addr = TOS_NODE_ID;
 
