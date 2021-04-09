@@ -355,7 +355,7 @@ implementation{
       socket_addr_t sAddr;
 
       dbg(TRANSPORT_CHANNEL, "Test Server Starting\n");
-      dbg(TRANSPORT_CHANNEL, "Window size %d\n", window)
+      dbg(TRANSPORT_CHANNEL, "Window size %d\n", window);
       sAddr.port = sPort;
       sAddr.addr = TOS_NODE_ID;
 
