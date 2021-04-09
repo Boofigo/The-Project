@@ -64,7 +64,7 @@ implementation {
       return fd;
    }
 
-   command error_t Transport.bind(socket_t fd, socket_addr_t *addr) 
+   command error_t Transport.bind(socket_t fd, socket_addr_t *addr, uint8_t window) 
    {
       socket_store_t temp;
       uint8_t i =1;
@@ -82,7 +82,7 @@ implementation {
             call SocketsTable.remove(i);
 
             temp.src = addr->port;
-
+            temp.effectiveWindow = window;
             call SocketsTable.insert(i, temp);
             dbg(TRANSPORT_CHANNEL, "Socket successfully bound\n");
             return  TRUE;     

@@ -359,9 +359,7 @@ implementation{
       sAddr.port = sPort;
       sAddr.addr = TOS_NODE_ID;
       fd = call Transport.socket();
-      fd->effectiveWindow = window;
-      dbg(TRANSPORT_CHANNEL, "Window size %d\n", fd.effectiveWindow);
-      call Transport.bind(fd, &sAddr);
+      call Transport.bind(fd, &sAddr,window);
       call Transport.listen(fd);
  
       dbg(TRANSPORT_CHANNEL, "Starting Server Timer\n");
