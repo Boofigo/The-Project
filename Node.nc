@@ -199,7 +199,7 @@ implementation{
                   break;
                case 7:
                   dbg(TRANSPORT_CHANNEL, "Acknowledgement for packet %d recieved\n", myMsg->seq);
-                  if(lastSent <= transferB)
+                  if(lastSent+ 1 <= transferB && lastSent <= transferB)
                   {
                      dbg(TRANSPORT_CHANNEL, "Sending packet %d\n", lastSent + 1);
                      lastSent = lastSent + 1;
