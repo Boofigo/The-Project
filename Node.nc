@@ -180,7 +180,7 @@ implementation{
                   dbg(TRANSPORT_CHANNEL, "Window size of node %d: %d\n",myMsg->src , myMsg->seq);
                   dbg(TRANSPORT_CHANNEL, "Starting Data Transmission\n");
 
-                  for(i = 1; i <= window; i++)
+                  for(i = 1; i <= myMsg->seq; i++)
                   {
                      dbg(TRANSPORT_CHANNEL, "Sending packet %d\n", i);
                      makePack(&sendPackage, myMsg->dest, myMsg->src, 19, 6, i, (uint8_t *)myMsg->payload, sizeof(myMsg->payload));
