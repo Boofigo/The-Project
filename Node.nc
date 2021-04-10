@@ -60,6 +60,7 @@ implementation{
 
    socket_t *fd;
    int transferB = 0;
+   int lastSent = 0;
 
    // Prototypes
    void makePack(pack *Package, uint16_t src, uint16_t dest, uint16_t TTL, uint16_t Protocol, uint16_t seq, uint8_t *payload, uint8_t length);
@@ -155,6 +156,7 @@ implementation{
             {
                socket_addr_t destAddr;
                uint8_t window; 
+               uint8_t i;
 
                case 0:
                   dbg(FLOODING_CHANNEL,"Packet from %d has arrived with Msg: %s\n", myMsg->src, myMsg->payload);
@@ -178,9 +180,13 @@ implementation{
                   dbg(TRANSPORT_CHANNEL, "Window size of node %d: %d\n",myMsg->src , myMsg->seq);
                   dbg(TRANSPORT_CHANNEL, "Starting Data Transmission\n");
 
-                  makePack(&sendPackage, myMsg->dest, myMsg->src, 19, 6, 1, (uint8_t *)myMsg->payload, sizeof(myMsg->payload));
-                  pushToPacketList(sendPackage);
-                  call Sender.send(sendPackage, myRoutingTable.nodes[myMsg->src].nextHop);
+                  for(i = 1; i <= window; i++)
+                  {
+                     makePack(&sendPackage, myMsg->dest, myMsg->src, 19, 6, i, (uint8_t *)myMsg->payload, sizeof(myMsg->payload));
+                     pushToPacketList(sendPackage);
+                     call Sender.send(sendPackage, myRoutingTable.nodes[myMsg->src].nextHop);
+                     lastSent = i;
+                  }
                   break;
                case 6:
                   dbg(TRANSPORT_CHANNEL, "Packet %d recieved\n", myMsg->seq);
@@ -192,11 +198,11 @@ implementation{
                   break;
                case 7:
                   dbg(TRANSPORT_CHANNEL, "Acknowledgement for packet %d recieved\n", myMsg->seq);
-                  if(myMsg->seq + 1 <= transferB)
+                  if(myMsg->seq + 1 <= transferB && lastSent <= transferB)
                   {
-                     dbg(TRANSPORT_CHANNEL, "Sending packet %d\n", myMsg->seq + 1);
+                     dbg(TRANSPORT_CHANNEL, "Sending packet %d\n", lastSent + 1);
 
-                     makePack(&sendPackage, myMsg->dest, myMsg->src, 19, 6, myMsg->seq + 1, (uint8_t *)myMsg->payload, sizeof(myMsg->payload));
+                     makePack(&sendPackage, myMsg->dest, myMsg->src, 19, 6, lastSent + 1, (uint8_t *)myMsg->payload, sizeof(myMsg->payload));
                      pushToPacketList(sendPackage);
                      call Sender.send(sendPackage, myRoutingTable.nodes[myMsg->src].nextHop);
                   }
