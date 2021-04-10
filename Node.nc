@@ -202,8 +202,8 @@ implementation{
                   if(myMsg->seq + 1 <= transferB && lastSent <= transferB)
                   {
                      dbg(TRANSPORT_CHANNEL, "Sending packet %d\n", lastSent + 1);
-
-                     makePack(&sendPackage, myMsg->dest, myMsg->src, 19, 6, lastSent + 1, (uint8_t *)myMsg->payload, sizeof(myMsg->payload));
+                     lastSent = lastSent + 1;
+                     makePack(&sendPackage, myMsg->dest, myMsg->src, 19, 6, lastSent, (uint8_t *)myMsg->payload, sizeof(myMsg->payload));
                      pushToPacketList(sendPackage);
                      call Sender.send(sendPackage, myRoutingTable.nodes[myMsg->src].nextHop);
                   }
