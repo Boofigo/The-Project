@@ -182,6 +182,7 @@ implementation{
 
                   for(i = 1; i <= window; i++)
                   {
+                     dbg(TRANSPORT_CHANNEL, "Sending packet %d\n", i);
                      makePack(&sendPackage, myMsg->dest, myMsg->src, 19, 6, i, (uint8_t *)myMsg->payload, sizeof(myMsg->payload));
                      pushToPacketList(sendPackage);
                      call Sender.send(sendPackage, myRoutingTable.nodes[myMsg->src].nextHop);
