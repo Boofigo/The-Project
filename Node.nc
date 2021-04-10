@@ -199,13 +199,17 @@ implementation{
                   break;
                case 7:
                   dbg(TRANSPORT_CHANNEL, "Acknowledgement for packet %d recieved\n", myMsg->seq);
-                  if(myMsg->seq + 1 <= transferB && lastSent <= transferB)
+                  if(lastSent <= transferB)
                   {
                      dbg(TRANSPORT_CHANNEL, "Sending packet %d\n", lastSent + 1);
                      lastSent = lastSent + 1;
                      makePack(&sendPackage, myMsg->dest, myMsg->src, 19, 6, lastSent, (uint8_t *)myMsg->payload, sizeof(myMsg->payload));
                      pushToPacketList(sendPackage);
                      call Sender.send(sendPackage, myRoutingTable.nodes[myMsg->src].nextHop);
+                  }
+                  else if(lastSent != transferB)
+                  {
+                     
                   }
                   else
                   {
