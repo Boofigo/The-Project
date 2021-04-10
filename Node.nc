@@ -167,7 +167,7 @@ implementation{
                   {
                      dbg(TRANSPORT_CHANNEL, "Sending Acknowledgement\n");
 
-                     makePack(&sendPackage, myMsg->dest, myMsg->src, 19, 5, fd->effectiveWindow, (uint8_t *)myMsg->payload, sizeof(myMsg->payload));
+                     makePack(&sendPackage, myMsg->dest, myMsg->src, 19, 5, fd.effectiveWindow, (uint8_t *)myMsg->payload, sizeof(myMsg->payload));
                      pushToPacketList(sendPackage);
                      call Sender.send(sendPackage, myRoutingTable.nodes[myMsg->src].nextHop);
                   }
