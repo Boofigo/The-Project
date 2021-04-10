@@ -207,7 +207,7 @@ implementation{
                      pushToPacketList(sendPackage);
                      call Sender.send(sendPackage, myRoutingTable.nodes[myMsg->src].nextHop);
                   }
-                  else if(lastSent != transferB)
+                  else if(myMsg->seq != transferB)
                   {
                      
                   }
