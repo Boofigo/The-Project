@@ -83,7 +83,6 @@ implementation {
 
             temp.src = addr->port;
             temp.effectiveWindow = window;
-            dbg(TRANSPORT_CHANNEL, "Socket successfully bound\n");
 
             call SocketsTable.insert(i, temp);
             dbg(TRANSPORT_CHANNEL, "Socket successfully bound\n");
