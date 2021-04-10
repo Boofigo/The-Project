@@ -210,7 +210,7 @@ implementation {
    command uint8_t Transport.window(socket_t fd)
    {
       socket_store_t temp;
-      temp = call SocketsTable.get(i);
+      temp = call SocketsTable.get(fd);
 
       return temp.effectiveWindow;
    }
