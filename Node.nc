@@ -154,6 +154,7 @@ implementation{
             switch(myMsg->protocol)
             {
                socket_addr_t destAddr;
+               uint8_t window; 
 
                case 0:
                   dbg(FLOODING_CHANNEL,"Packet from %d has arrived with Msg: %s\n", myMsg->src, myMsg->payload);
@@ -166,8 +167,8 @@ implementation{
                   if(fd != NULL)
                   {
                      dbg(TRANSPORT_CHANNEL, "Sending Acknowledgement\n");
-
-                     makePack(&sendPackage, myMsg->dest, myMsg->src, 19, 5, fd.effectiveWindow, (uint8_t *)myMsg->payload, sizeof(myMsg->payload));
+                     window = call Transport.window(fd);
+                     makePack(&sendPackage, myMsg->dest, myMsg->src, 19, 5, window, (uint8_t *)myMsg->payload, sizeof(myMsg->payload));
                      pushToPacketList(sendPackage);
                      call Sender.send(sendPackage, myRoutingTable.nodes[myMsg->src].nextHop);
                   }
