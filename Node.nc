@@ -201,7 +201,6 @@ implementation{
                   }
                   else
                   {
-                     dbg(TRANSPORT_CHANNEL, "Acknowledgement for packet %d recieved\n", myMsg->seq);
                      dbg(TRANSPORT_CHANNEL, "Transmission finished\n");
                      dbg(TRANSPORT_CHANNEL, "Informing server\n");
                      makePack(&sendPackage, myMsg->dest, myMsg->src, 19, 8, 0, (uint8_t *)myMsg->payload, sizeof(myMsg->payload));
