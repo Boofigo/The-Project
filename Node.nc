@@ -209,7 +209,7 @@ implementation{
                   }
                   else if(myMsg->seq != transferB)
                   {
-                     dbg(TRANSPORT_CHANNEL, "All data sent. Waiting for final acknowledgement\n",);
+                     dbg(TRANSPORT_CHANNEL, "All data sent. Waiting for final acknowledgement\n");
                   }
                   else
                   {
