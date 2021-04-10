@@ -145,6 +145,6 @@ interface Transport{
     */
    command error_t listen(socket_t fd);
 
-   command uint8_t window(socket_t fd)
+   command uint8_t window(socket_t fd);
 
 }
