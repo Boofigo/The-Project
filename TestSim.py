@@ -138,10 +138,10 @@ class TestSim:
         self.sendCMD(self.CMD_TEST_CLIENT, address, "{0}{1}{2}{3}".format(chr(destination),chr(sPort),chr(dPort),chr(transfer)));
 
     def cmdAppServer(self, address, port):
-        self.sendCMD(self.CMD_TEST_SERVER, address,"{0}".format(chr(port)));
+        self.sendCMD(self.CMD_APP_SERVER, address,"{0}".format(chr(port)));
 
     def cmdTestClient(self, address, sPort,):
-        self.sendCMD(self.CMD_TEST_CLIENT, address, "{0}".format(chr(sPort)));
+        self.sendCMD(self.CMD_APP_CLIENT, address, "{0}".format(chr(sPort)));
 
 
 def main():
