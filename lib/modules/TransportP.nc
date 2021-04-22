@@ -224,25 +224,25 @@ implementation {
       memcpy(Package->payload, payload, length);
    }
 
-   //command error_t Transport.connect4(socket_t fd)
-   //{
+   command error_t Transport.connect4(socket_t fd)
+   {
       
-   //}
+   }
 
-   //command error_t Transport.unicast(socket_t fd)
-   //{
+   command error_t Transport.unicast(socket_t fd)
+   {
 
-   //}
+   }
 
-   //command error_t Transport.broadcast(socket_t fd)
-   //{
+   command error_t Transport.broadcast(socket_t fd)
+   {
       
-   //}
+   }
 
-   //command error_t Transport.printUser(socket_t fd)
-   //{
+   command error_t Transport.printUser(socket_t fd)
+   {
       
-   //}
+   }
 
    
 
