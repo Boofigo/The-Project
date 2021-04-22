@@ -170,7 +170,7 @@ def main():
     s.cmdAppServer(3,2);
     s.runTime(80);
     #s.cmdTestClient(4,3,25,2,5);
-    s.cmdTestClient(4,3);
+    s.cmdAppClient(4,3);
     s.runTime(30);
 
     
