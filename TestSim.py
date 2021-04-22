@@ -17,6 +17,10 @@ class TestSim:
     CMD_TEST_SERVER = 5
     CMD_APP_SERVER = 7
     CMD_APP_CLIENT = 8
+    CMD_CONNECT = 10 
+	CMD_BROADCAST = 11
+	CMD_UNICAST = 12
+	CMD_PRINT_USER = 13
 
     # CHANNELS - see includes/channels.h
     COMMAND_CHANNEL="command";
