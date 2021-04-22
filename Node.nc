@@ -424,7 +424,7 @@ implementation{
       fd = call Transport.socket();
       call Transport.bind(fd, &src, 0);
 
-      dbg(TRANSPORT_CHANNEL, "Server set up\n");
+      dbg(TRANSPORT_CHANNEL, "Client set up\n");
    }
 
 
