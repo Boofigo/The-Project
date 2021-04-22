@@ -401,12 +401,31 @@ implementation{
 
    event void CommandHandler.setAppServer(uint8_t sPort)
    {
-      
+      socket_addr_t sAddr;
+
+      dbg(TRANSPORT_CHANNEL, "Test Server Starting\n");
+      dbg(TRANSPORT_CHANNEL, "Window size %d\n", window);
+      sAddr.port = sPort;
+      sAddr.addr = TOS_NODE_ID;
+      fd = call Transport.socket();
+      call Transport.bind(fd, &sAddr, window);
+      call Transport.listen(fd);
+
+      dbg(TRANSPORT_CHANNEL, "Server set up\n");
    }
 
    event void CommandHandler.setAppClient(uint8_t sPort)
    {
+      socket_addr_t src;
+      dbg(TRANSPORT_CHANNEL, "Test Client Starting\n");
 
+      src.port = srcPort;
+      src.addr = TOS_NODE_ID;
+
+      fd = call Transport.socket();
+      call Transport.bind(fd, &src, 0);
+
+      dbg(TRANSPORT_CHANNEL, "Server set up\n");
    }
 
 
