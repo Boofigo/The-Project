@@ -399,9 +399,15 @@ implementation{
       
    }
 
-   event void CommandHandler.setAppServer(){}
+   event void CommandHandler.setAppServer(uint8_t sPort)
+   {
+      
+   }
 
-   event void CommandHandler.setAppClient(){}
+   event void CommandHandler.setAppClient(uint8_t sPort)
+   {
+
+   }
 
 
    void makePack(pack *Package, uint16_t src, uint16_t dest, uint16_t TTL, uint16_t protocol, uint16_t seq, uint8_t* payload, uint8_t length)
