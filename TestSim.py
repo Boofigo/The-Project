@@ -149,6 +149,9 @@ class TestSim:
     def cmdAppClient(self, address, sPort,):
         self.sendCMD(self.CMD_APP_CLIENT, address, "{0}".format(chr(sPort)));
 
+    def cmdConnect(self, address, dest, name):
+        self.sendCMD(self.CMD_CONNECT, address, "{0}{1}".format(chr(dest),name));
+
 
 def main():
     s = TestSim();

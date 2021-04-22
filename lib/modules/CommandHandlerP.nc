@@ -74,18 +74,23 @@ implementation{
                 break;
 
             case CMD_TEST_SERVER:
-                dbg(COMMAND_CHANNEL, "Command Type: Client\n");
+                dbg(COMMAND_CHANNEL, "Command Type: Server\n");
                 signal CommandHandler.setTestServer(buff[0],buff[1]);
                 break;
 
             case CMD_APP_SERVER:
-                dbg(COMMAND_CHANNEL, "Command Type: Client\n");
+                dbg(COMMAND_CHANNEL, "Command Type: Server\n");
                 signal CommandHandler.setAppServer(buff[0]);
                 break;
 
             case CMD_APP_CLIENT:
                 dbg(COMMAND_CHANNEL, "Command Type: Client\n");
                 signal CommandHandler.setAppClient(buff[0]);
+                break;
+
+            case CMD_Connect:
+                dbg(COMMAND_CHANNEL, "Command Type: Connect\n");
+                signal CommandHandler.setAppClient(buff[0], &buff[1]);
                 break;
 
             default:
