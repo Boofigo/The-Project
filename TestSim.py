@@ -175,6 +175,8 @@ def main():
     #s.cmdTestClient(4,3,25,2,5);
     s.cmdAppClient(4,3);
     s.runTime(30);
+    s.cmdConnect(4, 4, "Bob");
+    s.runTime(30);
 
     
 if __name__ == '__main__':
