@@ -15,8 +15,8 @@ class TestSim:
     CMD_ROUTE_DUMP=3
     CMD_TEST_CLIENT = 4
     CMD_TEST_SERVER = 5
-    CMD_APP_SERVER = 6
-    CMD_APP_CLIENT = 7
+    CMD_APP_SERVER = 7
+    CMD_APP_CLIENT = 8
 
     # CHANNELS - see includes/channels.h
     COMMAND_CHANNEL="command";
