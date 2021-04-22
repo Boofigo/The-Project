@@ -418,7 +418,7 @@ implementation{
       socket_addr_t src;
       dbg(TRANSPORT_CHANNEL, "Test Client Starting\n");
 
-      src.port = srcPort;
+      src.port = sPort;
       src.addr = TOS_NODE_ID;
 
       fd = call Transport.socket();
