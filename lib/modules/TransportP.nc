@@ -224,4 +224,26 @@ implementation {
       memcpy(Package->payload, payload, length);
    }
 
+   command error_t connect4(socket_t fd)
+   {
+      
+   }
+
+   command error_t unicast(socket_t fd)
+   {
+
+   }
+
+   command error_t broadcast(socket_t fd)
+   {
+      
+   }
+
+   command error_t printUser(socket_t fd)
+   {
+      
+   }
+
+   
+
 }
