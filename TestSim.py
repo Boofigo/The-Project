@@ -132,12 +132,16 @@ class TestSim:
         self.t.addChannel(channelName, out);
 
     def cmdTestServer(self, address, port, window):
-        #print 'Listening for connections..', address, port;
         self.sendCMD(self.CMD_TEST_SERVER, address,"{0}{1}".format(chr(port),chr(window)));
 
     def cmdTestClient(self, address, destination, sPort, dPort, transfer):
-        #print 'Listening for connections...', address, destination, sPort, dPort, transfer;
         self.sendCMD(self.CMD_TEST_CLIENT, address, "{0}{1}{2}{3}".format(chr(destination),chr(sPort),chr(dPort),chr(transfer)));
+
+    def cmdAppServer(self, address, port):
+        self.sendCMD(self.CMD_TEST_SERVER, address,"{0}".format(chr(port)));
+
+    def cmdTestClient(self, address, sPort,):
+        self.sendCMD(self.CMD_TEST_CLIENT, address, "{0}".format(chr(sPort)));
 
 
 def main():
@@ -157,14 +161,9 @@ def main():
     #s.ping(1, 8, "Hello, World");
     s.runTime(40);
     s.cmdTestServer(3,2,3);
-    s.runTime(40);
-    #s.cmdTestServer(3,9);
-    s.runTime(60);
+    s.runTime(80);
     s.cmdTestClient(4,3,25,2,5);
-    #s.routeDMP(4);
-    s.runTime(10);
-    #s.neighborDMP(9);
-    s.runTime(10);
+    s.runTime(30);
 
     
 if __name__ == '__main__':
