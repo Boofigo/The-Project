@@ -146,7 +146,7 @@ class TestSim:
     def cmdAppServer(self, address, port):
         self.sendCMD(self.CMD_APP_SERVER, address,"{0}".format(chr(port)));
 
-    def cmdTestClient(self, address, sPort,):
+    def cmdAppClient(self, address, sPort,):
         self.sendCMD(self.CMD_APP_CLIENT, address, "{0}".format(chr(sPort)));
 
 
@@ -166,9 +166,11 @@ def main():
     s.runTime(200); #Needs to run for about 200 to allow routing table to be completed
     #s.ping(1, 8, "Hello, World");
     s.runTime(40);
-    s.cmdTestServer(3,2,3);
+    #s.cmdTestServer(3,2,3);
+    s.cmdAppServer(3,2);
     s.runTime(80);
-    s.cmdTestClient(4,3,25,2,5);
+    #s.cmdTestClient(4,3,25,2,5);
+    s.cmdTestClient(4,3);
     s.runTime(30);
 
     
