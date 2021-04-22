@@ -88,9 +88,9 @@ implementation{
                 signal CommandHandler.setAppClient(buff[0]);
                 break;
 
-            case CMD_Connect:
+            case CMD_CONNECT:
                 dbg(COMMAND_CHANNEL, "Command Type: Connect\n");
-                signal CommandHandler.setAppClient(buff[0], &buff[1]);
+                signal CommandHandler.connect4(buff[0], &buff[1]);
                 break;
 
             default:
