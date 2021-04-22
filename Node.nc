@@ -404,11 +404,10 @@ implementation{
       socket_addr_t sAddr;
 
       dbg(TRANSPORT_CHANNEL, "Test Server Starting\n");
-      dbg(TRANSPORT_CHANNEL, "Window size %d\n", window);
       sAddr.port = sPort;
       sAddr.addr = TOS_NODE_ID;
       fd = call Transport.socket();
-      call Transport.bind(fd, &sAddr, window);
+      call Transport.bind(fd, &sAddr, 0);
       call Transport.listen(fd);
 
       dbg(TRANSPORT_CHANNEL, "Server set up\n");
