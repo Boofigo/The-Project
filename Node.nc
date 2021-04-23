@@ -429,6 +429,7 @@ implementation{
 
    event void CommandHandler.connect4(uint8_t dest, uint8_t *payload)
    {
+      call Transport.connect4(fd, payload);
       dbg(TRANSPORT_CHANNEL,"Packet from %d has arrived with Msg: %s\n", dest, payload);
    }
 

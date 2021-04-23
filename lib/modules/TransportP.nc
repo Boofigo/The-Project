@@ -224,7 +224,7 @@ implementation {
       memcpy(Package->payload, payload, length);
    }
 
-   command error_t Transport.connect4(socket_t fd)
+   command error_t Transport.connect4(socket_t fd, uint8_t *payload)
    {
       
    }
