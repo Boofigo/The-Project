@@ -180,6 +180,8 @@ def main():
     s.runTime(30);
     s.cmdConnect(4, 1, "Bob");
     s.runTime(30);
+    s.cmdBroadcast(4);
+    s.runTime(30);
 
     
 if __name__ == '__main__':
