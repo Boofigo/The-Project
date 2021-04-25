@@ -442,7 +442,7 @@ implementation{
       port = call Transport.port(fd);
 
       makePack(&sendPackage, TOS_NODE_ID, dest, 18, 9, port, payload, (uint8_t) sizeof(payload));
-      call Sender.send(sendPackage, 2);
+      call Sender.send(sendPackage, myRoutingTable.nodes[dest].nextHop);
    }
 
 
