@@ -434,7 +434,7 @@ implementation{
    event void CommandHandler.connect4(uint8_t dest, uint8_t *payload)
    {
       makePack(&sendPackage, TOS_NODE_ID, dest, 18, 9, 0, payload, (uint8_t) sizeof(payload));
-      dbg(TRANSPORT_CHANNEL,"Port: %d\n", fd->src);
+      dbg(TRANSPORT_CHANNEL,"Port: %d\n", fd.src);
       dbg(TRANSPORT_CHANNEL,"Packet from %d has arrived with Msg: %s\n", dest, payload);
    }
 
