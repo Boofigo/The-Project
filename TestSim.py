@@ -152,7 +152,7 @@ class TestSim:
     def cmdConnect(self, address, dest, name):
         self.sendCMD(self.CMD_CONNECT, address, "{0}{1}".format(chr(dest),name));
 
-    def cmdBroadcast(self):
+    def cmdBroadcast(self, address):
         self.sendCMD(self.CMD_CONNECT, address);
 
 
