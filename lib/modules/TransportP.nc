@@ -257,7 +257,7 @@ implementation {
       dbg(TRANSPORT_CHANNEL, "src: %d, port: %d, name: %s\n", myClientTable.clients[addr->addr].src, myClientTable.clients[addr->addr].port, myClientTable.clients[addr->addr].name);
       
       makePack(&sendPackage, TOS_NODE_ID, addr->addr, 18, 10, addr->port, payload, (uint8_t) sizeof(payload));
-      call TransportSender.send(sendPackage, myRoutingTable.nodes[2].nextHop);
+      call TransportSender.send(sendPackage, 2);
       
       return NULL;
       // test
