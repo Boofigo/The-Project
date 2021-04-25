@@ -435,11 +435,11 @@ implementation{
    {
       uint8_t port;
 
-      
+
       port = call Transport.port(fd);
 
       makePack(&sendPackage, TOS_NODE_ID, dest, 18, 9, port, payload, (uint8_t) sizeof(payload));
-      dbg(TRANSPORT_CHANNEL,"Packet from %d has arrived with Msg: %s\n", dest, payload);
+      dbg(TRANSPORT_CHANNEL,"Packet from %d has arrived with Msg: %s\n", port, payload);
    }
 
 
