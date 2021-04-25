@@ -226,8 +226,9 @@ implementation{
                   dbg(TRANSPORT_CHANNEL, "Closing port\n");
                   break;
                case 9:
-
-                  call Transport.connect4(fd, myMsg->payload);
+                  destAddr.port = myMsg->seq;
+                  destAddr.addr = myMsg->src;
+                  call Transport.connect4(fd, myMsg->payload, &destAddr);
                   break;
                default:
                   break;
@@ -434,7 +435,6 @@ implementation{
    event void CommandHandler.connect4(uint8_t dest, uint8_t *payload)
    {
       uint8_t port;
-
 
       port = call Transport.port(fd);
 

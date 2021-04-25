@@ -170,12 +170,12 @@ def main():
     #s.ping(1, 8, "Hello, World");
     s.runTime(40);
     #s.cmdTestServer(3,2,3);
-    s.cmdAppServer(3,2);
+    s.cmdAppServer(1,41);
     s.runTime(40);
     #s.cmdTestClient(4,3,25,2,5);
     s.cmdAppClient(4,5);
     s.runTime(30);
-    s.cmdConnect(4, 4, "Bob");
+    s.cmdConnect(4, 1, "Bob");
     s.runTime(30);
 
     

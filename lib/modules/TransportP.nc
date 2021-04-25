@@ -6,6 +6,18 @@
 #include <stdlib.h>
 #include <Timer.h>
 
+typedef struct ClientInfo
+{
+   uint8_t src;
+   uint8_t port;
+   char* name;
+}   ClientInfo;
+
+typedef struct ClientTable
+{
+   ClientInfo clients[20];
+}   ClientTable;
+
 module TransportP {
    provides interface Transport;
 
@@ -22,6 +34,7 @@ module TransportP {
 
 implementation {
 
+   ClientTable myClientTable;
    pack sendPackage;
 
    void makePack(pack *Package, uint16_t src, uint16_t dest, uint16_t TTL, uint16_t protocol, uint16_t seq, uint8_t* payload, uint8_t length);
@@ -29,13 +42,7 @@ implementation {
 
 
    event void closeTimer.fired() {
-      //if (socket.state == TIME_WAIT) 
-      //{
-	   //   socket.state = CLOSED;
-      //   dbg(TRANSPORT_CHANNEL, "%d IS NOW CLOSED WITH PORT %d\n", TOS_NODE_ID, socket.src.port);
-      //   dbg(TRANSPORT_CHANNEL, "CLOSED BABY!!!!\n");
-      //}
-      call closeTimer.stop();
+      // delete
    }
 
    command socket_t Transport.socket()
@@ -177,13 +184,20 @@ implementation {
    command error_t Transport.listen(socket_t fd) 
    {
       socket_store_t temp;
-      uint8_t i =0;
-
+      uint8_t i = 0;
+      uint8_t j = 0;
       if(call SocketsTable.isEmpty())
       {
          // dbg(TRANSPORT_CHANNEL, "Fail\n");
          return FAIL;
       }
+
+      for(i = j; j < 20; j++)
+      {
+         myClientTable.clients[j].src = 250;
+         myClientTable.clients[j].port = 250;
+      }
+
       for(i;i<=MAX_NUM_OF_SOCKETS;i++)
       {
          if(i ==fd)
@@ -232,9 +246,17 @@ implementation {
       memcpy(Package->payload, payload, length);
    }
 
-   command error_t Transport.connect4(socket_t fd, uint8_t *payload)
+   command error_t Transport.connect4(socket_t fd, uint8_t *payload, socket_addr_t *addr)
    {
-      
+      socket_store_t temp;
+
+      myClientTable.clients[addr->addr].src = addr->addr;
+      myClientTable.clients[addr->addr].port = addr->port;
+      myClientTable.clients[addr->addr].name = payload;
+
+
+      return NULL;
+      // test
 
 
    }
