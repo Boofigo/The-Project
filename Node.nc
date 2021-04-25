@@ -225,6 +225,10 @@ implementation{
                   dbg(TRANSPORT_CHANNEL, "Transmission finished\n");
                   dbg(TRANSPORT_CHANNEL, "Closing port\n");
                   break;
+               case 9:
+
+                  call Transport.connect4(fd, myMsg->payload);
+                  break;
                default:
                   break;
             }
@@ -429,7 +433,8 @@ implementation{
 
    event void CommandHandler.connect4(uint8_t dest, uint8_t *payload)
    {
-      call Transport.connect4(fd, payload);
+      makePack(&sendPackage, TOS_NODE_ID, dest, 18, 9, 0, payload, (uint8_t) sizeof(payload));
+      dbg(TRANSPORT_CHANNEL,"Port: %d\n", fd->src);
       dbg(TRANSPORT_CHANNEL,"Packet from %d has arrived with Msg: %s\n", dest, payload);
    }
 

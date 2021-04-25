@@ -97,7 +97,7 @@ implementation {
    command socket_t Transport.accept(socket_t fd, socket_addr_t *addr)
    {
       socket_store_t temp;
-      uint8_t i =1;
+      uint8_t i = 1;
 
       dbg(TRANSPORT_CHANNEL, "Request from node %d to send recieved on port %d\n", addr->addr, addr->port );
       if(call SocketsTable.isEmpty())
@@ -227,6 +227,8 @@ implementation {
    command error_t Transport.connect4(socket_t fd, uint8_t *payload)
    {
       
+
+
    }
 
    command error_t Transport.unicast(socket_t fd)
