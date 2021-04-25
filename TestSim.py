@@ -173,7 +173,7 @@ def main():
     s.cmdAppServer(3,2);
     s.runTime(40);
     #s.cmdTestClient(4,3,25,2,5);
-    s.cmdAppClient(4,3);
+    s.cmdAppClient(4,5);
     s.runTime(30);
     s.cmdConnect(4, 4, "Bob");
     s.runTime(30);

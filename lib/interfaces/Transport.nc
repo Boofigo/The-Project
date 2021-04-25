@@ -147,6 +147,8 @@ interface Transport{
 
    command uint8_t window(socket_t fd);
 
+   command uint8_t port(socket_t fd);
+
    command error_t unicast(socket_t fd);
 
    command error_t broadcast(socket_t fd);
