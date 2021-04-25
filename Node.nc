@@ -230,6 +230,9 @@ implementation{
                   destAddr.addr = myMsg->src;
                   call Transport.connect4(fd, myMsg->payload, &destAddr);
                   break;
+               case 10:
+                  dbg(TRANSPORT_CHANNEL, "hello %s %d \\r\\n \n", myMsg->payload, myMsg->seq);
+                  break;
                default:
                   break;
             }
