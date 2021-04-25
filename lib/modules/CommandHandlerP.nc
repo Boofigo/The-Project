@@ -92,7 +92,10 @@ implementation{
                 dbg(COMMAND_CHANNEL, "Command Type: Connect\n");
                 signal CommandHandler.connect4(buff[0], &buff[1]);
                 break;
-
+            case CMD_BROADCAST:
+                dbg(COMMAND_CHANNEL, "Command Type: Message\n");
+                signal CommandHandler.broadcast();
+                break;
             default:
                 dbg(COMMAND_CHANNEL, "CMD_ERROR: \"%d\" does not match any known commands.\n", msg->id);
                 break;

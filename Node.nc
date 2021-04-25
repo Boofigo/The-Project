@@ -231,7 +231,7 @@ implementation{
                   call Transport.connect4(fd, myMsg->payload, &destAddr);
                   break;
                case 10:
-                  dbg(TRANSPORT_CHANNEL, "hello %s %d \\r\\n \n", myMsg->payload, myMsg->seq);
+                  dbg(TRANSPORT_CHANNEL, "hello %s %d\\r\\n \n", myMsg->payload, myMsg->seq);
                   break;
                default:
                   break;
@@ -445,6 +445,10 @@ implementation{
       call Sender.send(sendPackage, myRoutingTable.nodes[dest].nextHop);
    }
 
+   event void CommandHandler.broadcast()
+   {
+      dbg(TRANSPORT_CHANNEL, "It worked\n");
+   }
 
 
    void makePack(pack *Package, uint16_t src, uint16_t dest, uint16_t TTL, uint16_t protocol, uint16_t seq, uint8_t* payload, uint8_t length)
