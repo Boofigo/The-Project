@@ -254,6 +254,7 @@ implementation {
       myClientTable.clients[addr->addr].port = addr->port;
       myClientTable.clients[addr->addr].name = payload;
 
+      dbg(TRANSPORT_CHANNEL, "src: %d, port: %d, name: %s\n", myClientTable.clients[addr->addr].src, myClientTable.clients[addr->addr].port, myClientTable.clients[addr->addr].name);
 
       return NULL;
       // test
