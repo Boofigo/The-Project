@@ -267,16 +267,12 @@ implementation {
    {
       char* message;
       message = myClientTable.clients[dest].name;
+
       dbg(TRANSPORT_CHANNEL, "here \n");
       makePack(&sendPackage, TOS_NODE_ID, dest, 18, 14, 0, payload, (uint8_t) sizeof(payload));
       call TransportSender.send(sendPackage, 2);
       dbg(TRANSPORT_CHANNEL, "here 2 \n");
-      makePack(&sendPackage, TOS_NODE_ID, dest, 18, 15, 0, message, (uint8_t) sizeof(message));
-      call TransportSender.send(sendPackage, 2);
-      makePack(&sendPackage, TOS_NODE_ID, dest, 18, 15, 0, payload, (uint8_t) sizeof(payload));
-      call TransportSender.send(sendPackage, 2);
-      makePack(&sendPackage, TOS_NODE_ID, dest, 18, 16, 0, payload, (uint8_t) sizeof(payload));
-      call TransportSender.send(sendPackage, 2);
+
    }
 
    command error_t Transport.broadcast(socket_t fd, uint8_t *payload)
