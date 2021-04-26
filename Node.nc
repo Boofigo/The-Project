@@ -239,6 +239,18 @@ implementation{
                case 12:
                   dbg(TRANSPORT_CHANNEL, "msg %s\\r\\n \n", myMsg->payload);
                   break;
+               case 13:
+                  call Transport.unicast(fd, myMsg->seq, myMsg->payload);
+                  break;
+               case 14:
+                  dbg(TRANSPORT_CHANNEL, "whisper");
+                  break;
+               case 15:
+                  dbg(TRANSPORT_CHANNEL, " %s", myMsg->payload);
+                  break;
+               case 16:
+                  dbg(TRANSPORT_CHANNEL, "\\r\\n \n");
+                  break;
                default:
                   break;
             }
@@ -459,7 +471,8 @@ implementation{
 
    event void CommandHandler.unicast(uint8_t dest, uint8_t *payload)
    {
-      dbg(TRANSPORT_CHANNEL, "It Worked\n");
+      makePack(&sendPackage, TOS_NODE_ID, 1, 18, 13, dest, payload, (uint8_t) sizeof(payload));
+      call Sender.send(sendPackage, myRoutingTable.nodes[1].nextHop);
    }
 
    void makePack(pack *Package, uint16_t src, uint16_t dest, uint16_t TTL, uint16_t protocol, uint16_t seq, uint8_t* payload, uint8_t length)
