@@ -240,6 +240,7 @@ implementation{
                   dbg(TRANSPORT_CHANNEL, "msg %s\\r\\n \n", myMsg->payload);
                   break;
                case 13:
+                  dbg(TRANSPORT_CHANNEL, "%s\n", myMsg->payload);
                   call Transport.unicast(fd, myMsg->seq, myMsg->payload);
                   break;
                case 14:
@@ -471,7 +472,7 @@ implementation{
 
    event void CommandHandler.unicast(uint8_t dest, uint8_t *payload)
    {
-       dbg(TRANSPORT_CHANNEL, "%s\n", payload);
+       
       makePack(&sendPackage, TOS_NODE_ID, 1, 18, 13, dest, payload, (uint8_t) sizeof(payload));
       call Sender.send(sendPackage, myRoutingTable.nodes[1].nextHop);
    }
