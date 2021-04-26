@@ -267,7 +267,8 @@ implementation {
    {
       char* message;
       message = myClientTable.clients[dest].name;
-      dbg(TRANSPORT_CHANNEL, "%s\n", message);
+      dbg(TRANSPORT_CHANNEL, "%s\n", *message);
+
       makePack(&sendPackage, TOS_NODE_ID, dest, 18, 14, 0, payload, (uint8_t) sizeof(payload));
       call TransportSender.send(sendPackage, 2);
 
