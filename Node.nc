@@ -237,7 +237,6 @@ implementation{
                   call Transport.broadcast(fd, myMsg->payload);
                   break;
                case 12:
-                  call Transport.broadcast(fd);
                   dbg(TRANSPORT_CHANNEL, "msg %s\\r\\n \n", myMsg->payload);
                   break;
                default:
