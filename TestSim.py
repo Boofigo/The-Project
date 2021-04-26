@@ -180,6 +180,8 @@ def main():
     #s.cmdTestClient(4,3,25,2,5);
     s.cmdAppClient(4,5);
     s.runTime(30);
+    s.cmdAppClient(3,8);
+    s.runTime(30);
     s.cmdConnect(4, 1, "Bob");
     s.runTime(30);
     s.cmdConnect(3, 1, "Alice");
