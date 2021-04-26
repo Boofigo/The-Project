@@ -192,7 +192,7 @@ implementation {
          return FAIL;
       }
 
-      for(i = j; j < 20; j++)
+      for(j = 0; j < 20; j++)
       {
          myClientTable.clients[j].src = 250;
          myClientTable.clients[j].port = 250;
@@ -270,6 +270,17 @@ implementation {
 
    command error_t Transport.broadcast(socket_t fd)
    {
+      uint8_t i = 0;
+
+      for(i = 0; i < 20; i++)
+      {
+         if(myClientTable.clients[i].src != 250)
+         {
+            makePack(&sendPackage, TOS_NODE_ID, i, 18, 12, 0, payload, (uint8_t) sizeof(payload));
+            call TransportSender.send(sendPackage, 2);
+         }
+      }
+
       
    }
 
