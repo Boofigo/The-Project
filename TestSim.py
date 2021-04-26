@@ -187,7 +187,7 @@ def main():
     s.cmdConnect(3, 1, "Alice");
     s.runTime(30);
     s.cmdBroadcast(4, "Hello");
-    s.runTime(30);
+    s.runTime(60);
     s.cmdUnicast(4, 3, "Recieved");
     s.runTime(100);
 
