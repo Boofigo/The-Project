@@ -455,8 +455,9 @@ implementation{
 
    event void CommandHandler.broadcast(uint8_t *payload)
    {
-      makePack(&sendPackage, TOS_NODE_ID, 1, 18, 11, 0, payload, (uint8_t) sizeof(payload));
       dbg(TRANSPORT_CHANNEL, "Check 1\n");
+      makePack(&sendPackage, TOS_NODE_ID, 1, 18, 11, 0, payload, (uint8_t) sizeof(payload));
+      
       call Sender.send(sendPackage, myRoutingTable.nodes[1].nextHop);
    }
 
