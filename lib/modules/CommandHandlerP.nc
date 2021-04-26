@@ -92,10 +92,12 @@ implementation{
                 dbg(COMMAND_CHANNEL, "Command Type: Connect\n");
                 signal CommandHandler.connect4(buff[0], &buff[1]);
                 break;
+
             case CMD_BROADCAST:
                 dbg(COMMAND_CHANNEL, "Command Type: Message\n");
                 signal CommandHandler.broadcast(buff[0]);
                 break;
+                
             case CMD_UNICAST:
                 dbg(COMMAND_CHANNEL, "Command Type: Message\n");
                 signal CommandHandler.unicast(buff[0], &buff[1]);
