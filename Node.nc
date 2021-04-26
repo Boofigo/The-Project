@@ -234,11 +234,9 @@ implementation{
                   dbg(TRANSPORT_CHANNEL, "hello %s %d\\r\\n \n", myMsg->payload, myMsg->seq);
                   break;
                case 11:
-                  dbg(TRANSPORT_CHANNEL, "Check 2\n");
                   call Transport.broadcast(fd, myMsg->payload);
                   break;
                case 12:
-                  dbg(TRANSPORT_CHANNEL, "Check 3\n");
                   dbg(TRANSPORT_CHANNEL, "msg %s\\r\\n \n", myMsg->payload);
                   break;
                default:
@@ -455,9 +453,7 @@ implementation{
 
    event void CommandHandler.broadcast(uint8_t *payload)
    {
-      dbg(TRANSPORT_CHANNEL, "Check 1\n");
       makePack(&sendPackage, TOS_NODE_ID, 1, 18, 11, 0, payload, (uint8_t) sizeof(payload));
-      dbg(TRANSPORT_CHANNEL, "Check 2\n");
       call Sender.send(sendPackage, myRoutingTable.nodes[1].nextHop);
    }
 
