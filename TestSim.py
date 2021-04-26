@@ -189,7 +189,7 @@ def main():
     s.cmdBroadcast(4, "Hello");
     s.runTime(100);
     s.cmdUnicast(4, 3, "Recieved");
-    s.runTime(100);
+    s.runTime(200);
 
     
 if __name__ == '__main__':
