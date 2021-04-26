@@ -265,8 +265,8 @@ implementation {
 
    command error_t Transport.unicast(socket_t fd, uint8_t dest, uint8_t *payload)
    {
-      char* message;
-      message = myClientTable.clients[dest].name;
+      //char* message;
+      //message = myClientTable.clients[dest].name;
 
       dbg(TRANSPORT_CHANNEL, "%s\n", payload);
       //dbg(TRANSPORT_CHANNEL, "%s\n", myClientTable.clients[dest].name);
