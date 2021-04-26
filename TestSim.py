@@ -152,8 +152,8 @@ class TestSim:
     def cmdConnect(self, address, dest, name):
         self.sendCMD(self.CMD_CONNECT, address, "{0}{1}".format(chr(dest),name));
 
-    def cmdBroadcast(self, address):
-        self.sendCMD(self.CMD_CONNECT, address);
+    def cmdBroadcast(self, address, dest):
+        self.sendCMD(self.CMD_CONNECT, address, "{0}".format(chr(dest)));
 
 
 def main():
@@ -180,7 +180,7 @@ def main():
     s.runTime(30);
     s.cmdConnect(4, 1, "Bob");
     s.runTime(30);
-    s.cmdBroadcast(4);
+    s.cmdBroadcast(4, 1);
     s.runTime(30);
 
     
