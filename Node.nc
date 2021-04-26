@@ -240,7 +240,6 @@ implementation{
                   dbg(TRANSPORT_CHANNEL, "msg %s\\r\\n \n", myMsg->payload);
                   break;
                case 13:
-                  dbg(TRANSPORT_CHANNEL, "%s\n", myMsg->payload);
                   call Transport.unicast(fd, myMsg->seq, myMsg->payload);
                   break;
                case 14:
