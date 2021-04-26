@@ -11,4 +11,5 @@ interface CommandHandler{
    event void setAppClient(uint8_t sPort);
    event void connect4(uint8_t dest, uint8_t *payload);
    event void broadcast(uint8_t *payload);
+   event void unicast(uint8_t dest, uint8_t *payload);
 }

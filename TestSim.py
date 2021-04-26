@@ -155,6 +155,8 @@ class TestSim:
     def cmdBroadcast(self, address, msg):
         self.sendCMD(self.CMD_BROADCAST, address, "{0}".format(msg));
 
+    def cmdConnect(self, address, dest, msg):
+        self.sendCMD(self.CMD_UNICAST, address, "{0}{1}".format(chr(dest),msg));
 
 def main():
     s = TestSim();
