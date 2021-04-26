@@ -185,7 +185,7 @@ def main():
     s.cmdConnect(3, 1, "Alice");
     s.runTime(30);
     s.cmdBroadcast(4, "Hello");
-    s.runTime(30);
+    s.runTime(100);
 
     
 if __name__ == '__main__':
