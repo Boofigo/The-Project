@@ -188,7 +188,7 @@ def main():
     s.runTime(30);
     #s.cmdBroadcast(4, "Hello");
     s.runTime(100);
-    s.cmdUnicast(4, 3, "Recieved");
+    s.cmdUnicast(4, 3, "Test");
     s.runTime(200);
 
     
