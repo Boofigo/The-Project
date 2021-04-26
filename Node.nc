@@ -234,7 +234,7 @@ implementation{
                   dbg(TRANSPORT_CHANNEL, "hello %s %d\\r\\n \n", myMsg->payload, myMsg->seq);
                   break;
                case 11:
-                  call Transport.broadcast(fd);
+                  call Transport.broadcast(fd, myMsg->payload);
                   break;
                case 12:
                   call Transport.broadcast(fd);
