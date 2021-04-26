@@ -95,9 +95,9 @@ implementation{
 
             case CMD_BROADCAST:
                 dbg(COMMAND_CHANNEL, "Command Type: Message\n");
-                signal CommandHandler.broadcast(buff[0]);
+                signal CommandHandler.broadcast(&buff[0]);
                 break;
-                
+
             case CMD_UNICAST:
                 dbg(COMMAND_CHANNEL, "Command Type: Message\n");
                 signal CommandHandler.unicast(buff[0], &buff[1]);
