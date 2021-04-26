@@ -460,7 +460,7 @@ implementation{
 
       port = call Transport.port(fd);
 
-      makePack(&sendPackage, TOS_NODE_ID, dest, 18, 9, port, payload, (uint8_t) sizeof(payload));
+      makePack(&sendPackage, TOS_NODE_ID, dest, 18, 9, port, payload, (uint8_t)sizeof(payload));
       call Sender.send(sendPackage, myRoutingTable.nodes[dest].nextHop);
    }
 
@@ -473,7 +473,7 @@ implementation{
    event void CommandHandler.unicast(uint8_t dest, uint8_t *payload)
    {
        
-      makePack(&sendPackage, TOS_NODE_ID, 1, 18, 13, dest, payload, (uint8_t) sizeof(payload));
+      makePack(&sendPackage, TOS_NODE_ID, 1, 18, 13, dest, payload, (uint8_t)sizeof(payload));
       call Sender.send(sendPackage, myRoutingTable.nodes[1].nextHop);
    }
 
