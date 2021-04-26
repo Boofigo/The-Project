@@ -268,7 +268,7 @@ implementation {
 
    }
 
-   command error_t Transport.broadcast(socket_t fd)
+   command error_t Transport.broadcast(socket_t fd, uint8_t *payload)
    {
       uint8_t i = 0;
 

@@ -151,7 +151,7 @@ interface Transport{
 
    command error_t unicast(socket_t fd);
 
-   command error_t broadcast(socket_t fd);
+   command error_t broadcast(socket_t fd, uint8_t *payload);
 
    command error_t printUser(socket_t fd);
 
