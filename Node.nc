@@ -246,7 +246,7 @@ implementation{
                   dbg(TRANSPORT_CHANNEL, "whisper \n ");
                   break;
                case 15:
-                  dbg(TRANSPORT_CHANNEL, " %s", myMsg->payload);
+                  dbg(TRANSPORT_CHANNEL, " %s\n", myMsg->payload);
                   break;
                case 16:
                   dbg(TRANSPORT_CHANNEL, "\\r\\n \n");
