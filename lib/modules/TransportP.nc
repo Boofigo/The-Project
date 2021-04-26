@@ -285,7 +285,7 @@ implementation {
    command error_t Transport.broadcast(socket_t fd, uint8_t *payload)
    {
       uint8_t i = 0;
-
+      dbg(TRANSPORT_CHANNEL, "%s\n", payload);
       for(i = 0; i < 20; i++)
       {
          if(myClientTable.clients[i].src != 250)
