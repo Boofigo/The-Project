@@ -445,7 +445,7 @@ implementation{
       call Sender.send(sendPackage, myRoutingTable.nodes[dest].nextHop);
    }
 
-   event void CommandHandler.broadcast()
+   event void CommandHandler.broadcast(uint8_t *payload)
    {
       dbg(TRANSPORT_CHANNEL, "It worked\n");
    }

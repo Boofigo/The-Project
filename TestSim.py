@@ -150,10 +150,10 @@ class TestSim:
         self.sendCMD(self.CMD_APP_CLIENT, address, "{0}".format(chr(sPort)));
 
     def cmdConnect(self, address, dest, name):
-        self.sendCMD(self.CMD_CONNECT, address, "{0}{1}".format(chr(dest),name));
+        self.sendCMD(self.CMD_CONNECT, address, "{0}{1}".format(chr(dest),msg));
 
-    def cmdBroadcast(self, address, dest):
-        self.sendCMD(self.CMD_BROADCAST, address, "{0}".format(chr(dest)));
+    def cmdBroadcast(self, address, msg):
+        self.sendCMD(self.CMD_BROADCAST, address, "{0}".format(msg));
 
 
 def main():
@@ -180,7 +180,7 @@ def main():
     s.runTime(30);
     s.cmdConnect(4, 1, "Bob");
     s.runTime(30);
-    s.cmdBroadcast(4, 1);
+    s.cmdBroadcast(4, "Hello World");
     s.runTime(30);
 
     
