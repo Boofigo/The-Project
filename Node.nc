@@ -251,7 +251,10 @@ implementation{
                   dbg(TRANSPORT_CHANNEL, " %s\n", myMsg->payload);
                   break;
                case 16:
-                  dbg(TRANSPORT_CHANNEL, "\\r\\n \n");
+                  call Transport.printUser(fd, myMsg->seq);
+                  break;
+               case 17:
+                  dbg(TRANSPORT_CHANNEL, " %s\n", myMsg->payload);
                   break;
                default:
                   break;
@@ -475,6 +478,15 @@ implementation{
    {
        
       makePack(&sendPackage, TOS_NODE_ID, 1, 18, 13, dest, payload, (uint8_t)sizeof(payload));
+      call Sender.send(sendPackage, myRoutingTable.nodes[1].nextHop);
+   }
+
+   event void CommandHandler.printUser(uint8_t dest)
+   {
+      uint8_t *payload;
+      payload = "blank";
+
+      makePack(&sendPackage, TOS_NODE_ID, 1, 18, 16, dest, payload, (uint8_t)sizeof(payload));
       call Sender.send(sendPackage, myRoutingTable.nodes[1].nextHop);
    }
 

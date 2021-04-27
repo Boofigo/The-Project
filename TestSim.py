@@ -158,6 +158,9 @@ class TestSim:
     def cmdUnicast(self, address, dest, msg):
         self.sendCMD(self.CMD_UNICAST, address, "{0}{1}".format(chr(dest),msg));
 
+    def cmdprintUser(self, address, dest):
+        self.sendCMD(self.CMD_PRINT_USER, address, "{0}".format(chr(dest)));
+
 def main():
     s = TestSim();
     s.runTime(10);
@@ -188,7 +191,9 @@ def main():
     s.runTime(30);
     #s.cmdBroadcast(4, "Hello");
     s.runTime(300);
-    s.cmdUnicast(4, 3, "HI!");
+    #s.cmdUnicast(4, 3, "HI!");
+    s.runTime(30);
+    s.cmdBroadcast(4,4);
     s.runTime(200);
 
     

@@ -153,7 +153,7 @@ interface Transport{
 
    command error_t broadcast(socket_t fd, uint8_t *payload);
 
-   command error_t printUser(socket_t fd);
+   command error_t printUser(socket_t fd, uint8_t dest);
 
    command error_t connect4(socket_t fd, uint8_t *payload, socket_addr_t *addr);
 }

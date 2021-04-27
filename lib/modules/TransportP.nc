@@ -304,9 +304,20 @@ implementation {
       
    }
 
-   command error_t Transport.printUser(socket_t fd)
+   command error_t Transport.printUser(socket_t fd, uint8_t dest)
    {
-      
+      char* message;
+   
+
+      for(i = 0; i < 20; i++)
+      {
+         if(myClientTable.clients[i].src != 250)
+         {
+            message = myClientTable.clients[i].name;
+            makePack(&sendPackage, TOS_NODE_ID, dest, 18, 17, 0, message, (uint8_t) sizeof(payload));
+            call TransportSender.send(sendPackage, 2);
+         }
+      }
    }
 
    
