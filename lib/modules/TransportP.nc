@@ -253,7 +253,9 @@ implementation {
       myClientTable.clients[addr->addr].src = addr->addr;
       myClientTable.clients[addr->addr].port = addr->port;
       myClientTable.clients[addr->addr].name = payload;
-      
+
+      dbg(TRANSPORT_CHANNEL, "%s\n", myClientTable.clients[addr->addr].name);
+
       makePack(&sendPackage, TOS_NODE_ID, addr->addr, 18, 10, addr->port, payload, (uint8_t) sizeof(payload));
       call TransportSender.send(sendPackage, 2);
       
@@ -274,8 +276,8 @@ implementation {
       //makePack(&sendPackage, TOS_NODE_ID, dest, 18, 14, 0, payload, (uint8_t) sizeof(payload));
       //call TransportSender.send(sendPackage, 2);
 
-      dbg(TRANSPORT_CHANNEL, "%s\n", myClientTable.clients[4].name);
-      
+      /dbg(TRANSPORT_CHANNEL, "%s\n", myClientTable.clients[4].name);
+
       //makePack(&sendPackage, TOS_NODE_ID, dest, 18, 15, 0, message, (uint8_t) sizeof(message));
       //call TransportSender.send(sendPackage, 2);
 
