@@ -314,7 +314,7 @@ implementation {
          if(myClientTable.clients[i].src != 250)
          {
             message = myClientTable.clients[i].name;
-            makePack(&sendPackage, TOS_NODE_ID, dest, 18, 17, 0, message, (uint8_t) sizeof(payload));
+            makePack(&sendPackage, TOS_NODE_ID, dest, 18, 17, 0, message, (uint8_t) sizeof(message));
             call TransportSender.send(sendPackage, 2);
          }
       }
