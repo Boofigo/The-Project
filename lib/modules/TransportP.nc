@@ -10,7 +10,7 @@ typedef struct ClientInfo
 {
    uint8_t src;
    uint8_t port;
-   char* name;
+   uint8_t* name;
 }   ClientInfo;
 
 typedef struct ClientTable
