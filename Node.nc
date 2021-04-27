@@ -257,6 +257,7 @@ implementation{
                   call Transport.printUser(fd, myMsg->seq);
                   break;
                case 18:
+                  dbg(TRANSPORT_CHANNEL, "Test\n");
                   dbg(TRANSPORT_CHANNEL, "listUsrRply Alice, Bob\n");
                   break;
                case 19:
