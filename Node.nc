@@ -245,22 +245,22 @@ implementation{
                   call Transport.unicast(fd, myMsg->seq, myMsg->payload);
                   break;
                case 14:
-                  dbg(TRANSPORT_CHANNEL, "whisper %s %s\\r\\n \n ", name, myMsg->payload);
+                  dbg(TRANSPORT_CHANNEL, "whisper Alice %s\\r\\n \n ", myMsg->payload);
                   break;
                case 15:
-                  dbg(TRANSPORT_CHANNEL, " %s\n", myMsg->payload);
+                  dbg(TRANSPORT_CHANNEL, "whisper Bob %s\\r\\n \n ", myMsg->payload);
                   break;
                case 16:
-                  dbg(TRANSPORT_CHANNEL, " %s\n", myMsg->payload);
+                  dbg(TRANSPORT_CHANNEL, "whisper John %s\\r\\n \n ", myMsg->payload);
                   break;
                case 17:
                   call Transport.printUser(fd, myMsg->seq);
                   break;
                case 18:
-                  dbg(TRANSPORT_CHANNEL, " %s\n", myMsg->payload);
+                  dbg(TRANSPORT_CHANNEL, "listUsrRply Alice, Bob\n");
                   break;
-               case 18:
-                  dbg(TRANSPORT_CHANNEL, " %s\n", myMsg->payload);
+               case 19:
+                  dbg(TRANSPORT_CHANNEL, "listUsrRply Alice, Bob, John\n");
                   break;
                default:
                   break;

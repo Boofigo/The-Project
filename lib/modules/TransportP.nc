@@ -272,20 +272,26 @@ implementation {
 
       //dbg(TRANSPORT_CHANNEL, "%s\n", message);
       
+      if(dest == 3)
+      { 
+         //dbg(TRANSPORT_CHANNEL, "%d\n", myClientTable.clients[i].src);
+         makePack(&sendPackage, TOS_NODE_ID, dest, 18, 14, 0, payload, (uint8_t) sizeof(payload));
+         call TransportSender.send(sendPackage, 2);
+      }
+      else if(dest == 4)
+      { 
+         makePack(&sendPackage, TOS_NODE_ID, dest, 18, 15, 0, payload, (uint8_t) sizeof(payload));
+         call TransportSender.send(sendPackage, 2);
+      }
+      else if(dest == 5)
+      { 
+         makePack(&sendPackage, TOS_NODE_ID, dest, 18, 16, 0, payload, (uint8_t) sizeof(payload));
+         call TransportSender.send(sendPackage, 2);
+      }
       
-      makePack(&sendPackage, TOS_NODE_ID, dest, 18, 14, 0, payload, (uint8_t) sizeof(payload));
-      call TransportSender.send(sendPackage, 2);
-
-      //dbg(TRANSPORT_CHANNEL, "%s\n", myClientTable.clients[4].name);
-
-      //makePack(&sendPackage, TOS_NODE_ID, dest, 18, 15, 0, message, (uint8_t) sizeof(message));
+      //makePack(&sendPackage, TOS_NODE_ID, dest, 18, 14, 0, payload, (uint8_t) sizeof(payload));
       //call TransportSender.send(sendPackage, 2);
 
-      //makePack(&sendPackage, TOS_NODE_ID, dest, 18, 15, 0, payload, (uint8_t) sizeof(payload));
-      //call TransportSender.send(sendPackage, 2);
-
-      //makePack(&sendPackage, TOS_NODE_ID, dest, 18, 16, 0, payload, (uint8_t) sizeof(payload));
-      //call TransportSender.send(sendPackage, 2);
    }
 
    command error_t Transport.broadcast(socket_t fd, uint8_t *payload)
@@ -309,16 +315,23 @@ implementation {
       char* message;
       uint8_t i = 0;
 
-      for(i = 0; i < 20; i++)
-      {
-         if(myClientTable.clients[i].src != 250)
+      //for(i = 0; i < 20; i++)
+      //{
+         if(myClientTable.clients[5].src == 250)
          { 
-            dbg(TRANSPORT_CHANNEL, "%d\n", myClientTable.clients[i].src);
+            //dbg(TRANSPORT_CHANNEL, "%d\n", myClientTable.clients[i].src);
             message = myClientTable.clients[i].name;
             makePack(&sendPackage, TOS_NODE_ID, dest, 18, 18, 0, message, (uint8_t) sizeof(message));
             call TransportSender.send(sendPackage, 2);
          }
-      }
+         else
+         { 
+            
+            message = myClientTable.clients[i].name;
+            makePack(&sendPackage, TOS_NODE_ID, dest, 18, 19, 0, message, (uint8_t) sizeof(message));
+            call TransportSender.send(sendPackage, 2);
+         }
+      //}
    }
 
    
