@@ -323,6 +323,7 @@ implementation {
             //dbg(TRANSPORT_CHANNEL, "%d\n", myClientTable.clients[i].src);
             message = myClientTable.clients[i].name;
             makePack(&sendPackage, TOS_NODE_ID, dest, 18, 18, 0, message, (uint8_t) sizeof(message));
+            dbg(TRANSPORT_CHANNEL, "Test3\n");
             call TransportSender.send(sendPackage, 2);
          }
          else
