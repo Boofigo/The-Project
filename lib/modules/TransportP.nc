@@ -314,22 +314,18 @@ implementation {
    {
       char* message;
       uint8_t i = 0;
-      dbg(TRANSPORT_CHANNEL, "Test1\n");
       //for(i = 0; i < 20; i++)
       //{
          if(myClientTable.clients[5].src == 250)
          { 
-            dbg(TRANSPORT_CHANNEL, "Test2\n");
             //dbg(TRANSPORT_CHANNEL, "%d\n", myClientTable.clients[i].src);
             message = "blank";
             makePack(&sendPackage, TOS_NODE_ID, dest, 18, 18, 0, message, (uint8_t) sizeof(message));
-            dbg(TRANSPORT_CHANNEL, "Test3\n");
             call TransportSender.send(sendPackage, 2);
          }
          else
          { 
-            dbg(TRANSPORT_CHANNEL, "Test3\n");
-            message = myClientTable.clients[i].name;
+            message = "blank";
             makePack(&sendPackage, TOS_NODE_ID, dest, 18, 19, 0, message, (uint8_t) sizeof(message));
             call TransportSender.send(sendPackage, 2);
          }

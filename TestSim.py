@@ -191,8 +191,8 @@ def main():
     s.runTime(30);
     s.cmdBroadcast(4, "Hello");
     s.runTime(300);
-    #s.cmdUnicast(4, 3, "HI!");
-    #s.runTime(30);
+    s.cmdUnicast(4, 3, "HI!");
+    s.runTime(30);
     s.cmdprintUser(4,4);
     s.runTime(100);
 
