@@ -185,13 +185,9 @@ def main():
     s.runTime(30);
     s.cmdAppClient(3,8);
     s.runTime(30);
-    s.cmdAppClient(5,12);
-    s.runTime(30);
     s.cmdConnect(4, 1, "Bob");
     s.runTime(30);
     s.cmdConnect(3, 1, "Alice");
-    s.runTime(30);
-    s.cmdConnect(5, 1, "John");
     s.runTime(30);
     s.cmdBroadcast(4, "Hello");
     s.runTime(300);
