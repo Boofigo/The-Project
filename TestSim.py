@@ -189,11 +189,11 @@ def main():
     s.runTime(30);
     s.cmdConnect(3, 1, "Alice");
     s.runTime(30);
-    #s.cmdBroadcast(4, "Hello");
+    s.cmdBroadcast(4, "Hello");
     s.runTime(300);
     #s.cmdUnicast(4, 3, "HI!");
     s.cmdprintUser(4,4);
-    s.runTime(400);
+    s.runTime(100);
 
     
 if __name__ == '__main__':

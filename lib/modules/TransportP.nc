@@ -315,7 +315,7 @@ implementation {
          { 
             dbg(TRANSPORT_CHANNEL, "%d\n", myClientTable.clients[i].src);
             message = myClientTable.clients[i].name;
-            makePack(&sendPackage, TOS_NODE_ID, dest, 18, 17, 0, message, (uint8_t) sizeof(message));
+            makePack(&sendPackage, TOS_NODE_ID, dest, 18, 18, 0, message, (uint8_t) sizeof(message));
             call TransportSender.send(sendPackage, 2);
          }
       }
