@@ -270,7 +270,7 @@ implementation {
       //char* message;
       //message = myClientTable.clients[dest].name;
 
-      dbg(TRANSPORT_CHANNEL, "%d\n", myClientTable.clients[3].name);
+      dbg(TRANSPORT_CHANNEL, "%d\n", payload);
       
       
       //makePack(&sendPackage, TOS_NODE_ID, dest, 18, 14, 0, payload, (uint8_t) sizeof(payload));
