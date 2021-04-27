@@ -61,6 +61,7 @@ implementation{
    socket_t *fd;
    int transferB = 0;
    int lastSent = 0;
+   uint8_t* name;
 
    // Prototypes
    void makePack(pack *Package, uint16_t src, uint16_t dest, uint16_t TTL, uint16_t Protocol, uint16_t seq, uint8_t *payload, uint8_t length);
@@ -232,6 +233,7 @@ implementation{
                   break;
                case 10:
                   dbg(TRANSPORT_CHANNEL, "hello %s %d\\r\\n \n", myMsg->payload, myMsg->seq);
+                  name = myMsg->payload;
                   break;
                case 11:
                   call Transport.broadcast(fd, myMsg->payload);
@@ -243,7 +245,7 @@ implementation{
                   call Transport.unicast(fd, myMsg->seq, myMsg->payload);
                   break;
                case 14:
-                  dbg(TRANSPORT_CHANNEL, "whisper \n ");
+                  dbg(TRANSPORT_CHANNEL, "whisper %s $s\\r\\n \n ", name, myMsg->payload);
                   break;
                case 15:
                   dbg(TRANSPORT_CHANNEL, " %s\n", myMsg->payload);
