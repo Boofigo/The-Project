@@ -245,7 +245,7 @@ implementation{
                   call Transport.unicast(fd, myMsg->seq, myMsg->payload);
                   break;
                case 14:
-                  dbg(TRANSPORT_CHANNEL, "whisper %s $s \\r\\n \n ", myMsg->payload, myMsg->payload);
+                  dbg(TRANSPORT_CHANNEL, "whisper %s %s\\r\\n \n ", name, myMsg->payload);
                   break;
                case 15:
                   dbg(TRANSPORT_CHANNEL, " %s\n", myMsg->payload);
