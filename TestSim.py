@@ -193,7 +193,7 @@ def main():
     s.runTime(300);
     #s.cmdUnicast(4, 3, "HI!");
     s.cmdprintUser(4,4);
-    s.runTime(100);
+    s.runTime(400);
 
     
 if __name__ == '__main__':
