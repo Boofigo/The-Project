@@ -307,7 +307,7 @@ implementation {
    command error_t Transport.printUser(socket_t fd, uint8_t dest)
    {
       char* message;
-   
+      uint8_t i = 0;
 
       for(i = 0; i < 20; i++)
       {
