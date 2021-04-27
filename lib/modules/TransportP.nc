@@ -312,7 +312,8 @@ implementation {
       for(i = 0; i < 20; i++)
       {
          if(myClientTable.clients[i].src != 250)
-         {
+         { 
+            dbg(TRANSPORT_CHANNEL, "%d\n", myClientTable.clients[i].src);
             message = myClientTable.clients[i].name;
             makePack(&sendPackage, TOS_NODE_ID, dest, 18, 17, 0, message, (uint8_t) sizeof(message));
             call TransportSender.send(sendPackage, 2);
