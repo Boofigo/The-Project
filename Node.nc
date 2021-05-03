@@ -276,7 +276,7 @@ implementation{
 
                   break;
                case 21:
-                  call Transport.windowcast(fd, myMsg->seq, myMsg->payload, 2);
+                  call Transport.windowcast(fd, myMsg->src, myMsg->payload, 2);
                   break;
                case 22:
                   dbg(TRANSPORT_CHANNEL, "Packet 4 recieved with message: \\r\\n\n");
