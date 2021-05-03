@@ -266,9 +266,12 @@ implementation {
 
    command error_t Transport.unicast(socket_t fd, uint8_t dest, uint8_t *payload)
    {
+         dbg(TRANSPORT_CHANNEL, "%s\n", payload);
+
+
+
       //char* message;
       //message = "whisper ";
-      //message = message + myClientTable.clients[4].name + " " + payload;
 
       //dbg(TRANSPORT_CHANNEL, "%s\n", message);
       
