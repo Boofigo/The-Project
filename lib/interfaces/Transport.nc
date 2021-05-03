@@ -157,5 +157,5 @@ interface Transport{
 
    command error_t connect4(socket_t fd, uint8_t *payload, socket_addr_t *addr);
 
-   command error_t windowcast(socket_t fd, uint8_t window, uint8_t *payload, uint8_t window);
+   command error_t windowcast(socket_t fd, uint8_t dest, uint8_t *payload, uint8_t window);
 }
