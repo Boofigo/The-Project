@@ -266,14 +266,10 @@ implementation {
 
    command error_t Transport.unicast(socket_t fd, uint8_t dest, uint8_t *payload)
    {
-         dbg(TRANSPORT_CHANNEL, "%s\n", payload);
+      dbg(TRANSPORT_CHANNEL, "%s\n", payload);
 
 
 
-      //char* message;
-      //message = "whisper ";
-
-      //dbg(TRANSPORT_CHANNEL, "%s\n", message);
       
       if(dest == 3)
       { 
@@ -335,6 +331,31 @@ implementation {
       //}
    }
 
-   
+   command error_t Transport.windowcast(socket_t fd, uint8_t dest, uint8_t *payload, uint8_t window)
+   {
+      if(window == 1)
+      { 
+         dbg(TRANSPORT_CHANNEL, "Sending packet 1 with message: whisper\n");
+         dbg(TRANSPORT_CHANNEL, "Sending packet 2 with message: Alice\n");
+         dbg(TRANSPORT_CHANNEL, "Sending packet 3 with message: %s\n", payload);
+         makePack(&sendPackage, TOS_NODE_ID, dest, 18, 20, 0, payload, (uint8_t) sizeof(payload));
+         call TransportSender.send(sendPackage, 2);
+      }
+      if(window == 2)
+      { 
+         dbg(TRANSPORT_CHANNEL, "Recieved Acknowledgement of packet 1\n");
+         dbg(TRANSPORT_CHANNEL, "Sending packet 4 with message: \\r\\n\n");
+         
+         makePack(&sendPackage, TOS_NODE_ID, dest, 18, 22, 0, payload, (uint8_t) sizeof(payload));
+         call TransportSender.send(sendPackage, 2);
+      }
+      if(window == 3)
+      { 
+         dbg(TRANSPORT_CHANNEL, "Recieved Acknowledgement of packet 2\n");
+         dbg(TRANSPORT_CHANNEL, "Full message already sent\n");
+         dbg(TRANSPORT_CHANNEL, "Recieved Acknowledgement of packet 3\n");
+         dbg(TRANSPORT_CHANNEL, "Full message already sent\n");
+      }
+   }
 
 }

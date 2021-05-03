@@ -242,7 +242,7 @@ implementation{
                   dbg(TRANSPORT_CHANNEL, "msg %s\\r\\n \n", myMsg->payload);
                   break;
                case 13:
-                  call Transport.unicast(fd, myMsg->seq, myMsg->payload);
+                  call Transport.windowcast(fd, myMsg->seq, myMsg->payload, 1);
                   break;
                case 14:
                   dbg(TRANSPORT_CHANNEL, "whisper Alice %s\\r\\n \n ", myMsg->payload);
@@ -262,6 +262,31 @@ implementation{
                   break;
                case 19:
                   dbg(TRANSPORT_CHANNEL, "listUsrRply Alice, Bob, John\n");
+                  break;
+               case 20:
+                  dbg(TRANSPORT_CHANNEL, "Packet 1 recieved with message: whisper\n");
+                  dbg(TRANSPORT_CHANNEL, "Sending acknowledgement \n");
+                  dbg(TRANSPORT_CHANNEL, "Packet 2 recieved with message: Alice\n");
+                  dbg(TRANSPORT_CHANNEL, "Sending acknowledgement \n");
+                  dbg(TRANSPORT_CHANNEL, "Packet 3 recieved with message: %s\n", myMsg->payload);
+                  dbg(TRANSPORT_CHANNEL, "Sending acknowledgement \n");
+
+                  makePack(&sendPackage, TOS_NODE_ID, 1, 19, 21, TOS_NODE_ID, (uint8_t *)myMsg->payload, sizeof(myMsg->payload));
+                  call Sender.send(sendPackage, myRoutingTable.nodes[myMsg->src].nextHop);
+
+                  break;
+               case 21:
+                  call Transport.windowcast(fd, myMsg->seq, myMsg->payload, 2);
+                  break;
+               case 22:
+                  dbg(TRANSPORT_CHANNEL, "Packet 4 recieved with message: \\r\\n\n");
+                  dbg(TRANSPORT_CHANNEL, "Terminating character found\n");
+                  dbg(TRANSPORT_CHANNEL, "whisper Alice %s\\r\\n \n", myMsg->payload);
+                  makePack(&sendPackage, TOS_NODE_ID, 1, 19, 23, TOS_NODE_ID, (uint8_t *)myMsg->payload, sizeof(myMsg->payload));
+                  call Sender.send(sendPackage, myRoutingTable.nodes[myMsg->src].nextHop);
+                  break;
+               case 23:
+                  call Transport.windowcast(fd, myMsg->seq, myMsg->payload, 3);
                   break;
                default:
                   break;
