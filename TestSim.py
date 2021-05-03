@@ -190,9 +190,9 @@ def main():
     s.cmdConnect(3, 1, "Alice");
     s.runTime(30);
     s.cmdBroadcast(4, "Hello");
-    s.runTime(500);
+    s.runTime(200);
     s.cmdUnicast(4, 3, "HI!");
-    s.runTime(100);
+    s.runTime(200);
     s.cmdprintUser(4,4);
     s.runTime(100);
 
